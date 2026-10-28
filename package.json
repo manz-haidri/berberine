@@ -11,6 +11,7 @@
     "preview": "astro preview",
     "get-images": "node download-images.js",
     "check": "node check-dist.js",
+    "deploy": "astro build && wrangler pages deploy dist --project-name berberine --branch main --force",
     "astro": "astro"
   },
   "dependencies": {
@@ -19,6 +20,7 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.3",
+    "wrangler": "^4.154.0"
   }
 }
