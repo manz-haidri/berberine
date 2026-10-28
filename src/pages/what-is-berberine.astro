@@ -1,0 +1,252 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MedicalDisclaimer from '../components/MedicalDisclaimer.astro';
+import ChemicalCard from '../components/ChemicalCard.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import { botanicalPlants, chineseNomenclature } from '../data/botanicalData';
+
+const tocItems = [
+  { id: "overview", label: "What Is Berberine?" },
+  { id: "botanical-sources", label: "Plants Containing Berberine" },
+  { id: "chinese-nomenclature", label: "Chinese Names (小檗碱 / 黄连素)" },
+  { id: "chemical-properties", label: "Chemical Structure & Bioavailability" },
+  { id: "berberine-hcl", label: "Berberine HCl (Chapter 8)" },
+  { id: "drops-and-foods", label: "Drops & Dietary Foods (Chapter 11)" },
+];
+---
+
+<Layout
+  title="What Is Berberine? Origins, Botanical Sources & Science"
+  description="Explore what berberine is, its botanical sources (barberry, goldenseal), chemical structure, bioavailability, and clinical mechanisms in metabolic health."
+>
+  <!-- Breadcrumb & Header -->
+  <div class="bg-white border-b border-[#e6e6e6] py-6">
+    <div class="site-container">
+      <nav class="text-xs text-[#615d59] mb-2" aria-label="Breadcrumb">
+        <ol class="flex items-center gap-1.5 list-none p-0 m-0">
+          <li><a href="/" class="hover:text-[#0075de]">Home</a></li>
+          <li>/</li>
+          <li class="text-[#000000] font-medium" aria-current="page">What Is Berberine?</li>
+        </ol>
+      </nav>
+      <div class="flex flex-wrap items-center gap-2 mb-2">
+        <span class="badge-pill bg-[#62aef0]/15 text-[#0075de] text-xs font-semibold">
+          Foundational Guide
+        </span>
+        <span class="text-xs text-[#615d59]">Botanical Origins & Chemical Properties • Scientific Editorial Review</span>
+      </div>
+      <h1 class="display-2 text-[#000000] tracking-tight m-0">
+        What Is Berberine? Origin, Botanical Sources & Chemistry
+      </h1>
+      <p class="body-md text-[#615d59] mt-3 max-w-3xl">
+        Berberine is a natural substance found in plants such as barberry and goldenseal. It is used in supplements and studied for its effects on blood sugar, cholesterol, and other aspects of health.
+      </p>
+    </div>
+  </div>
+
+  <!-- Content Layout with Sticky Sidebar -->
+  <div class="site-container py-10">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-10">
+      <!-- Main Content (3 Columns) -->
+      <div class="lg:col-span-3 space-y-10 sm:space-y-12">
+        <!-- Mobile / iPad Quick Navigation (Hidden on Desktop) -->
+        <div class="lg:hidden">
+          <TableOfContents items={tocItems} title="Chapter Contents" mobileInline={true} />
+        </div>
+
+        <!-- Section: Overview -->
+        <section id="overview" class="space-y-4">
+          <div class="inline-flex items-center gap-2 text-xs font-bold text-[#0075de] uppercase tracking-wider">
+            <span>Chapter 1: Foundational Science</span>
+          </div>
+          <h2 class="heading-1 text-[#000000] tracking-tight">
+            Origin and Biological Classification
+          </h2>
+          <div class="body-md text-[#31302e] space-y-4 leading-relaxed">
+            <p>
+              <strong>Berberine</strong> is a naturally occurring plant compound classified as an <em>isoquinoline alkaloid</em> (specifically a protoberberine salt). It is found in several medicinal plants and carries an extensive history of use in traditional medicine, particularly in traditional Chinese medicine (TCM) and Ayurvedic healing practices.
+            </p>
+            <p>
+              In recent years, berberine has attracted surging scientific and medical interest due to its measurable effects on glucose metabolism, cholesterol regulation, cellular insulin sensitivity, and hepatic health. 
+            </p>
+            <p>
+              Unlike essential nutrients such as vitamins and minerals, berberine is not required for normal human physiological functioning. Instead, it is a biologically active secondary plant metabolite that interacts with several physiological cascades—most notably the <strong>AMP-activated protein kinase (AMPK)</strong> energy-sensing enzyme.
+            </p>
+            <p>
+              Researchers have investigated whether these biological effects could help manage metabolic conditions such as type 2 diabetes mellitus, dyslipidemia, and metabolic dysfunction-associated fatty liver disease (MAFLD/NAFLD). However, although clinical trials have reported promising surrogate biomarker results, <strong>berberine is not an approved replacement for prescription pharmaceutical treatments</strong>.
+            </p>
+
+            <!-- Expert Pull Quote (GEO Citation Boost) -->
+            <blockquote class="my-6 p-4 sm:p-5 rounded-xl bg-[#f0f7ff] border-l-4 border-[#0075de] text-[#1e293b]">
+              <p class="text-xs sm:text-sm italic leading-relaxed m-0 mb-2">
+                "Intact oral berberine exhibits systemic bioavailability under 5% because intestinal P-glycoprotein rapidly pumps it back into the gut lumen. Its clinical metabolic benefits are predominantly mediated locally in the gastrointestinal tract, altering microbiome ecology and stimulating intestinal endocrine signaling."
+              </p>
+              <footer class="flex items-center gap-1.5 text-xs font-semibold text-[#0075de]">
+                <span>— Pharmacokinetic Review</span>
+                <span class="text-[#64748b] font-normal">• Berberine Research Portal</span>
+              </footer>
+            </blockquote>
+          </div>
+        </section>
+
+        <!-- Section: Plants Containing Berberine -->
+        <section id="botanical-sources" class="space-y-4">
+          <div class="flex items-center justify-between border-b border-[#e6e6e6] pb-2">
+            <h2 class="heading-1 text-[#000000] tracking-tight m-0">
+              What Plants Contain Berberine?
+            </h2>
+            <span class="text-xs text-[#615d59]">5 Primary Botanical Sources</span>
+          </div>
+          <p class="body-md text-[#31302e]">
+            Berberine does not synthesize in ordinary garden vegetables or staple grain crops. It occurs naturally in specific medicinal plant families—predominantly <em>Berberidaceae</em>, <em>Ranunculaceae</em>, and <em>Papaveraceae</em>:
+          </p>
+
+          <div class="table-container">
+            <table class="data-table" aria-label="Plants Containing Berberine">
+              <thead>
+                <tr>
+                  <th class="w-1/4">Plant (Common Name)</th>
+                  <th class="w-1/4">Scientific Name</th>
+                  <th class="w-1/4">Berberine-Containing Parts</th>
+                  <th>Historical Medical Use</th>
+                </tr>
+              </thead>
+              <tbody>
+                {botanicalPlants.map((plant) => (
+                  <tr>
+                    <td class="font-bold text-[#000000]">{plant.commonName}</td>
+                    <td class="italic font-mono text-xs text-[#213183]">{plant.scientificName}</td>
+                    <td class="font-medium text-[#31302e]">{plant.partsUsed}</td>
+                    <td class="text-xs text-[#615d59]">{plant.historicalUse}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="p-4 rounded-xl bg-[#fffaf5] border border-[#e6cbb2] text-xs text-[#523410] leading-relaxed">
+            <strong class="font-semibold text-[#793400]">Critical Botanical Nuance:</strong> Berberine-containing plants have historically been utilized in traditional medicine for infectious diarrhea, digestive discomfort, and topical wounds. However, <em>historical herbal use does not automatically validate the clinical efficacy or long-term safety of high-dose, isolated chemical berberine supplements</em>.
+          </div>
+        </section>
+
+        <!-- Section: Chinese Nomenclature -->
+        <section id="chinese-nomenclature" class="space-y-4">
+          <h2 class="heading-1 text-[#000000] tracking-tight">
+            What Is Berberine Called in Chinese?
+          </h2>
+          <p class="body-md text-[#31302e] leading-relaxed">
+            Because a substantial body of early pharmacology originated in East Asian academic institutions, understanding Chinese terminology is central to reading historical and contemporary clinical trial records:
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="feature-card">
+              <div class="text-xs text-[#615d59] font-mono mb-1">Modern Chemical Name</div>
+              <div class="text-3xl font-bold text-[#0075de] mb-1">小檗碱</div>
+              <div class="text-sm font-semibold text-[#000000]">xiǎo bò jiǎn</div>
+              <p class="text-xs text-[#615d59] mt-2">
+                The official chemical denomination utilized in Chinese pharmacological compendia, medical journals, and laboratory standards.
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="text-xs text-[#615d59] font-mono mb-1">Traditional Clinical Form</div>
+              <div class="text-3xl font-bold text-[#213183] mb-1">黄连素</div>
+              <div class="text-sm font-semibold text-[#000000]">huáng lián sù</div>
+              <p class="text-xs text-[#615d59] mt-2">
+                The popular and traditional clinical formulation name derived from <em>Huang Lian</em> (Coptis chinensis rhizome), widely utilized for acute gastrointestinal complaints.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section: Chemical Properties Component -->
+        <section id="chemical-properties">
+          <ChemicalCard />
+        </section>
+
+        <!-- Section: Chapter 8 - Berberine HCl Deep Dive -->
+        <section id="berberine-hcl" class="space-y-4 pt-6 border-t border-[#e6e6e6]">
+          <div class="inline-flex items-center gap-2 text-xs font-bold text-[#213183] uppercase tracking-wider">
+            <span>Chapter 8: Salt Chemistry</span>
+          </div>
+          <h2 class="heading-1 text-[#000000] tracking-tight">
+            What Is Berberine HCl (Hydrochloride)?
+          </h2>
+          <div class="body-md text-[#31302e] space-y-4 leading-relaxed">
+            <p>
+              <strong>Berberine hydrochloride</strong>, commonly abbreviated as <strong>Berberine HCl</strong>, is a salt form created by reacting the berberine cation with hydrochloric acid. It is the dominant commercial form found in dietary supplements and the active intervention in virtually all benchmark clinical trials.
+            </p>
+            <div class="p-4 rounded-xl bg-white border border-[#e6e6e6] flex flex-wrap items-center justify-around gap-4 text-center">
+              <div>
+                <span class="text-xs font-mono text-[#615d59]">Salt Molecular Formula</span>
+                <div class="text-lg font-bold font-mono text-[#0075de]">C20H18ClNO4</div>
+              </div>
+              <div class="h-8 w-px bg-[#e6e6e6] hidden md:block"></div>
+              <div>
+                <span class="text-xs font-mono text-[#615d59]">Molecular Weight</span>
+                <div class="text-lg font-bold font-mono text-[#0075de]">371.81 g/mol</div>
+              </div>
+              <div class="h-8 w-px bg-[#e6e6e6] hidden md:block"></div>
+              <div>
+                <span class="text-xs font-mono text-[#615d59]">Cation Molecular Weight</span>
+                <div class="text-lg font-bold font-mono text-[#213183]">336.36 g/mol</div>
+              </div>
+            </div>
+            <h3 class="heading-2 text-[#000000] pt-2">How Is Berberine HCl Different From Berberine?</h3>
+            <p>
+              In casual consumer literature, the terms "berberine" and "berberine HCl" are used interchangeably, but chemically they are distinct:
+            </p>
+            <ul class="list-disc pl-5 space-y-1 text-sm">
+              <li><strong>Berberine</strong> identifies the free quaternary ammonium alkaloid cation.</li>
+              <li><strong>Berberine HCl</strong> denotes the crystalline salt formed with chloride to stabilize the compound into an administratable solid.</li>
+            </ul>
+            <h3 class="heading-2 text-[#000000] pt-2">Does Berberine HCl Have Optimal Absorption?</h3>
+            <p>
+              No. Berberine hydrochloride remains subject to major intestinal absorption limitations. Its pervasive presence in commercial supplements is a result of cost efficiency, stability, and historical clinical precedent—not because it possesses superior bioavailability. Researchers continue to explore phospholipid and microemulsion formulations to address this constraint.
+            </p>
+          </div>
+        </section>
+
+        <!-- Section: Chapter 11 - Berberine Drops & Foods -->
+        <section id="drops-and-foods" class="space-y-4 pt-6 border-t border-[#e6e6e6]">
+          <div class="inline-flex items-center gap-2 text-xs font-bold text-[#dd5b00] uppercase tracking-wider">
+            <span>Chapter 11: Delivery & Diet</span>
+          </div>
+          <h2 class="heading-1 text-[#000000] tracking-tight">
+            Berberine Drops and Natural Foods Reality Check
+          </h2>
+          <div class="body-md text-[#31302e] space-y-4 leading-relaxed">
+            <h3 class="heading-2 text-[#000000]">What Are Berberine Drops?</h3>
+            <p>
+              Liquid berberine drops are commercially sold as tinctures or glycerin suspensions. Some brands use purified berberine salts dissolved in solution, while others market crude botanical extracts (like goldenseal tincture).
+            </p>
+            <p>
+              <strong>Critical Dosing Caution:</strong> The concentration of active berberine per milliliter varies enormously among liquid products. Achieving the clinical trial dosage of 1,000 mg to 1,500 mg daily through liquid droppers often requires swallowing substantial liquid volumes with an intensely unpleasant bitter taste. Furthermore, liquid delivery does not inherently improve gastrointestinal bioavailability.
+            </p>
+
+            <h3 class="heading-2 text-[#000000]">What Foods Naturally Contain Berberine?</h3>
+            <p>
+              Berberine is concentrated almost exclusively in the roots, barks, and rhizomes of specialized medicinal shrubs—not in common culinary fruits or vegetables.
+            </p>
+            <p>
+              While certain barberry species (such as <em>Berberis vulgaris</em>) produce edible tart red berries used in Persian cooking (known as <em>zereshk</em>), <strong>eating culinary barberries cannot substitute for standardized berberine supplementation</strong>:
+            </p>
+            <ul class="list-disc pl-5 space-y-1 text-sm">
+              <li>The berberine alkaloid is concentrated primarily in the woody roots and bark, with only minor amounts in the fruit pulp.</li>
+              <li>Alkaloid yields vary drastically depending on soil, harvest season, and climate.</li>
+              <li>There is no established dietary regimen of whole foods that reliably provides the standardized doses tested in clinical metabolic research.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Medical Disclaimer -->
+        <MedicalDisclaimer variant="callout" />
+      </div>
+
+      <!-- Sticky Table of Contents Sidebar (1 Column) -->
+      <aside class="hidden lg:block lg:col-span-1">
+        <TableOfContents items={tocItems} title="Chapter Contents" />
+      </aside>
+    </div>
+  </div>
+</Layout>

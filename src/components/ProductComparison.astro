@@ -1,0 +1,624 @@
+---
+import { verifiedSupplementProducts, type SupplementProduct } from '../data/supplementProducts';
+
+export interface Props {
+  previewOnly?: boolean;
+}
+
+const { previewOnly = false } = Astro.props;
+const displayProducts = previewOnly ? verifiedSupplementProducts.slice(0, 3) : verifiedSupplementProducts;
+---
+
+<div class="product-comparison-wrapper space-y-8">
+  {!previewOnly && (
+    <div class="bg-white p-5 rounded-2xl border border-[#e6e6e6] shadow-xs space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-[#f0ede9] pb-3">
+        <div>
+          <h3 class="text-sm font-bold text-[#000000] m-0">Filter Products by Formulation</h3>
+          <p class="text-xs text-[#615d59] mt-0.5 m-0">Compare research-aligned salt forms against modified complexes</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-[#615d59]" id="comparison-counter">Comparing: <strong id="selected-count" class="text-[#0075de]">0</strong>/3 products</span>
+          <button
+            type="button"
+            id="clear-comparison-btn"
+            class="text-xs text-[#615d59] hover:text-[#dd5b00] underline hidden"
+          >
+            Clear selection
+          </button>
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none max-w-full" style="-webkit-overflow-scrolling: touch;" role="group" aria-label="Formulation Filter">
+          <span class="font-semibold text-[#31302e] dark:text-[#cbd5e1] mr-1 shrink-0">Form:</span>
+          <button
+            type="button"
+            class="filter-btn active px-3.5 py-2 rounded-full font-medium whitespace-nowrap min-h-[38px] cursor-pointer touch-manipulation"
+            data-filter="all"
+          >
+            All Forms
+          </button>
+          <button
+            type="button"
+            class="filter-btn px-3.5 py-2 rounded-full font-medium whitespace-nowrap min-h-[38px] cursor-pointer touch-manipulation"
+            data-filter="hcl"
+          >
+            Berberine HCl
+          </button>
+          <button
+            type="button"
+            class="filter-btn px-3.5 py-2 rounded-full font-medium whitespace-nowrap min-h-[38px] cursor-pointer touch-manipulation"
+            data-filter="phytosome"
+          >
+            Phytosome
+          </button>
+          <button
+            type="button"
+            class="filter-btn px-3.5 py-2 rounded-full font-medium whitespace-nowrap min-h-[38px] cursor-pointer touch-manipulation"
+            data-filter="combination"
+          >
+            Combination Blends
+          </button>
+        </div>
+
+        <div class="flex items-center gap-2 shrink-0 pt-1 sm:pt-0">
+          <label class="inline-flex items-center gap-2 cursor-pointer select-none min-h-[34px]">
+            <input type="checkbox" id="single-ingredient-toggle" class="w-4 h-4 rounded border-[#e6e6e6] text-[#0075de] focus:ring-[#0075de]" />
+            <span class="text-[#31302e] font-medium">Single-ingredient only</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  )}
+
+  <!-- Side-by-Side Comparison Drawer (Shows when 2 or 3 items selected) -->
+  <div
+    id="comparison-drawer"
+    class="hidden bg-white p-4 sm:p-6 rounded-2xl border-2 border-[#0075de] shadow-elevated space-y-4"
+    aria-live="polite"
+  >
+    <div class="flex items-center justify-between border-b border-[#e6e6e6] pb-3">
+      <div>
+        <span class="eyebrow text-[#0075de]">Side-by-Side Review</span>
+        <h3 class="text-base font-bold text-[#000000] m-0">Direct Product Comparison (Up to 3 Products)</h3>
+      </div>
+      <button
+        type="button"
+        id="close-drawer-btn"
+        class="text-xs px-2.5 py-1.5 rounded-lg bg-[#f6f5f4] text-[#31302e] hover:bg-[#e6e6e6] active:bg-[#e0deda] min-h-[36px]"
+      >
+        Close Comparison ✕
+      </button>
+    </div>
+
+    <div class="overflow-x-auto" style="-webkit-overflow-scrolling: touch;">
+      <div id="comparison-grid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 text-xs">
+        <!-- Injected via JavaScript when selected -->
+      </div>
+    </div>
+
+    <div class="p-3 bg-[#fcf8f2] border border-[#ebdccb] rounded-lg text-[11px] text-[#523410]">
+      <strong>Important Cost-Per-Serving Note:</strong> Price-per-serving calculations reflect verified bottle prices divided by package servings. Because serving sizes (e.g. 1 capsule vs 2 capsules) and chemical forms (HCl salt vs phytosome complex) differ substantially, price-per-serving cannot be directly equated with cost per effective gram of absorbed active alkaloid.
+    </div>
+  </div>
+
+  <!-- Product Cards Grid: 1 col on mobile, 2 cols on iPad portrait & iPad landscape (when in 3/4 content column), 3 cols on desktop monitors -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 lg:gap-6" id="products-grid">
+    {displayProducts.map((prod) => (
+      <div
+        class="feature-card product-card flex flex-col justify-between bg-white border border-[#e6e6e6] rounded-xl p-5 hover:border-[#0075de]/40 transition-all shadow-xs overflow-hidden"
+        data-formulation={prod.formulationType}
+        data-has-actives={prod.hasAdditionalActives ? "true" : "false"}
+        data-id={prod.id}
+      >
+        <div class="space-y-3">
+          <!-- Card Image & Header -->
+          <div class="flex items-center gap-3 pb-2 border-b border-[#f0ede9]">
+            <div class="w-16 h-20 p-1 bg-[#fcfbfa] rounded-lg border border-[#e6e6e6] flex items-center justify-center shrink-0">
+              <img
+                src={prod.imageUrl}
+                alt={prod.imageAlt}
+                width="56"
+                height="74"
+                loading="lazy"
+                class="max-h-full max-w-full object-contain"
+              />
+            </div>
+            <div class="min-w-0 flex-1">
+              <span class="text-xs font-semibold uppercase tracking-wider text-[#615d59] block">{prod.brandName}</span>
+              <h4 class="text-sm font-bold text-[#000000] leading-snug line-clamp-2">{prod.productName}</h4>
+              <span class="inline-block mt-1 text-[10px] font-semibold px-2 py-0.5 rounded bg-[#f6f5f4] text-[#31302e] border border-[#e6e6e6]">
+                {prod.formulationLabel}
+              </span>
+            </div>
+          </div>
+
+          <!-- Product Specification Table -->
+          <div class="p-3 rounded-lg bg-[#fcfbfa] border border-[#f0ede9] text-xs space-y-1.5">
+            <div class="flex items-start justify-between gap-1">
+              <span class="text-[#615d59]">Serving Size:</span>
+              <strong class="text-[#000000] text-right">{prod.servingSize}</strong>
+            </div>
+            <div class="flex items-start justify-between gap-1">
+              <span class="text-[#615d59]">Total Package:</span>
+              <span class="text-[#31302e] text-right">{prod.servingsPerContainer} servings ({prod.capsulesPerBottle} caps)</span>
+            </div>
+            <div class="pt-1 border-t border-[#f0ede9]">
+              <span class="text-[#615d59] block text-[11px]">Declared Formulation Amount:</span>
+              <strong class="text-[#0075de] block text-[11.5px] font-semibold">{prod.declaredFormulationAmount}</strong>
+            </div>
+            <div class="pt-0.5">
+              <span class="text-[#615d59] block text-[10px]">Declared Berberine Content:</span>
+              <span class="text-[#31302e] block text-[10.5px] leading-snug">{prod.declaredBerberineContent}</span>
+            </div>
+            <div class="pt-0.5 border-t border-[#f0ede9]">
+              <span class="text-[#615d59] block text-[10px]">Daily Directions &amp; Cost:</span>
+              <span class="text-[#31302e] block text-[10.5px] leading-snug">{prod.manufacturerDailyDirections} ({prod.dailyCostRange})</span>
+            </div>
+          </div>
+
+          <!-- Manufacturer Page Discrepancy Note (if present) -->
+          {prod.manufacturerDiscrepancy && (
+            <div class="p-2.5 rounded-lg bg-[#fffaf5] border border-[#f3d9b1] text-[11px] text-[#793400] leading-snug">
+              <strong>⚠️ Label Note:</strong> {prod.manufacturerDiscrepancy}
+            </div>
+          )}
+
+          <!-- Testing and Certification Badge with Scope & Link -->
+          <div class="p-2.5 rounded-lg bg-[#f6f5f4] border border-[#e6e6e6] text-[11px] space-y-1">
+            <div class="flex items-center justify-between gap-1.5">
+              <div class="flex items-center gap-1.5">
+                <span class={`w-2 h-2 rounded-full ${prod.qualityTesting.testingScope === 'facility-certification' ? 'bg-[#0075de]' : prod.qualityTesting.testingScope === 'manufacturer-reported-external' ? 'bg-[#1aae39]' : 'bg-[#dd5b00]'}`}></span>
+                <strong class="text-[#31302e] text-[11px]">{prod.qualityTesting.badgeText}</strong>
+              </div>
+              {prod.qualityTesting.sourceLink && (
+                <a
+                  href={prod.qualityTesting.sourceLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-[10px] text-[#0075de] hover:underline shrink-0"
+                >
+                  Source ↗
+                </a>
+              )}
+            </div>
+            <p class="text-[#615d59] m-0 leading-tight text-[10.5px]">
+              {prod.qualityTesting.details}
+            </p>
+          </div>
+
+          <!-- Pricing Block -->
+          <div class="pt-2 border-t border-[#f0ede9] flex items-baseline justify-between">
+            <div>
+              <span class="text-xl font-bold text-[#000000]">{prod.priceStatus === 'Estimated' && '~'}${prod.priceUSD.toFixed(2)}</span>
+              <span class="text-xs text-[#615d59]"> {prod.currency}</span>
+              {prod.priceStatus === 'Estimated' && (
+                <span class="block text-[10px] text-[#793400] font-medium">(Estimated benchmark)</span>
+              )}
+            </div>
+            <div class="text-right">
+              <span class="text-xs font-semibold text-[#1aae39] block">
+                {prod.priceStatus === 'Estimated' && '~'}${prod.pricePerServing.toFixed(2)} / serving {prod.priceStatus === 'Estimated' && '(Est.)'}
+              </span>
+              <span class="text-[10px] text-[#a39e98] block">
+                {prod.priceStatus === 'Verified' ? `Verified: ${prod.priceCheckDate}` : `Checked: ${prod.priceCheckDate}`}
+              </span>
+            </div>
+          </div>
+
+          <!-- Allergens & Free-from Tags -->
+          <div class="text-[11px] text-[#615d59] flex flex-wrap gap-1">
+            {prod.labelListedAllergens.map((alg) => (
+              <span class="bg-[#f6f5f4] px-1.5 py-0.5 rounded text-[#615d59]">{alg}</span>
+            ))}
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-[#e6e6e6] mt-4 space-y-2.5">
+          {!previewOnly && (
+            <label class="inline-flex items-center gap-2 text-xs font-medium text-[#31302e] cursor-pointer w-full select-none hover:text-[#0075de] transition-colors py-0.5">
+              <input
+                type="checkbox"
+                class="compare-checkbox w-4 h-4 rounded border-[#d6d3d1] text-[#0075de] focus:ring-[#0075de]"
+                data-id={prod.id}
+                id={`compare-checkbox-${prod.id}`}
+              />
+              <span>Add to Side-by-Side Comparison</span>
+            </label>
+          )}
+
+          <div class="space-y-1.5 pt-0.5">
+            <div class="text-[11px] text-[#615d59] leading-tight flex items-baseline justify-between gap-1">
+              <span class="text-[#8c8883] shrink-0">Sold by:</span>
+              <span class="font-medium text-[#31302e] text-right truncate" title={prod.sellerName}>{prod.sellerName}</span>
+            </div>
+            <a
+              href={prod.retailerUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-retailer text-xs py-2 px-3.5 font-semibold transition-all flex items-center justify-center gap-1.5 w-full min-h-[38px] text-center rounded-lg shadow-xs"
+              aria-label={`View ${prod.brandName} ${prod.productName} at retailer (${prod.retailerDomain})`}
+            >
+              <span class="truncate">{prod.retailerCtaText}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    ))}
+
+    <!-- Empty state when no products match active filters -->
+    <div
+      id="no-products-msg"
+      class="hidden col-span-full py-12 px-6 text-center bg-white border border-[#e6e6e6] rounded-xl space-y-2"
+    >
+      <p class="text-sm font-semibold text-[#1a1918] m-0">No products match this formulation filter combination</p>
+      <p class="text-xs text-[#615d59] m-0">Try switching to "All Forms" or unchecking "Single-ingredient only".</p>
+      <button
+        type="button"
+        id="reset-filter-btn"
+        class="inline-flex items-center text-xs font-semibold text-[#0075de] hover:underline pt-2 cursor-pointer"
+      >
+        Reset filters
+      </button>
+    </div>
+  </div>
+
+  {previewOnly && (
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-2xl bg-white border border-[#e6e6e6] shadow-xs">
+      <div>
+        <h4 class="text-sm font-bold text-[#000000] m-0">Looking for detailed side-by-side formulation comparisons?</h4>
+        <p class="text-xs text-[#615d59] mt-0.5 m-0">
+          Compare chemical salt forms, facility certifications, and ingredient purity across verified brands.
+        </p>
+      </div>
+      <a href="/supplements/#compare-supplements" class="btn-primary text-xs py-2 px-4 shrink-0 min-h-[40px] flex items-center justify-center">
+        Compare All Supplements →
+      </a>
+    </div>
+  )}
+</div>
+
+<script>
+  import { verifiedSupplementProducts } from '../data/supplementProducts';
+
+  function initProductComparison() {
+    const products = verifiedSupplementProducts;
+    let selectedIds: string[] = [];
+    let currentFilter = 'all';
+    let singleIngredientOnly = false;
+
+    const cards = document.querySelectorAll<HTMLElement>('.product-card');
+    const filterButtons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+    const singleToggle = document.getElementById('single-ingredient-toggle') as HTMLInputElement | null;
+    const noProductsMsg = document.getElementById('no-products-msg');
+    const resetBtn = document.getElementById('reset-filter-btn');
+
+    function updateFilter() {
+      let visibleCount = 0;
+      cards.forEach((card) => {
+        const form = card.getAttribute('data-formulation');
+        const hasActives = card.getAttribute('data-has-actives') === 'true';
+
+        const matchesForm = currentFilter === 'all' || form === currentFilter;
+        const matchesSingle = !singleIngredientOnly || !hasActives;
+
+        if (matchesForm && matchesSingle) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      if (noProductsMsg) {
+        if (visibleCount === 0) {
+          noProductsMsg.classList.remove('hidden');
+        } else {
+          noProductsMsg.classList.add('hidden');
+        }
+      }
+    }
+
+    function setActiveFilterButton(filterVal: string) {
+      currentFilter = filterVal;
+      filterButtons.forEach((b) => {
+        const val = b.getAttribute('data-filter');
+        b.classList.toggle('active', val === currentFilter);
+      });
+      updateFilter();
+    }
+
+    // Bind filter buttons
+    filterButtons.forEach((btn) => {
+      btn.onclick = () => {
+        const filterVal = btn.getAttribute('data-filter') || 'all';
+        setActiveFilterButton(filterVal);
+      };
+    });
+
+    // Reset filter button
+    if (resetBtn) {
+      resetBtn.onclick = () => {
+        singleIngredientOnly = false;
+        if (singleToggle) singleToggle.checked = false;
+        setActiveFilterButton('all');
+      };
+    }
+
+    // Bind single-ingredient toggle
+    if (singleToggle) {
+      singleToggle.onchange = () => {
+        singleIngredientOnly = singleToggle.checked;
+        updateFilter();
+      };
+    }
+
+    // Update comparison drawer view
+    function renderComparisonDrawer() {
+      const drawer = document.getElementById('comparison-drawer');
+      const grid = document.getElementById('comparison-grid');
+      const countEl = document.getElementById('selected-count');
+      const clearBtn = document.getElementById('clear-comparison-btn');
+
+      if (countEl) countEl.textContent = selectedIds.length.toString();
+
+      if (!drawer || !grid) return;
+
+      if (selectedIds.length >= 2) {
+        drawer.classList.remove('hidden');
+        if (clearBtn) clearBtn.classList.remove('hidden');
+
+        const selectedProducts = products.filter((p) => selectedIds.includes(p.id));
+        grid.replaceChildren();
+
+        selectedProducts.forEach((p) => {
+          const card = document.createElement('div');
+          card.className = 'p-4 rounded-xl bg-[#fcfbfa] border border-[#e6e6e6] space-y-2';
+
+          // Header row
+          const header = document.createElement('div');
+          header.className = 'flex items-center gap-2 pb-2 border-b border-[#f0ede9]';
+
+          const img = document.createElement('img');
+          img.src = p.imageUrl;
+          img.alt = p.imageAlt;
+          img.width = 36;
+          img.height = 48;
+          img.className = 'h-12 w-auto object-contain';
+
+          const info = document.createElement('div');
+          info.className = 'min-w-0 flex-1';
+
+          const brand = document.createElement('span');
+          brand.className = 'font-bold text-[#000000] text-sm block truncate';
+          brand.textContent = p.brandName;
+
+          const prodName = document.createElement('div');
+          prodName.className = 'text-[11px] text-[#31302e] truncate font-medium';
+          prodName.textContent = p.productName;
+
+          info.appendChild(brand);
+          info.appendChild(prodName);
+
+          const badge = document.createElement('span');
+          badge.className = 'text-[10px] bg-white border border-[#e6e6e6] px-1.5 py-0.5 rounded text-[#615d59] font-medium shrink-0';
+          badge.textContent = p.formulationLabel;
+
+          header.appendChild(img);
+          header.appendChild(info);
+          header.appendChild(badge);
+
+          // Details section
+          const details = document.createElement('div');
+          details.className = 'space-y-1 text-[11px]';
+
+          const createRow = (label: string, value: string, isStrong = true, highlightClass = '') => {
+            const row = document.createElement('div');
+            const lbl = document.createElement('span');
+            lbl.className = 'text-[#615d59]';
+            lbl.textContent = label + ' ';
+            row.appendChild(lbl);
+
+            const val = document.createElement(isStrong ? 'strong' : 'span');
+            if (highlightClass) val.className = highlightClass;
+            val.textContent = value;
+            row.appendChild(val);
+            return row;
+          };
+
+          details.appendChild(createRow('Serving Size:', p.servingSize));
+          details.appendChild(createRow('Declared Amount:', p.declaredFormulationAmount, true, 'text-[#0075de]'));
+          details.appendChild(createRow('Berberine Content:', p.declaredBerberineContent, false));
+
+          const pricePrefix = p.priceStatus === 'Estimated' ? '~' : '';
+          const priceEstSuffix = p.priceStatus === 'Estimated' ? ' estimated' : '';
+          const bottlePriceText = `${pricePrefix}$${p.priceUSD.toFixed(2)} (${pricePrefix}$${p.pricePerServing.toFixed(2)}/serving${priceEstSuffix})`;
+          details.appendChild(createRow('Bottle Price:', bottlePriceText));
+
+          details.appendChild(createRow('Daily Cost:', p.dailyCostRange));
+          details.appendChild(createRow('Testing Scope:', p.qualityTesting.badgeText));
+
+          if (p.manufacturerDiscrepancy) {
+            const discDiv = document.createElement('div');
+            discDiv.className = 'text-[#793400] bg-[#fffaf5] p-1.5 rounded border border-[#f3d9b1] text-[10px]';
+            const strongNotice = document.createElement('strong');
+            strongNotice.textContent = 'Notice: ';
+            discDiv.appendChild(strongNotice);
+            discDiv.appendChild(document.createTextNode(p.manufacturerDiscrepancy));
+            details.appendChild(discDiv);
+          }
+
+          // Retailer link button row
+          const footer = document.createElement('div');
+          footer.className = 'pt-2 border-t border-[#f0ede9]';
+
+          const link = document.createElement('a');
+          link.href = p.retailerUrl;
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+          link.className = 'btn-retailer text-xs py-2 px-3 w-full justify-center min-h-[38px] text-center font-semibold rounded-lg transition-all flex items-center';
+          link.textContent = p.retailerCtaText;
+
+          footer.appendChild(link);
+
+          card.appendChild(header);
+          card.appendChild(details);
+          card.appendChild(footer);
+
+          grid.appendChild(card);
+        });
+      } else {
+        drawer.classList.add('hidden');
+        if (clearBtn) clearBtn.classList.add('hidden');
+      }
+    }
+
+    // Bind checkbox changes
+    document.querySelectorAll<HTMLInputElement>('.compare-checkbox').forEach((checkbox) => {
+      checkbox.onchange = () => {
+        const id = checkbox.getAttribute('data-id');
+        if (!id) return;
+
+        if (checkbox.checked) {
+          if (selectedIds.length >= 3) {
+            checkbox.checked = false;
+            alert('You can compare a maximum of 3 products at a time in the side-by-side drawer.');
+            return;
+          }
+          if (!selectedIds.includes(id)) {
+            selectedIds.push(id);
+          }
+        } else {
+          selectedIds = selectedIds.filter((item) => item !== id);
+        }
+        renderComparisonDrawer();
+      };
+    });
+
+    // Close drawer button
+    const closeBtn = document.getElementById('close-drawer-btn');
+    if (closeBtn) {
+      closeBtn.onclick = () => {
+        const drawer = document.getElementById('comparison-drawer');
+        if (drawer) drawer.classList.add('hidden');
+      };
+    }
+
+    // Clear comparison selection
+    const clearBtn = document.getElementById('clear-comparison-btn');
+    if (clearBtn) {
+      clearBtn.onclick = () => {
+        selectedIds = [];
+        document.querySelectorAll<HTMLInputElement>('.compare-checkbox').forEach((cb) => {
+          cb.checked = false;
+        });
+        renderComparisonDrawer();
+      };
+    }
+
+    // Listen for external add-to-compare buttons (from RankedReviews)
+    document.querySelectorAll('.add-to-custom-compare-btn').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const target = e.currentTarget as HTMLElement;
+        const productId = target.getAttribute('data-product-id');
+        if (!productId) return;
+
+        // If product card is hidden by active filter, reset to all
+        const card = document.querySelector(`.product-card[data-id="${productId}"]`) as HTMLElement | null;
+        if (card && card.style.display === 'none') {
+          setActiveFilterButton('all');
+        }
+
+        const checkbox = document.querySelector(`.compare-checkbox[data-id="${productId}"]`) as HTMLInputElement | null;
+        if (checkbox) {
+          if (!checkbox.checked) {
+            if (selectedIds.length >= 3) {
+              alert('You can compare a maximum of 3 products at a time in the side-by-side drawer.');
+              return;
+            }
+            checkbox.checked = true;
+            if (!selectedIds.includes(productId)) {
+              selectedIds.push(productId);
+            }
+            renderComparisonDrawer();
+          }
+        }
+      });
+    });
+  }
+
+  initProductComparison();
+  document.addEventListener('astro:page-load', initProductComparison);
+</script>
+
+<style>
+  .filter-btn {
+    background-color: #ffffff;
+    color: #31302e;
+    border: 1px solid #e6e6e6;
+    transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+                background-color 0.15s ease,
+                border-color 0.15s ease,
+                color 0.15s ease;
+    will-change: transform, box-shadow;
+  }
+  .filter-btn:hover:not(.active) {
+    background-color: #f6f5f4;
+    border-color: #d6d3d1;
+    color: #1a1918;
+    transform: translateY(-1.5px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
+  }
+  .filter-btn.active {
+    background-color: #0075de !important;
+    border-color: #0075de !important;
+    color: #ffffff !important;
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0, 117, 222, 0.25);
+  }
+  .filter-btn.active:hover {
+    background-color: #005bab !important;
+    border-color: #005bab !important;
+    color: #ffffff !important;
+    transform: translateY(-1.5px);
+    box-shadow: 0 4px 12px rgba(0, 117, 222, 0.35);
+  }
+  .filter-btn:active {
+    transform: translateY(1px) scale(0.96);
+    transition-duration: 0.08s;
+  }
+  .filter-btn:focus-visible {
+    outline: 2px solid #0075de;
+    outline-offset: 2px;
+  }
+
+  .btn-retailer {
+    background-color: #ffffff;
+    color: #0075de;
+    border: 1px solid #0075de;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+                background-color 0.15s ease,
+                color 0.15s ease,
+                border-color 0.15s ease;
+    will-change: transform, box-shadow;
+  }
+  .btn-retailer:hover {
+    background-color: #0075de !important;
+    color: #ffffff !important;
+    border-color: #0075de !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px 0 rgba(0, 117, 222, 0.32);
+  }
+  .btn-retailer:active {
+    background-color: #005bab !important;
+    color: #ffffff !important;
+    border-color: #005bab !important;
+    transform: translateY(1px) scale(0.97);
+    transition-duration: 0.08s;
+  }
+</style>

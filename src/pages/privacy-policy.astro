@@ -1,0 +1,317 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MedicalDisclaimer from '../components/MedicalDisclaimer.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+
+const lastUpdated = "October 28, 2026";
+const effectiveDate = "October 2026";
+
+const sections = [
+  { id: "overview", title: "1. Overview & Core Data Commitments" },
+  { id: "information-collected", title: "2. Information We Collect" },
+  { id: "cookies-local-storage", title: "3. Cookies & Local Browser Storage" },
+  { id: "how-data-is-used", title: "4. How We Process & Use Data" },
+  { id: "third-party-links", title: "5. Third-Party Links & External Citations" },
+  { id: "security-retention", title: "6. Data Security & Retention Safeguards" },
+  { id: "privacy-rights", title: "7. Your Rights (GDPR & CCPA/CPRA Compliance)" },
+  { id: "childrens-privacy", title: "8. Children's Online Privacy Protection" },
+  { id: "policy-updates", title: "9. Policy Revisions & Dedicated Privacy Contact" },
+];
+---
+
+<Layout
+  title="Privacy Policy | Berberine Research Portal"
+  description="Privacy Policy for berberinebenefit.com: disclosures on zero tracking cookies, functional theme storage, GDPR/CCPA compliance, and user data protection."
+  canonical="https://berberinebenefit.com/privacy-policy/"
+  isMedicalPage={false}
+>
+  <!-- Header Banner -->
+  <div class="bg-white dark:bg-[#000000] border-b border-[#e6e6e6] dark:border-[#262626] py-8 sm:py-10">
+    <div class="site-container">
+      <nav class="text-xs text-[#615d59] dark:text-[#94a3b8] mb-3" aria-label="Breadcrumb">
+        <ol class="flex items-center gap-1.5 list-none p-0 m-0">
+          <li><a href="/" class="hover:text-[#0075de] transition-colors">Home</a></li>
+          <li aria-hidden="true">/</li>
+          <li class="text-[#000000] dark:text-[#f8fafc] font-medium" aria-current="page">Privacy Policy</li>
+        </ol>
+      </nav>
+
+      <div class="flex flex-wrap items-center gap-2 mb-3">
+        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#0075de]/10 text-[#0075de] dark:bg-[#389bf2]/15 dark:text-[#389bf2] border border-[#0075de]/20">
+          Legal & Data Transparency
+        </span>
+        <span class="text-xs text-[#615d59] dark:text-[#94a3b8]">
+          Effective: {effectiveDate} • Last Reviewed: {lastUpdated}
+        </span>
+      </div>
+
+      <h1 class="display-2 text-[#000000] dark:text-[#f8fafc] tracking-tight m-0">
+        Privacy Policy
+      </h1>
+      <p class="body-md text-[#615d59] dark:text-[#94a3b8] mt-3 max-w-3xl leading-relaxed">
+        At Berberine Research Portal (<span class="font-mono text-[#0075de] dark:text-[#389bf2]">berberinebenefit.com</span>), we prioritize reader trust, digital privacy, and zero-invasive-tracking principles. This policy details how technical data is handled when you access our open-access scientific guides.
+      </p>
+    </div>
+  </div>
+
+  <!-- Medical & Legal Notice Strip -->
+  <MedicalDisclaimer variant="banner" reviewedDate="October 2026 (Privacy & Regulatory Review)" />
+
+  <!-- Main Content Layout -->
+  <div class="site-container py-10 sm:py-14">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-10">
+      
+      <!-- Sticky Sidebar Navigation -->
+      <aside class="hidden lg:block lg:col-span-1">
+        <div class="sticky top-24 p-5 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] shadow-xs">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-[#000000] dark:text-[#f8fafc] mb-3">
+            Table of Contents
+          </h2>
+          <nav aria-label="Privacy sections">
+            <ul class="space-y-2 list-none p-0 m-0 text-xs">
+              {sections.map((sec) => (
+                <li>
+                  <a
+                    href={`#${sec.id}`}
+                    class="text-[#615d59] dark:text-[#94a3b8] hover:text-[#0075de] dark:hover:text-[#389bf2] transition-colors block py-0.5"
+                  >
+                    {sec.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div class="mt-6 pt-4 border-t border-[#e6e6e6] dark:border-[#262626] text-[11px] text-[#615d59] dark:text-[#94a3b8] space-y-2">
+            <div>
+              <strong>Privacy Officer Desk:</strong><br />
+              <a href="mailto:privacy@berberinebenefit.com" class="text-[#0075de] dark:text-[#389bf2] hover:underline">
+                privacy@berberinebenefit.com
+              </a>
+            </div>
+            <div>
+              <strong>Response SLA:</strong> Within 48 hours for data requests.
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Document Body -->
+      <main class="lg:col-span-3 space-y-10">
+        
+        <!-- Mobile / iPad Quick Navigation (Hidden on Desktop) -->
+        <div class="lg:hidden">
+          <TableOfContents items={sections.map(s => ({ id: s.id, label: s.title }))} title="Privacy Sections" mobileInline={true} />
+        </div>
+
+        <!-- Summary Callout Box -->
+        <section class="p-6 rounded-xl bg-[#f0f7ff] dark:bg-[#0c1a2e] border border-[#b8daff] dark:border-[#1e3a63] text-xs sm:text-sm leading-relaxed">
+          <h2 class="text-sm sm:text-base font-bold text-[#005bab] dark:text-[#60aff5] mb-2 flex items-center gap-2">
+            <span>🛡️</span> Key Privacy Highlights at a Glance
+          </h2>
+          <ul class="space-y-1.5 list-disc pl-5 text-[#213183] dark:text-[#cbd5e1] m-0">
+            <li><strong>Zero Commercial Data Selling:</strong> We do not sell, rent, monetize, or broker personal reader information to third parties or data brokers.</li>
+            <li><strong>Zero Invasive Cross-Site Trackers:</strong> We do not use third-party behavioral tracking pixels, biometric tools, or persistent advertising IDs.</li>
+            <li><strong>Functional Local Storage Only:</strong> We store exactly one client-side value (`theme = 'dark'` or `'light'`) in your browser to preserve your display preferences across visits.</li>
+            <li><strong>Open-Access Content:</strong> You do not need to create an account, provide a credit card, or register a profile to read our clinical analyses.</li>
+          </ul>
+        </section>
+
+        <!-- 1. Overview -->
+        <section id="overview" class="p-6 sm:p-8 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] space-y-4">
+          <h2 class="heading-2 text-[#000000] dark:text-[#f8fafc] m-0">
+            1. Overview & Core Data Commitments
+          </h2>
+          <p class="text-sm text-[#31302e] dark:text-[#cbd5e1] leading-relaxed">
+            This Privacy Policy governs the manner in which the <strong>Berberine Research Portal</strong> ("we", "our", "us", or "the Portal"), operating via the domain <a href="https://berberinebenefit.com" class="text-[#0075de] dark:text-[#389bf2] underline">berberinebenefit.com</a>, collects, utilizes, safeguards, and discloses information gathered from visitors and readers ("Users" or "you").
+          </p>
+          <p class="text-sm text-[#31302e] dark:text-[#cbd5e1] leading-relaxed">
+            As an educational and scientific research initiative analyzing pharmacological literature, peer-reviewed clinical trials, and dietary supplement formulations, our guiding technical philosophy is <strong>data minimization</strong>. We collect solely the baseline telemetry required to deliver fast, secure web pages and uphold the security of our infrastructure.
+          </p>
+        </section>
+
+        <!-- 2. Information We Collect -->
+        <section id="information-collected" class="p-6 sm:p-8 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] space-y-4">
+          <h2 class="heading-2 text-[#000000] dark:text-[#f8fafc] m-0">
+            2. Information We Collect
+          </h2>
+          <p class="text-sm text-[#31302e] dark:text-[#cbd5e1] leading-relaxed">
+            We collect information through two distinct streams: automatic technical telemetry and voluntary correspondence.
+          </p>
+
+          <div class="space-y-3">
+            <h3 class="text-sm font-bold text-[#000000] dark:text-[#f8fafc]">
+              A. Automatically Collected Diagnostic Telemetry
+            </h3>
+            <p class="text-sm text-[#31302e] dark:text-[#cbd5e1] leading-relaxed">
+              When accessing pages on our web servers, standard edge diagnostic headers are logged for security, rate-limiting, and error diagnosis. This telemetry includes:
+            </p>
+            <ul class="list-disc pl-5 text-xs sm:text-sm text-[#615d59] dark:text-[#94a3b8] space-y-1">
+              <li>Internet Protocol (IP) address (truncated/anonymized at network edge);</li>
+              <li>Browser engine, user-agent string, and operating system family;</li>
+              <li>Requested Uniform Resource Locator (URL) and timestamp of the request;</li>
+              <li>HTTP response code (e.g., 200 OK, 404 Not Found);</li>
+              <li>Referring domain or search query pathway (if transmitted by your browser).</li>
+            </ul>
+          </div>
+
+          <div class="space-y-3 pt-2">
+            <h3 class="text-sm font-bold text-[#000000] dark:text-[#f8fafc]">
+              B. Voluntarily Provided Reader Information
+            </h3>
+            <p class="text-sm text-[#31302e] dark:text-[#cbd5e1] leading-relaxed">
+              If you communicate with our editorial desk, submit a scientific errata report, or inquire via our <a href="/contact/" class="text-[#0075de] dark:text-[#389bf2] hover:underline font-medium">Contact page</a>, we collect the details you deliberately provide:
+            </p>
+            <ul class="list-disc pl-5 text-xs sm:text-sm text-[#615d59] dark:text-[#94a3b8] space-y-1">
+              <li>Full name or professional title;</li>
+              <li>Contact email address;</li>
+              <li>Message subject line, inquiry categorization, and narrative text;</li>
+              <li>Any scientific citations, trial DOIs, or PDF attachments submitted for review.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- 3. Cookies & Local Storage -->
+        <section id="cookies-local-storage" class="p-6 sm:p-8 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] space-y-4">
+          <h2 class="heading-2 text-[#000000] dark:text-[#f8fafc] m-0">
+            3. Cookies & Local Browser Storage
+          </h2>
+          <p class="text-sm text-[#31302e] dark:text-[#cbd5e1] leading-relaxed">
+            Unlike many commercial media websites, <strong>we do not utilize third-party marketing cookies, cross-domain retargeting pixels, or fingerprinting scripts</strong>.
+          </p>
+
+          <div class="p-4 rounded-lg bg-[#f6f5f4] dark:bg-[#141414] border border-[#e6e6e6] dark:border-[#262626] space-y-2">
+            <div class="text-xs font-bold uppercase tracking-wider text-[#000000] dark:text-[#f8fafc]">
+              Functional Local Storage: Theme State
+            </div>
+            <p class="text-xs text-[#615d59] dark:text-[#94a3b8] m-0">
+              We utilize HTML5 <code class="font-mono text-[#0075de] dark:text-[#389bf2]">window.localStorage</code> solely to preserve your preferred visual appearance mode (<code class="font-mono text-xs">theme = 'light' | 'dark'</code>). This prevents visual flash-of-unstyled-content (FOUC) when navigating between scientific chapters. This value remains entirely within your local device and is never transmitted to any advertising network.
+            </p>
+          </div>
+
+          <p class="text-xs sm:text-sm text-[#615d59] dark:text-[#94a3b8] leading-relaxed">
+            You can configure your web browser (Google Chrome, Apple Safari, Mozilla Firefox, Microsoft Edge, Brave) to block all cookies or clear local storage cache at any time. Doing so will simply reset the visual theme to the system default on page reload.
+          </p>
+        </section>
+
+        <!-- 4. How Data Is Used -->
+        <section id="how-data-is-used" class="p-6 sm:p-8 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] space-y-4">
+          <h2 class="heading-2 text-[#000000] dark:text-[#f8fafc] m-0">
+            4. How We Process & Use Data
+          </h2>
+          <p class="text-sm text-[#31302e] dark:text-[#cbd5e1] leading-relaxed">
+            Data processed by the Berberine Research Portal is used exclusively for legitimate operational purposes:
+          </p>
+          <ul class="list-disc pl-5 text-xs sm:text-sm text-[#31302e] dark:text-[#cbd5e1] space-y-2">
+            <li><strong>Ensuring Web Reliability & DDoS Mitigation:</strong> Analyzing request rates and malicious traffic signatures to protect availability for medical researchers.</li>
+            <li><strong>Fixing Dead Links & Broken References:</strong> Reviewing aggregate 404 server errors to correct broken academic hyperlinking.</li>
+            <li><strong>Editorial Correspondence:</strong> Replying directly to reader questions, physician queries, and scientific review corrections.</li>
+            <li><strong>Compliance with Legal Obligations:</strong> Responding to lawful subpoenas, warrants, or court orders where required by law.</li>
+          </ul>
+        </section>
+
+        <!-- 5. Third-Party Links -->
+        <section id="third-party-links" class="p-6 sm:p-8 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] space-y-4">
+          <h2 class="heading-2 text-[#000000] dark:text-[#f8fafc] m-0">
+            5. Third-Party Links & External Citations
+          </h2>
+          <p class="text-sm text-[#31302e] dark:text-[#cbd5e1] leading-relaxed">
+            Our scientific portal contains hyperlinks pointing to external websites, including:
+          </p>
+          <ul class="list-disc pl-5 text-xs sm:text-sm text-[#615d59] dark:text-[#94a3b8] space-y-1">
+            <li>National Institutes of Health (NIH) / National Library of Medicine (PubMed / NCBI);</li>
+            <li>Clinical trial registries (e.g., ClinicalTrials.gov, Chinese Clinical Trial Registry);</li>
+            <li>Academic publishers (e.g., JAMA Network, Elsevier, Springer Nature, Wiley, Frontiers);</li>
+            <li>Independent supplement manufacturers and authorized retail distributors.</li>
+          </ul>
+          <p class="text-xs sm:text-sm text-[#615d59] dark:text-[#94a3b8] leading-relaxed">
+            We hold no jurisdiction or control over the privacy practices, tracking mechanisms, or terms of third-party domains. When navigating away from <span class="font-mono text-[#0075de] dark:text-[#389bf2]">berberinebenefit.com</span>, we strongly advise reading the destination website's individual privacy notice.
+          </p>
+        </section>
+
+        <!-- 6. Security & Retention -->
+        <section id="security-retention" class="p-6 sm:p-8 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] space-y-4">
+          <h2 class="heading-2 text-[#000000] dark:text-[#f8fafc] m-0">
+            6. Data Security & Retention Safeguards
+          </h2>
+          <p class="text-sm text-[#31302e] dark:text-[#cbd5e1] leading-relaxed">
+            We implement rigorous technical and organizational controls to protect data:
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
+            <div class="p-4 rounded-lg bg-[#f6f5f4] dark:bg-[#141414] border border-[#e6e6e6] dark:border-[#262626]">
+              <strong class="text-[#000000] dark:text-[#f8fafc] block mb-1">🔐 TLS 1.3 Transport Security</strong>
+              <span class="text-[#615d59] dark:text-[#94a3b8]">All communications between your browser and our edge servers are encrypted using modern Transport Layer Security (TLS/HTTPS).</span>
+            </div>
+            <div class="p-4 rounded-lg bg-[#f6f5f4] dark:bg-[#141414] border border-[#e6e6e6] dark:border-[#262626]">
+              <strong class="text-[#000000] dark:text-[#f8fafc] block mb-1">⏳ 90-Day Retention Window</strong>
+              <span class="text-[#615d59] dark:text-[#94a3b8]">Diagnostic edge server access logs are automatically rotated and purged after 90 days. We do not maintain historical user dossiers.</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 7. Privacy Rights -->
+        <section id="privacy-rights" class="p-6 sm:p-8 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] space-y-4">
+          <h2 class="heading-2 text-[#000000] dark:text-[#f8fafc] m-0">
+            7. Your Rights (GDPR & CCPA/CPRA Compliance)
+          </h2>
+          <p class="text-sm text-[#31302e] dark:text-[#cbd5e1] leading-relaxed">
+            Depending on your jurisdiction (such as the European Economic Area under GDPR, the United Kingdom under UK-GDPR, or California under CCPA/CPRA), you are granted specific statutory rights regarding personal data:
+          </p>
+          <ul class="list-disc pl-5 text-xs sm:text-sm text-[#31302e] dark:text-[#cbd5e1] space-y-1.5">
+            <li><strong>Right of Access & Portability:</strong> Request confirmation of what personal data we hold about you and receive a readable copy.</li>
+            <li><strong>Right to Rectification:</strong> Request correction of inaccurate or incomplete contact records.</li>
+            <li><strong>Right to Erasure ("Right to be Forgotten"):</strong> Request deletion of correspondence threads where retention is no longer legally necessary.</li>
+            <li><strong>Right to Restrict or Object:</strong> Restrict or object to processing under certain legitimate interest grounds.</li>
+            <li><strong>Non-Discrimination:</strong> We do not discriminate in pricing, access, or content delivery against users who exercise privacy rights.</li>
+          </ul>
+          <div class="p-4 rounded-lg bg-[#f0fdf4] dark:bg-[#082212] border border-[#bbf7d0] dark:border-[#166534] text-xs sm:text-sm text-[#14532d] dark:text-[#86efac]">
+            <strong>California CCPA "Do Not Sell" Declaration:</strong> We have not sold, shared, or rented consumers' personal information in the preceding 12 months, and we will not sell personal information in the future.
+          </div>
+        </section>
+
+        <!-- 8. Children's Privacy -->
+        <section id="childrens-privacy" class="p-6 sm:p-8 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] space-y-3">
+          <h2 class="heading-2 text-[#000000] dark:text-[#f8fafc] m-0">
+            8. Children's Online Privacy Protection
+          </h2>
+          <p class="text-sm text-[#31302e] dark:text-[#cbd5e1] leading-relaxed">
+            The Berberine Research Portal is intended strictly for adults and researchers aged 18 and older. In accordance with the Children's Online Privacy Protection Act (COPPA), we do not knowingly solicit or collect data from children under the age of 16. If we discover that personal information has been transmitted by a minor without parental consent, we will purge it immediately.
+          </p>
+        </section>
+
+        <!-- 9. Revisions & Contact -->
+        <section id="policy-updates" class="p-6 sm:p-8 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] space-y-4">
+          <h2 class="heading-2 text-[#000000] dark:text-[#f8fafc] m-0">
+            9. Policy Revisions & Dedicated Privacy Contact
+          </h2>
+          <p class="text-sm text-[#31302e] dark:text-[#cbd5e1] leading-relaxed">
+            We may periodically revise this Privacy Policy to reflect updates in web technologies, regulatory statutes, or site architecture. When changes are made, the "Last Reviewed" date at the top of this document will be updated accordingly. Continued use of the Portal signifies acknowledgement of any revised terms.
+          </p>
+          <div class="p-5 rounded-xl bg-[#f6f5f4] dark:bg-[#141414] border border-[#e6e6e6] dark:border-[#262626] text-xs sm:text-sm space-y-2">
+            <h3 class="font-bold text-[#000000] dark:text-[#f8fafc] m-0">
+              Direct Privacy Inquiries:
+            </h3>
+            <p class="text-[#615d59] dark:text-[#94a3b8] m-0">
+              To exercise privacy rights, submit a data inquiry, or request clarification regarding our data practices:
+            </p>
+            <div class="pt-2 flex flex-wrap gap-4">
+              <div>
+                <span class="text-[11px] uppercase tracking-wider text-[#615d59] dark:text-[#94a3b8] block">Electronic Mail</span>
+                <a href="mailto:privacy@berberinebenefit.com" class="font-semibold text-[#0075de] dark:text-[#389bf2] hover:underline">
+                  privacy@berberinebenefit.com
+                </a>
+              </div>
+              <div>
+                <span class="text-[11px] uppercase tracking-wider text-[#615d59] dark:text-[#94a3b8] block">Online Channel</span>
+                <a href="/contact/" class="font-semibold text-[#0075de] dark:text-[#389bf2] hover:underline">
+                  Web Contact Form →
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+</Layout>

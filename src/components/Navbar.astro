@@ -1,0 +1,307 @@
+---
+const pathname = Astro.url.pathname.replace(/\/$/, "");
+
+const navLinks = [
+  { href: "/", label: "Home", active: pathname === "" },
+  { href: "/what-is-berberine/", label: "About Berberine", active: pathname === "/what-is-berberine" },
+  { href: "/benefits/", label: "Benefits & Safety", active: pathname === "/benefits" || pathname === "/safety-and-side-effects" },
+  { href: "/research/", label: "Research", active: pathname === "/research" },
+  { href: "/supplements/", label: "Compare Supplements", active: pathname === "/supplements" },
+  { href: "/faq/", label: "FAQs", active: pathname === "/faq" },
+];
+---
+
+<header class="sticky top-0 z-40 bg-white/95 dark:bg-[#000000]/95 backdrop-blur border-b border-[#e6e6e6] dark:border-[#262626]">
+  <div class="site-container flex items-center justify-between h-16">
+    <!-- Brand Logo -->
+    <a href="/" class="flex items-center gap-2 sm:gap-2.5 text-decoration-none group min-w-0 shrink-0">
+      <img
+        src="/images/logo.svg"
+        alt="Berberine Research Portal Logo"
+        width="36"
+        height="36"
+        class="w-9 h-9 sm:w-10 sm:h-10 rounded-lg object-contain shadow-xs group-hover:scale-105 transition-transform duration-200 shrink-0"
+      />
+      <span class="text-lg sm:text-xl font-bold text-[#000000] dark:text-[#f8fafc] tracking-tight group-hover:text-[#0075de] dark:group-hover:text-[#389bf2] transition-colors truncate">
+        Berberine
+      </span>
+    </a>
+
+    <!-- Desktop Navigation (Fluid spacing for iPad Landscape & Desktop) -->
+    <nav class="hidden lg:flex items-center gap-3.5 xl:gap-6" aria-label="Main Navigation">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class={`text-xs xl:text-sm font-medium transition-colors py-1 whitespace-nowrap ${
+            link.active
+              ? "text-[#0075de] font-semibold"
+              : "text-[#55524e] hover:text-[#000000] dark:text-[#cbd5e1] dark:hover:text-white"
+          }`}
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Right Utility Action & Mobile Toggle Container -->
+    <div class="flex items-center gap-2 sm:gap-3">
+      <!-- Evidence Matrix button (Visible on xl+ to keep iPad/tablet header spacious) -->
+      <div class="hidden xl:flex items-center">
+        <a href="/research/#evidence-matrix" class="btn-primary text-xs py-1.5 px-3.5 whitespace-nowrap">
+          Evidence Matrix
+        </a>
+      </div>
+
+      <!-- Day / Night Mode Toggle Button -->
+      <button
+        id="theme-toggle"
+        type="button"
+        class="theme-toggle p-2 rounded-lg text-[#31302e] hover:bg-[#f6f5f4] active:bg-[#edebe9] dark:text-[#cbd5e1] dark:hover:bg-[#1a1a1a] focus:outline-none focus:ring-2 focus:ring-[#0075de] transition-colors relative flex items-center justify-center min-w-[40px] min-h-[40px] touch-manipulation"
+        aria-label="Toggle Day / Night mode"
+        title="Toggle Day / Night mode"
+      >
+        <!-- Sun icon (visible in night mode) -->
+        <svg
+          class="theme-icon-sun w-5 h-5 text-[#fde047] transition-transform duration-200"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+        <!-- Moon icon (visible in day mode) -->
+        <svg
+          class="theme-icon-moon w-5 h-5 text-[#31302e] transition-transform duration-200"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+      </button>
+
+      <!-- Mobile / iPad Menu Button -->
+      <button
+        id="mobile-menu-toggle"
+        type="button"
+        class="lg:hidden p-2 rounded-lg text-[#31302e] hover:bg-[#f6f5f4] active:bg-[#edebe9] dark:text-[#cbd5e1] dark:hover:bg-[#1a1a1a] focus:outline-none focus:ring-2 focus:ring-[#0075de] transition-colors flex items-center justify-center min-w-[40px] min-h-[40px] touch-manipulation"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <!-- Hamburger Icon -->
+        <svg id="menu-icon-open" class="w-6 h-6 block" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <!-- Close (X) Icon -->
+        <svg id="menu-icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile / iPad Dropdown Menu with Backdrop Blur & Elevated Shadow -->
+  <div
+    id="mobile-menu"
+    class="hidden lg:hidden border-t border-[#e6e6e6] dark:border-[#262626] bg-white/98 dark:bg-[#000000]/98 backdrop-blur-md px-4 py-4 space-y-1 shadow-lg max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain"
+    style="-webkit-overflow-scrolling: touch;"
+  >
+    {navLinks.map((link) => (
+      <a
+        href={link.href}
+        class={`mobile-nav-link flex items-center justify-between px-3.5 py-3 rounded-lg text-sm font-medium transition-colors min-h-[44px] ${
+          link.active ? "bg-[#f0f7ff] dark:bg-[#0c1a2e] text-[#0075de] dark:text-[#389bf2] font-semibold" : "text-[#31302e] dark:text-[#cbd5e1] hover:bg-[#f6f5f4] dark:hover:bg-[#141414] active:bg-[#eceae7]"
+        }`}
+      >
+        <span>{link.label}</span>
+        {link.active && (
+          <span class="w-1.5 h-1.5 rounded-full bg-[#0075de] dark:bg-[#389bf2]"></span>
+        )}
+      </a>
+    ))}
+
+    <!-- Quick Secondary Links (About Us & Contact) -->
+    <div class="pt-2 pb-1 grid grid-cols-2 gap-2 text-xs">
+      <a
+        href="/about/"
+        class="mobile-nav-link flex items-center justify-center px-3 py-2.5 rounded-lg font-medium text-[#615d59] dark:text-[#94a3b8] hover:text-[#0075de] dark:hover:text-[#389bf2] hover:bg-[#f6f5f4] dark:hover:bg-[#141414] border border-[#e6e6e6] dark:border-[#262626] min-h-[40px]"
+      >
+        About Us
+      </a>
+      <a
+        href="/contact/"
+        class="mobile-nav-link flex items-center justify-center px-3 py-2.5 rounded-lg font-medium text-[#615d59] dark:text-[#94a3b8] hover:text-[#0075de] dark:hover:text-[#389bf2] hover:bg-[#f6f5f4] dark:hover:bg-[#141414] border border-[#e6e6e6] dark:border-[#262626] min-h-[40px]"
+      >
+        Contact Us
+      </a>
+    </div>
+
+    <!-- Mobile Theme Toggle Item -->
+    <div class="pt-3 mt-2 border-t border-[#e6e6e6] dark:border-[#262626] flex items-center justify-between px-3.5 py-2">
+      <span class="text-xs font-semibold text-[#615d59] dark:text-[#94a3b8]">Theme Mode</span>
+      <button
+        id="theme-toggle-mobile"
+        type="button"
+        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#f6f5f4] dark:bg-[#141414] text-[#31302e] dark:text-[#cbd5e1] border border-[#e6e6e6] dark:border-[#262626] min-h-[36px]"
+      >
+        <span class="theme-label-mobile">☀️ Day Mode</span>
+      </button>
+    </div>
+
+    <div class="pt-2 flex flex-col gap-2">
+      <a
+        href="/research/#evidence-matrix"
+        class="mobile-nav-link btn-primary text-xs justify-center py-2.5 min-h-[44px]"
+      >
+        Evidence Matrix
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  function updateThemeUi(isDark: boolean) {
+    // 1. Sun icon (visible in dark mode, hidden in light mode)
+    document.querySelectorAll('.theme-icon-sun').forEach((el) => {
+      (el as HTMLElement).style.display = isDark ? 'block' : 'none';
+      el.classList.toggle('hidden', !isDark);
+      el.classList.toggle('block', isDark);
+    });
+
+    // 2. Moon icon (visible in light mode, hidden in dark mode)
+    document.querySelectorAll('.theme-icon-moon').forEach((el) => {
+      (el as HTMLElement).style.display = isDark ? 'none' : 'block';
+      el.classList.toggle('hidden', isDark);
+      el.classList.toggle('block', !isDark);
+    });
+
+    // 3. Mobile toggle button label text
+    document.querySelectorAll('.theme-label-mobile').forEach((el) => {
+      el.textContent = isDark ? '🌙 Night Mode' : '☀️ Day Mode';
+    });
+
+    // 4. Desktop toggle button accessibility labels
+    const desktopBtn = document.getElementById('theme-toggle');
+    if (desktopBtn) {
+      desktopBtn.setAttribute('aria-label', isDark ? 'Switch to Day mode' : 'Switch to Night mode');
+      desktopBtn.setAttribute('title', isDark ? 'Switch to Day mode' : 'Switch to Night mode');
+    }
+  }
+
+  function syncThemeState() {
+    const isDark = document.documentElement.classList.contains('dark') || document.documentElement.getAttribute('data-theme') === 'dark';
+    updateThemeUi(isDark);
+  }
+
+  // Register the document click handler ONCE to prevent duplicate toggling
+  if (!(window as any).__themeDelegationSetup) {
+    (window as any).__themeDelegationSetup = true;
+
+    document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement | null;
+      const btn = target?.closest('#theme-toggle, #theme-toggle-mobile, .theme-toggle');
+      if (btn) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (typeof (window as any).__toggleTheme === 'function') {
+          (window as any).__toggleTheme();
+        } else {
+          // Fallback if __toggleTheme is not yet registered
+          const isDark = document.documentElement.classList.contains('dark') || document.documentElement.getAttribute('data-theme') === 'dark';
+          const next = !isDark;
+          if (next) {
+            document.documentElement.classList.add('dark');
+            document.documentElement.setAttribute('data-theme', 'dark');
+            try { localStorage.setItem('theme', 'dark'); } catch (_) {}
+          } else {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.setAttribute('data-theme', 'light');
+            try { localStorage.setItem('theme', 'light'); } catch (_) {}
+          }
+          updateThemeUi(next);
+        }
+      }
+    });
+
+    // Listen to global theme change event
+    window.addEventListener('theme-change', (e: any) => {
+      updateThemeUi(Boolean(e.detail?.isDark));
+    });
+  }
+
+  // Setup mobile dropdown menu (idempotent per button element)
+  function setupMobileMenu() {
+    const toggleBtn = document.getElementById('mobile-menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('menu-icon-open');
+    const iconClose = document.getElementById('menu-icon-close');
+
+    if (!toggleBtn || !mobileMenu) return;
+    if (toggleBtn.dataset.listenerBound === 'true') return;
+    toggleBtn.dataset.listenerBound = 'true';
+
+    function setMenuState(open: boolean) {
+      toggleBtn?.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (open) {
+        mobileMenu?.classList.remove('hidden');
+        iconOpen?.classList.add('hidden');
+        iconOpen?.classList.remove('block');
+        iconClose?.classList.remove('hidden');
+        iconClose?.classList.add('block');
+      } else {
+        mobileMenu?.classList.add('hidden');
+        iconOpen?.classList.remove('hidden');
+        iconOpen?.classList.add('block');
+        iconClose?.classList.add('hidden');
+        iconClose?.classList.remove('block');
+      }
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+      setMenuState(!isExpanded);
+    });
+
+    // Close when clicking any nav link
+    const links = mobileMenu.querySelectorAll('.mobile-nav-link');
+    links.forEach((link) => {
+      link.addEventListener('click', () => {
+        setMenuState(false);
+      });
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && toggleBtn.getAttribute('aria-expanded') === 'true') {
+        setMenuState(false);
+        toggleBtn.focus();
+      }
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      const target = e.target as Node;
+      if (
+        toggleBtn.getAttribute('aria-expanded') === 'true' &&
+        !mobileMenu.contains(target) &&
+        !toggleBtn.contains(target)
+      ) {
+        setMenuState(false);
+      }
+    });
+  }
+
+  // Setup on initial page load and on Astro ClientRouter page transitions
+  function init() {
+    setupMobileMenu();
+    syncThemeState();
+  }
+
+  init();
+  document.addEventListener('astro:page-load', init);
+</script>

@@ -1,0 +1,281 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MedicalDisclaimer from '../components/MedicalDisclaimer.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+
+const effectiveDate = "October 2026";
+const lastUpdated = "October 28, 2026";
+
+const sections = [
+  { id: "acceptance", title: "1. Acceptance of Terms & Educational Scope" },
+  { id: "medical-disclaimer", title: "2. Non-Medical Advice & Health Disclaimer" },
+  { id: "no-commercial-sales", title: "3. No Commercial Sales & Third-Party Retailers" },
+  { id: "intellectual-property", title: "4. Intellectual Property & Academic Fair Use" },
+  { id: "user-conduct", title: "5. User Conduct & Acceptable Use" },
+  { id: "disclaimer-warranties", title: "6. Disclaimer of Warranties (As-Is)" },
+  { id: "limitation-liability", title: "7. Limitation of Liability" },
+  { id: "indemnification", title: "8. Indemnification & Severability" },
+  { id: "governing-law", title: "9. Governing Law & Dispute Resolution" },
+  { id: "contact-legal", title: "10. Modifications & Legal Contact" },
+];
+---
+
+<Layout
+  title="Terms & Conditions | Berberine Research Portal"
+  description="Terms and Conditions of use for berberinebenefit.com: educational disclaimers, intellectual property rights, third-party content, and liability limitations."
+  canonical="https://berberinebenefit.com/terms-and-conditions/"
+  isMedicalPage={false}
+>
+  <!-- Header Banner -->
+  <div class="bg-white dark:bg-[#000000] border-b border-[#e6e6e6] dark:border-[#262626] py-8 sm:py-10">
+    <div class="site-container">
+      <nav class="text-xs text-[#615d59] dark:text-[#94a3b8] mb-3" aria-label="Breadcrumb">
+        <ol class="flex items-center gap-1.5 list-none p-0 m-0">
+          <li><a href="/" class="hover:text-[#0075de] transition-colors">Home</a></li>
+          <li aria-hidden="true">/</li>
+          <li class="text-[#000000] dark:text-[#f8fafc] font-medium" aria-current="page">Terms & Conditions</li>
+        </ol>
+      </nav>
+
+      <div class="flex flex-wrap items-center gap-2 mb-3">
+        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#0075de]/10 text-[#0075de] dark:bg-[#389bf2]/15 dark:text-[#389bf2] border border-[#0075de]/20">
+          Terms of Service & Usage
+        </span>
+        <span class="text-xs text-[#615d59] dark:text-[#94a3b8]">
+          Effective: {effectiveDate} • Last Reviewed: {lastUpdated}
+        </span>
+      </div>
+
+      <h1 class="display-2 text-[#000000] dark:text-[#f8fafc] tracking-tight m-0">
+        Terms & Conditions
+      </h1>
+      <p class="body-md text-[#615d59] dark:text-[#94a3b8] mt-3 max-w-3xl leading-relaxed">
+        Please read these Terms and Conditions carefully prior to accessing or using the Berberine Research Portal (<span class="font-mono text-[#0075de] dark:text-[#389bf2]">berberinebenefit.com</span>). Your continued use signifies legal acceptance of these terms.
+      </p>
+    </div>
+  </div>
+
+  <!-- Medical Disclaimer Strip -->
+  <MedicalDisclaimer variant="banner" reviewedDate="October 2026 (Legal & Terms Audit)" />
+
+  <!-- Main Content Layout -->
+  <div class="site-container py-10 sm:py-14">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-10">
+      
+      <!-- Sticky Sidebar Navigation -->
+      <aside class="hidden lg:block lg:col-span-1">
+        <div class="sticky top-24 p-5 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] shadow-xs">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-[#000000] dark:text-[#f8fafc] mb-3">
+            Table of Contents
+          </h2>
+          <nav aria-label="Terms sections">
+            <ul class="space-y-2 list-none p-0 m-0 text-xs">
+              {sections.map((sec) => (
+                <li>
+                  <a
+                    href={`#${sec.id}`}
+                    class="text-[#615d59] dark:text-[#94a3b8] hover:text-[#0075de] dark:hover:text-[#389bf2] transition-colors block py-0.5"
+                  >
+                    {sec.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div class="mt-6 pt-4 border-t border-[#e6e6e6] dark:border-[#262626] text-[11px] text-[#615d59] dark:text-[#94a3b8] space-y-2">
+            <div>
+              <strong>Legal Compliance Office:</strong><br />
+              <a href="mailto:legal@berberinebenefit.com" class="text-[#0075de] dark:text-[#389bf2] hover:underline">
+                legal@berberinebenefit.com
+              </a>
+            </div>
+            <div>
+              <strong>Domain:</strong> berberinebenefit.com
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Document Body -->
+      <main class="lg:col-span-3 space-y-10">
+
+        <!-- Mobile / iPad Quick Navigation (Hidden on Desktop) -->
+        <div class="lg:hidden">
+          <TableOfContents items={sections.map(s => ({ id: s.id, label: s.title }))} title="Terms Sections" mobileInline={true} />
+        </div>
+
+        <!-- Critical Medical Warning Alert -->
+        <section class="p-6 rounded-xl bg-[#fff7ed] dark:bg-[#2b1805] border border-[#ffedd5] dark:border-[#7c2d12] text-xs sm:text-sm leading-relaxed">
+          <h2 class="text-sm sm:text-base font-bold text-[#c2410c] dark:text-[#fb923c] mb-2 flex items-center gap-2">
+            <span>⚠️</span> Critical Non-Medical Advice Notice
+          </h2>
+          <p class="text-[#7c2d12] dark:text-[#fed7aa] m-0 leading-relaxed">
+            Content published on <strong>berberinebenefit.com</strong> is strictly for academic, informational, and research purposes. It does <strong>not</strong> constitute medical advice, diagnosis, treatment, or clinical prognosis. Berberine is a pharmacologically active compound with documented effects on drug metabolism enzymes (CYP450) and plasma proteins. <strong>Always consult a board-certified physician or qualified healthcare provider before initiating, modifying, or discontinuing any dietary supplement or prescription medication.</strong>
+          </p>
+        </section>
+
+        <!-- 1. Acceptance -->
+        <section id="acceptance" class="p-6 sm:p-8 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] space-y-4">
+          <h2 class="heading-2 text-[#000000] dark:text-[#f8fafc] m-0">
+            1. Acceptance of Terms & Educational Scope
+          </h2>
+          <p class="text-sm text-[#31302e] dark:text-[#cbd5e1] leading-relaxed">
+            By browsing, accessing, bookmarking, or using <a href="https://berberinebenefit.com" class="text-[#0075de] dark:text-[#389bf2] font-mono">berberinebenefit.com</a> (the "Website" or "Portal"), you enter into a binding legal agreement with the Berberine Research Portal. If you do not agree unconditionally with all terms contained herein, you must immediately terminate use of this Website.
+          </p>
+          <p class="text-sm text-[#31302e] dark:text-[#cbd5e1] leading-relaxed">
+            The Portal is provided as an open-access scientific publication synthesizing published pharmacological literature, randomized controlled trials, systematic reviews, and dietary supplement formulations.
+          </p>
+        </section>
+
+        <!-- 2. Medical Disclaimer -->
+        <section id="medical-disclaimer" class="p-6 sm:p-8 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] space-y-4">
+          <h2 class="heading-2 text-[#000000] dark:text-[#f8fafc] m-0">
+            2. Non-Medical Advice & Health Disclaimer
+          </h2>
+          <p class="text-sm text-[#31302e] dark:text-[#cbd5e1] leading-relaxed">
+            Without limiting the generality of the foregoing:
+          </p>
+          <ul class="list-disc pl-5 text-xs sm:text-sm text-[#31302e] dark:text-[#cbd5e1] space-y-2">
+            <li><strong>No Physician-Patient Relationship:</strong> Utilizing this Website, sending an electronic message, or reading research summaries does not create a doctor-patient, confidential, or clinical relationship of any kind.</li>
+            <li><strong>Not an FDA-Approved Drug:</strong> Berberine has not been evaluated or approved by the U.S. Food and Drug Administration (FDA) or the European Medicines Agency (EMA) to diagnose, treat, cure, or prevent any chronic disease, diabetes mellitus, or cardiovascular disorder.</li>
+            <li><strong>Severe Drug Interactions:</strong> Berberine inhibits cytochrome P450 isoenzymes (primarily CYP3A4 and CYP2D6) and P-glycoprotein. Concomitant use with narrow therapeutic index medications (such as cyclosporine, tacrolimus, warfarin, antiarrhythmics) or oral antidiabetic agents can lead to serious adverse clinical events.</li>
+            <li><strong>Contraindicated Cohorts:</strong> Berberine is strictly contraindicated during pregnancy (due to uterine contractions and teratogenic risks), lactation, and in neonates (due to displacement of bilirubin and fatal kernicterus risks).</li>
+          </ul>
+        </section>
+
+        <!-- 3. No Commercial Sales -->
+        <section id="no-commercial-sales" class="p-6 sm:p-8 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] space-y-4">
+          <h2 class="heading-2 text-[#000000] dark:text-[#f8fafc] m-0">
+            3. No Commercial Sales & Third-Party Retailers
+          </h2>
+          <p class="text-sm text-[#31302e] dark:text-[#cbd5e1] leading-relaxed">
+            The Berberine Research Portal does not formulate, bottle, sell, ship, warehouse, or handle physical transactions for any dietary supplements or consumer goods.
+          </p>
+          <p class="text-sm text-[#31302e] dark:text-[#cbd5e1] leading-relaxed">
+            Any product evaluations, price calculations, or retailer links appearing on our <a href="/supplements/" class="text-[#0075de] dark:text-[#389bf2] font-semibold hover:underline">Compare Supplements Guide</a> are presented purely as factual market research. If you choose to follow an outbound link to an authorized distributor or manufacturer (such as Amazon, Thorne, or iHerb), any resulting purchase is executed solely between you and that third-party entity under their respective terms of sale, privacy policy, and return agreements.
+          </p>
+        </section>
+
+        <!-- 4. Intellectual Property -->
+        <section id="intellectual-property" class="p-6 sm:p-8 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] space-y-4">
+          <h2 class="heading-2 text-[#000000] dark:text-[#f8fafc] m-0">
+            4. Intellectual Property & Academic Fair Use
+          </h2>
+          <p class="text-sm text-[#31302e] dark:text-[#cbd5e1] leading-relaxed">
+            All original text, interactive comparison tables, evidence synthesis charts, diagrams, source code, logos, and graphic layouts on <span class="font-mono text-[#0075de] dark:text-[#389bf2]">berberinebenefit.com</span> are the proprietary intellectual property of the Berberine Research Portal and protected by international copyright laws.
+          </p>
+          <div class="p-4 rounded-lg bg-[#f6f5f4] dark:bg-[#141414] border border-[#e6e6e6] dark:border-[#262626] space-y-2">
+            <div class="text-xs font-bold uppercase tracking-wider text-[#000000] dark:text-[#f8fafc]">
+              Permitted Academic Citation
+            </div>
+            <p class="text-xs text-[#615d59] dark:text-[#94a3b8] m-0">
+              You are granted a limited license to quote brief excerpts (up to 150 words) for non-commercial educational or journalistic analysis, provided that clear bibliographic attribution is included with an active hyperlink to the original URL on <span class="font-mono text-[#0075de] dark:text-[#389bf2]">berberinebenefit.com</span>. Full article reproduction, programmatic scraping, or wholesale syndication without written consent is strictly prohibited.
+            </p>
+          </div>
+        </section>
+
+        <!-- 5. User Conduct -->
+        <section id="user-conduct" class="p-6 sm:p-8 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] space-y-4">
+          <h2 class="heading-2 text-[#000000] dark:text-[#f8fafc] m-0">
+            5. User Conduct & Acceptable Use
+          </h2>
+          <p class="text-sm text-[#31302e] dark:text-[#cbd5e1] leading-relaxed">
+            Users agree to utilize this Website only for legitimate, lawful purposes. You agree not to:
+          </p>
+          <ul class="list-disc pl-5 text-xs sm:text-sm text-[#615d59] dark:text-[#94a3b8] space-y-1.5">
+            <li>Engage in denial-of-service (DoS) or distributed denial-of-service (DDoS) attacks against our infrastructure;</li>
+            <li>Probe, scan, or test the vulnerability of the Website or attempt to bypass security measures;</li>
+            <li>Submit fraudulent, abusive, or automated spam messages through contact or inquiry forms;</li>
+            <li>Misrepresent your identity or impersonate medical practitioners, researchers, or portal contributors.</li>
+          </ul>
+        </section>
+
+        <!-- 6. Disclaimer of Warranties -->
+        <section id="disclaimer-warranties" class="p-6 sm:p-8 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] space-y-4">
+          <h2 class="heading-2 text-[#000000] dark:text-[#f8fafc] m-0">
+            6. Disclaimer of Warranties (As-Is)
+          </h2>
+          <p class="text-sm text-[#31302e] dark:text-[#cbd5e1] leading-relaxed">
+            THE WEBSITE, ITS CONTENT, DATA TABLES, AND RESEARCH COMPILATIONS ARE PROVIDED ON AN <strong>"AS IS"</strong> AND <strong>"AS AVAILABLE"</strong> BASIS, WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS, STATUTORY, OR IMPLIED.
+          </p>
+          <p class="text-xs sm:text-sm text-[#615d59] dark:text-[#94a3b8] leading-relaxed">
+            To the fullest extent permissible pursuant to applicable law, the Portal disclaims all warranties, including but not limited to implied warranties of merchantability, fitness for a particular health outcome, title, accuracy, non-infringement, or freedom from computer viruses or network interruptions.
+          </p>
+        </section>
+
+        <!-- 7. Limitation of Liability -->
+        <section id="limitation-liability" class="p-6 sm:p-8 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] space-y-4">
+          <h2 class="heading-2 text-[#000000] dark:text-[#f8fafc] m-0">
+            7. Limitation of Liability
+          </h2>
+          <p class="text-sm text-[#31302e] dark:text-[#cbd5e1] leading-relaxed">
+            IN NO EVENT SHALL THE BERBERINE RESEARCH PORTAL, ITS WRITERS, EDITORS, PHARMACOLOGICAL ADVISORS, HOSTING PROVIDERS, OR AFFILIATES BE LIABLE FOR ANY DIRECT, INDIRECT, PUNITIVE, INCIDENTAL, SPECIAL, OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR IN ANY WAY CONNECTED WITH:
+          </p>
+          <ul class="list-disc pl-5 text-xs sm:text-sm text-[#615d59] dark:text-[#94a3b8] space-y-1.5">
+            <li>Your reliance upon any scientific trial, clinical figure, or dosage mentioned on the Website;</li>
+            <li>Adverse reactions, side effects, or drug interactions from self-administering botanical supplements;</li>
+            <li>Any delay, failure, or inability to use the Website;</li>
+            <li>Transactions entered into with third-party supplement vendors or online retailers.</li>
+          </ul>
+        </section>
+
+        <!-- 8. Indemnification -->
+        <section id="indemnification" class="p-6 sm:p-8 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] space-y-3">
+          <h2 class="heading-2 text-[#000000] dark:text-[#f8fafc] m-0">
+            8. Indemnification & Severability
+          </h2>
+          <p class="text-sm text-[#31302e] dark:text-[#cbd5e1] leading-relaxed">
+            You agree to defend, indemnify, and hold harmless the Berberine Research Portal and its agents from and against any claims, liabilities, damages, judgments, awards, losses, costs, and expenses (including reasonable legal fees) arising out of your violation of these Terms or misuse of content.
+          </p>
+          <p class="text-xs sm:text-sm text-[#615d59] dark:text-[#94a3b8] leading-relaxed">
+            If any provision of these Terms is held to be invalid or unenforceable, such provision shall be struck and the remaining provisions shall be enforced to the fullest extent of the law.
+          </p>
+        </section>
+
+        <!-- 9. Governing Law -->
+        <section id="governing-law" class="p-6 sm:p-8 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] space-y-3">
+          <h2 class="heading-2 text-[#000000] dark:text-[#f8fafc] m-0">
+            9. Governing Law & Dispute Resolution
+          </h2>
+          <p class="text-sm text-[#31302e] dark:text-[#cbd5e1] leading-relaxed">
+            These Terms and any dispute or claim arising out of or related to the Website shall be governed by and construed in accordance with applicable laws, without giving effect to any choice of law principles. Parties agree to attempt to resolve any dispute amicably and informally before seeking formal relief.
+          </p>
+        </section>
+
+        <!-- 10. Modifications & Contact -->
+        <section id="contact-legal" class="p-6 sm:p-8 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] space-y-4">
+          <h2 class="heading-2 text-[#000000] dark:text-[#f8fafc] m-0">
+            10. Modifications & Legal Contact
+          </h2>
+          <p class="text-sm text-[#31302e] dark:text-[#cbd5e1] leading-relaxed">
+            We reserve the right to revise or update these Terms and Conditions at our sole discretion. Any modifications take effect immediately upon posting to this URL.
+          </p>
+          <div class="p-5 rounded-xl bg-[#f6f5f4] dark:bg-[#141414] border border-[#e6e6e6] dark:border-[#262626] text-xs sm:text-sm space-y-2">
+            <h3 class="font-bold text-[#000000] dark:text-[#f8fafc] m-0">
+              Legal Inquiries & Formal Notices:
+            </h3>
+            <p class="text-[#615d59] dark:text-[#94a3b8] m-0">
+              For legal correspondence, trademark or copyright inquiries, or terms questions:
+            </p>
+            <div class="pt-2 flex flex-wrap gap-4">
+              <div>
+                <span class="text-[11px] uppercase tracking-wider text-[#615d59] dark:text-[#94a3b8] block">Electronic Legal Notice</span>
+                <a href="mailto:legal@berberinebenefit.com" class="font-semibold text-[#0075de] dark:text-[#389bf2] hover:underline">
+                  legal@berberinebenefit.com
+                </a>
+              </div>
+              <div>
+                <span class="text-[11px] uppercase tracking-wider text-[#615d59] dark:text-[#94a3b8] block">General Support</span>
+                <a href="/contact/" class="font-semibold text-[#0075de] dark:text-[#389bf2] hover:underline">
+                  Contact Us Form →
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+</Layout>

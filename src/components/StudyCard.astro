@@ -1,0 +1,169 @@
+---
+import type { ResearchStudy } from '../data/researchStudies';
+
+export interface Props {
+  study: ResearchStudy;
+  featured?: boolean;
+}
+
+const { study, featured = false } = Astro.props;
+
+// Badge styling per study design
+const badgeStyles: Record<string, { bg: string; text: string; label: string }> = {
+  'systematic-review-meta-analysis': {
+    bg: 'bg-[#213183]',
+    text: 'text-white',
+    label: 'Meta-Analysis / Review'
+  },
+  'randomized-controlled-trial': {
+    bg: 'bg-[#0075de]',
+    text: 'text-white',
+    label: 'Randomized Controlled Trial (RCT)'
+  },
+  'pharmacokinetic-absorption': {
+    bg: 'bg-[#2a9d99]',
+    text: 'text-white',
+    label: 'Pharmacokinetics & Absorption'
+  },
+  'supplement-potency-testing': {
+    bg: 'bg-[#dd5b00]',
+    text: 'text-white',
+    label: 'Supplement Potency Analysis'
+  },
+  'preclinical-animal-cell': {
+    bg: 'bg-[#793400]',
+    text: 'text-white',
+    label: 'Preclinical (Animal / Cell Study)'
+  }
+};
+
+const badgeInfo = badgeStyles[study.studyDesignType] || {
+  bg: 'bg-[#213183]',
+  text: 'text-white',
+  label: study.studyType
+};
+---
+
+<article class={`feature-card ${featured ? 'border-[#0075de]/30 shadow-sm' : ''} my-6`} id={`study-${study.id}`}>
+  <!-- Card Header -->
+  <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-[#e6e6e6]">
+    <div class="flex flex-wrap items-center gap-2">
+      <span class={`inline-flex items-center justify-center px-2.5 py-0.5 rounded text-xs font-semibold ${badgeInfo.bg} ${badgeInfo.text}`}>
+        {badgeInfo.label}
+      </span>
+      <span class="text-xs font-medium text-[#615d59]">
+        {study.journal} • Published: {study.publicationDate}
+      </span>
+    </div>
+    <div class="text-xs text-[#615d59]">
+      Sample: <strong class="text-[#000000]">{typeof study.participants === 'number' ? study.participants.toLocaleString() : study.participants}</strong>
+    </div>
+  </div>
+
+  <!-- Study Title -->
+  <h3 class="text-lg font-bold text-[#000000] leading-snug tracking-tight mb-2">
+    {study.title}
+  </h3>
+
+  <!-- Authors Line -->
+  <div class="text-xs text-[#31302e] mb-3 pb-2 border-b border-[#f0ede9]">
+    <span class="text-[#615d59] font-medium">Authors:</span>{' '}
+    <span class="font-medium text-[#000000]">{study.authors.join(', ')}</span>
+  </div>
+
+  <!-- Trial Protocol Details Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-4 bg-[#fcfbfa] p-3 rounded-lg border border-[#e6e6e6]">
+    <div>
+      <span class="text-[#615d59] block">Population / Cohort:</span>
+      <strong class="text-[#31302e]">{study.population}</strong>
+    </div>
+    <div>
+      <span class="text-[#615d59] block">Dose & Duration:</span>
+      <strong class="text-[#31302e]">{study.exactFormulationAndDose} ({study.duration})</strong>
+    </div>
+    <div class="sm:col-span-2">
+      <span class="text-[#615d59] block">Comparator / Control:</span>
+      <strong class="text-[#31302e]">{study.comparator}</strong>
+    </div>
+  </div>
+
+  <!-- Plain-Language Interpretation -->
+  <div class="body-sm text-[#31302e] mb-4 bg-[#f6f5f4] p-3.5 rounded-lg border border-[#e6e6e6]">
+    <span class="block text-xs font-bold text-[#0075de] uppercase tracking-wider mb-1">
+      Plain-Language Summary
+    </span>
+    <p class="text-xs text-[#31302e] leading-relaxed m-0">
+      {study.plainLanguageInterpretation}
+    </p>
+  </div>
+
+  <!-- Metrics Table -->
+  {study.metricsTable && (
+    <div class="mb-4 overflow-x-auto -mx-1 sm:mx-0" style="-webkit-overflow-scrolling: touch;">
+      <table class="data-table text-xs">
+        <thead>
+          <tr>
+            <th class="py-1.5 px-3">Clinical / Laboratory Parameter</th>
+            <th class="py-1.5 px-3">Reported Effect / Difference</th>
+            <th class="py-1.5 px-3">Context & Significance</th>
+          </tr>
+        </thead>
+        <tbody>
+          {study.metricsTable.map((row) => (
+            <tr>
+              <td class="py-2 px-3 font-medium text-[#000000]">{row.parameter}</td>
+              <td class="py-2 px-3 font-semibold text-[#13882c]">{row.reduction}</td>
+              <td class="py-2 px-3 text-[#615d59]">{row.note || 'Documented in published study record'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )}
+
+  <!-- Key Findings List -->
+  <div class="space-y-1 mb-4">
+    <span class="text-xs font-semibold uppercase tracking-wider text-[#615d59]">Detailed Study Findings:</span>
+    <ul class="list-disc pl-5 text-xs text-[#31302e] space-y-1">
+      {study.keyFindings.map((finding) => (
+        <li>{finding}</li>
+      ))}
+    </ul>
+  </div>
+
+  <!-- Documented Limitations -->
+  <div class="p-3 bg-[#fffaf5] border border-[#e6cbb2] rounded-lg text-xs text-[#523410] mb-4">
+    <strong class="font-semibold text-[#793400]">Documented Study Limitations:</strong>
+    <ul class="list-disc pl-4 mt-1 space-y-0.5 text-[#615d59]">
+      {study.limitations.map((lim) => (
+        <li>{lim}</li>
+      ))}
+    </ul>
+    {study.fundingAndConflicts && (
+      <div class="mt-2 pt-2 border-t border-[#ebdccb] text-[11px] text-[#793400]">
+        <strong>Funding & Conflicts of Interest:</strong> {study.fundingAndConflicts}
+      </div>
+    )}
+  </div>
+
+  <!-- Footer Links with direct DOI / PubMed link and reviewed date -->
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-[#e6e6e6] text-xs">
+    <div class="flex flex-wrap items-center gap-2">
+      <span class="text-[#615d59]">
+        DOI: <code class="font-mono bg-[#f6f5f4] px-1.5 py-0.5 rounded border border-[#e6e6e6] text-[#31302e] break-all">{study.doi}</code>
+      </span>
+      <span class="text-[#a39e98] text-[11px]">
+        Reviewed: {study.reviewedDate}
+      </span>
+    </div>
+    <a
+      href={study.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn-utility text-xs py-2 px-3 text-[#0075de] hover:text-[#005bab] font-semibold min-h-[38px] w-full sm:w-auto justify-center"
+    >
+      <span>Read Original Study on {study.pubmedId ? 'PubMed' : 'Publisher'}</span>
+      <span>↗</span>
+    </a>
+  </div>
+</article>

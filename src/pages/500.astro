@@ -1,0 +1,59 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="500 - Server Error | Berberine Research Portal"
+  description="An unexpected server error occurred on berberinebenefit.com. Our technical team has been notified."
+  robots="noindex, nofollow"
+  isMedicalPage={false}
+>
+  <div class="site-container py-16 sm:py-24">
+    <div class="max-w-2xl mx-auto text-center space-y-8">
+      
+      <!-- Diagnostic Visual Indicator -->
+      <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-[#fff7ed] dark:bg-[#2b1805] border border-[#ffedd5] dark:border-[#7c2d12] text-3xl shadow-xs">
+        ⚠️
+      </div>
+
+      <div class="space-y-3">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-[#dd5b00]/10 text-[#dd5b00] dark:bg-[#dd5b00]/20 border border-[#dd5b00]/25">
+          HTTP 500 • Internal System Interruption
+        </div>
+        <h1 class="display-2 text-[#000000] dark:text-[#f8fafc] tracking-tight m-0">
+          Temporary Server Interruption
+        </h1>
+        <p class="body-md text-[#615d59] dark:text-[#94a3b8] max-w-lg mx-auto leading-relaxed">
+          We encountered an unexpected technical problem processing this request. Our static research repository is securely mirrored and unaffected.
+        </p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+        <button
+          type="button"
+          onclick="window.location.reload()"
+          class="btn-primary text-xs sm:text-sm py-2.5 px-6 font-semibold cursor-pointer"
+        >
+          🔄 Reload Page
+        </button>
+        <a href="/" class="btn-secondary text-xs sm:text-sm py-2.5 px-6 font-semibold">
+          Return to Homepage
+        </a>
+      </div>
+
+      <!-- Reassurance & Diagnostic Card -->
+      <div class="p-6 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] text-left space-y-3 shadow-xs">
+        <div class="text-xs font-bold uppercase tracking-wider text-[#000000] dark:text-[#f8fafc]">
+          What Can You Do Next?
+        </div>
+        <ul class="text-xs sm:text-sm text-[#615d59] dark:text-[#94a3b8] list-disc pl-4 space-y-1.5 m-0 leading-relaxed">
+          <li>Try refreshing your browser in a few moments; transient network timeouts usually resolve quickly.</li>
+          <li>Access our static research chapters directly from the <a href="/" class="text-[#0075de] dark:text-[#389bf2] underline">Homepage</a> or <a href="/research/" class="text-[#0075de] dark:text-[#389bf2] underline">Research Library</a>.</li>
+          <li>If the issue continues, please alert our technical desk at <a href="/contact/" class="text-[#0075de] dark:text-[#389bf2] underline">Contact Support</a>.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</Layout>

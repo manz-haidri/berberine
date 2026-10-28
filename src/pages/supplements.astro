@@ -1,0 +1,404 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MedicalDisclaimer from '../components/MedicalDisclaimer.astro';
+import EvidenceBadge from '../components/EvidenceBadge.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import ProductComparison from '../components/ProductComparison.astro';
+import Top5ComparisonTable from '../components/Top5ComparisonTable.astro';
+import RankedReviews from '../components/RankedReviews.astro';
+import RankingMethodology from '../components/RankingMethodology.astro';
+import { supplementTypes, hclVsPhytosomeComparison, buyerEvaluationCriteria } from '../data/supplementTypes';
+import { verifiedSupplementProducts } from '../data/supplementProducts';
+
+const tocItems = [
+  { id: "how-top-5-compare", label: "How the Top 5 Compare", badge: "Table" },
+  { id: "top-5-ranked-reviews", label: "Top 5 Supplements, Ranked", badge: "Ranked" },
+  { id: "ranking-methodology", label: "How We Rank (Rubric)" },
+  { id: "compare-supplements", label: "Custom 3-Way Comparison", badge: "Interactive" },
+  { id: "supplement-types", label: "Supplement Delivery Forms (Ch 4)" },
+  { id: "research-dosages", label: "Research Dosages (500mg Split)" },
+  { id: "buying-guide", label: "How to Choose (Ch 5)" },
+  { id: "bioavailability-and-clinical-outcomes", label: "Bioavailability and Clinical Outcomes" },
+  { id: "phytosome-vs-hcl", label: "HCl vs Phytosome (Ch 9)", badge: "Compare" },
+  { id: "transdermal-patches", label: "Patches Evidence (Ch 10)", badge: "Evidence" },
+];
+
+const supplementItemListSchema = {
+  "@type": "ItemList",
+  "@id": "https://berberinebenefit.com/supplements/#itemlist",
+  "name": "Top 5 Berberine Supplements: Compared & Reviewed (2026)",
+  "description": "Evidence-based comparative ranking of retail berberine formulations evaluated by label clarity, testing scope, source traceability, and price transparency.",
+  "itemListElement": verifiedSupplementProducts.map((p, index) => {
+    const productItem: Record<string, any> = {
+      "@type": "Product",
+      "name": p.productName,
+      "brand": {
+        "@type": "Brand",
+        "name": p.brandName
+      },
+      "description": p.editorialAssessment,
+      "image": `https://berberinebenefit.com${p.imageUrl}`,
+      "url": `https://berberinebenefit.com/supplements/#review-${p.id}`
+    };
+
+    if (p.priceStatus === "Verified") {
+      productItem.offers = {
+        "@type": "Offer",
+        "price": p.priceUSD.toFixed(2),
+        "priceCurrency": "USD",
+        "url": `https://berberinebenefit.com/supplements/#review-${p.id}`
+      };
+    }
+
+    return {
+      "@type": "ListItem",
+      "position": index + 1,
+      "item": productItem
+    };
+  })
+};
+---
+
+<Layout
+  title="Top 5 Berberine Supplements: Compared & Reviewed (2026)"
+  description="Evidence-based comparison of top 5 berberine supplements. Head-to-head comparison table, ranked product reviews, evaluation rubric, and formulation science."
+  dateModified="2026-10-25T00:00:00Z"
+  additionalSchemas={[supplementItemListSchema]}
+>
+  <!-- Header Banner -->
+  <div class="bg-white border-b border-[#e6e6e6] py-6">
+    <div class="site-container">
+      <nav class="text-xs text-[#615d59] mb-2" aria-label="Breadcrumb">
+        <ol class="flex items-center gap-1.5 list-none p-0 m-0">
+          <li><a href="/" class="hover:text-[#0075de]">Home</a></li>
+          <li>/</li>
+          <li class="text-[#000000] font-medium" aria-current="page">Supplements Guide &amp; Comparison</li>
+        </ol>
+      </nav>
+      <div class="flex flex-wrap items-center gap-2 mb-2">
+        <span class="badge-pill bg-[#0075de]/15 text-[#005bab] text-xs font-semibold">
+          Product Review &amp; Formulation Science
+        </span>
+        <span class="text-xs text-[#615d59]">Evidence-Based Evaluation • Editorial Benchmark Review</span>
+      </div>
+      <h1 class="display-2 text-[#000000] tracking-tight m-0">
+        Berberine Supplements: Top 5 Comparison &amp; Formulation Evidence
+      </h1>
+      <p class="body-md text-[#615d59] mt-3 max-w-3xl">
+        Evaluating authentic retail berberine formulations against published clinical trials. Direct head-to-head comparison table, ranked product reviews, objective evaluation rubric, and chemical formulation science.
+      </p>
+    </div>
+  </div>
+
+  <!-- Content Layout -->
+  <div class="site-container py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-10">
+      <!-- Main Content (3 Columns) -->
+      <div class="lg:col-span-3 space-y-12">
+        <!-- 1. Introduction & Affiliate Transparency -->
+        <div class="space-y-4">
+          <div class="p-5 rounded-2xl bg-[#faf9f8] border border-[#e6e6e6] shadow-xs space-y-3">
+            <h2 class="text-base font-bold text-[#000000] m-0">
+              Evidence-Based Comparison of Leading Retail Formulations
+            </h2>
+            <p class="body-sm text-[#31302e] leading-relaxed m-0">
+              Selecting an authentic berberine supplement requires looking beyond promotional front labels. We reviewed five commercially prominent formulations—comparing standard hydrochloride (HCl) salts, phospholipid phytosome matrices, and multi-botanical complexes against clinical pharmacology benchmarks.
+            </p>
+            <div class="pt-3 border-t border-[#f0ede9] text-xs text-[#615d59] flex items-start gap-2.5">
+              <span class="text-[#0075de] font-bold text-sm leading-none mt-0.5">ℹ</span>
+              <div>
+                <strong class="text-[#000000] font-semibold">Editorial Independence &amp; Affiliate Disclosure:</strong>
+                This educational portal does not sell dietary supplements directly, collect consumer payments, or fulfill orders. Retailer links are provided for consumer verification. If you purchase through external retailer links, we may receive an affiliate referral commission at no additional cost to you. Affiliate relationships do not determine our editorial ranking order, evidence assessments, or testing verifications. Read our full <a href="#ranking-methodology" class="text-[#0075de] font-semibold hover:underline">ranking methodology and evaluation rubric</a>.
+              </div>
+            </div>
+          </div>
+
+          <!-- Compact Anchor Navigation (Horizontally scrollable on mobile) -->
+          <nav aria-label="Supplements page section jump links" class="bg-white p-2.5 rounded-xl border border-[#e6e6e6] shadow-xs">
+            <div class="flex items-center gap-1.5 text-xs overflow-x-auto pb-1 sm:pb-0 scrollbar-none max-w-full" style="-webkit-overflow-scrolling: touch;">
+              <span class="font-semibold text-[#615d59] px-2 shrink-0">Jump to:</span>
+              <a href="#how-top-5-compare" class="px-3 py-1.5 rounded-lg bg-[#f6f5f4] text-[#31302e] hover:bg-[#0075de] hover:text-white active:bg-[#005bab] active:text-white cursor-pointer font-medium transition-colors whitespace-nowrap min-h-[34px] flex items-center">
+                Compare Top 5
+              </a>
+              <a href="#top-5-ranked-reviews" class="px-3 py-1.5 rounded-lg bg-[#f6f5f4] text-[#31302e] hover:bg-[#0075de] hover:text-white active:bg-[#005bab] active:text-white cursor-pointer font-medium transition-colors whitespace-nowrap min-h-[34px] flex items-center">
+                Read Ranked Reviews
+              </a>
+              <a href="#ranking-methodology" class="px-3 py-1.5 rounded-lg bg-[#f6f5f4] text-[#31302e] hover:bg-[#0075de] hover:text-white active:bg-[#005bab] active:text-white cursor-pointer font-medium transition-colors whitespace-nowrap min-h-[34px] flex items-center">
+                How We Rank
+              </a>
+              <a href="#compare-supplements" class="px-3 py-1.5 rounded-lg bg-[#f6f5f4] text-[#31302e] hover:bg-[#0075de] hover:text-white active:bg-[#005bab] active:text-white cursor-pointer font-medium transition-colors whitespace-nowrap min-h-[34px] flex items-center">
+                Custom Comparison
+              </a>
+              <a href="#supplement-types" class="px-3 py-1.5 rounded-lg bg-[#f6f5f4] text-[#31302e] hover:bg-[#0075de] hover:text-white active:bg-[#005bab] active:text-white cursor-pointer font-medium transition-colors whitespace-nowrap min-h-[34px] flex items-center">
+                Formulation Guide
+              </a>
+            </div>
+          </nav>
+
+          <!-- Mobile / iPad Complete Chapter Navigation (Hidden on Desktop) -->
+          <div class="lg:hidden">
+            <TableOfContents items={tocItems} title="All Page Chapters" mobileInline={true} />
+          </div>
+        </div>
+
+        <!-- 2. SECTION: How the Top 5 compare (Table matching Image 1) -->
+        <section id="how-top-5-compare" class="space-y-5 pt-2">
+          <div class="border-b border-[#e6e6e6] pb-3">
+            <h2 class="text-3xl lg:text-4xl font-normal text-[#000000] tracking-tight m-0 font-serif">
+              How the Top 5 <em class="italic text-[#0075de]">compare.</em>
+            </h2>
+            <p class="text-sm text-[#615d59] mt-2 max-w-3xl leading-relaxed">
+              Editorial review of five products based on manufacturer labels and publicly available documentation.
+            </p>
+          </div>
+
+          <Top5ComparisonTable />
+        </section>
+
+        <!-- 3. SECTION: Top 5 berberine supplements, ranked -->
+        <section id="top-5-ranked-reviews" class="pt-4 border-t border-[#e6e6e6]">
+          <RankedReviews />
+        </section>
+
+        <!-- 4. SECTION: How We Rank (Methodology) -->
+        <section id="ranking-methodology" class="pt-4 border-t border-[#e6e6e6]">
+          <RankingMethodology />
+        </section>
+
+        <!-- 5. SECTION: Existing Interactive Custom Comparison -->
+        <section id="compare-supplements" class="pt-6 border-t border-[#e6e6e6] space-y-4">
+          <div class="border-b border-[#e6e6e6] pb-3">
+            <div class="inline-flex items-center gap-2 text-xs font-bold text-[#0075de] uppercase tracking-wider mb-1">
+              <span>Interactive Selection Tool</span>
+            </div>
+            <h2 class="heading-1 text-[#000000] tracking-tight m-0">
+              Custom Side-by-Side Product Comparison
+            </h2>
+            <p class="body-sm text-[#615d59] mt-1.5 max-w-2xl">
+              Filter products by chemical salt format or single-ingredient purity. Select up to 3 products to open the direct side-by-side review drawer.
+            </p>
+          </div>
+
+          <ProductComparison />
+        </section>
+
+        <!-- 6. SECTION: Educational Chapters (Preserved & Enhanced) -->
+        <div class="pt-8 border-t-2 border-[#e6e6e6] space-y-12">
+          <!-- Chapter 4: Supplement Forms -->
+          <section id="supplement-types" class="space-y-4">
+            <div class="inline-flex items-center gap-2 text-xs font-bold text-[#0075de] uppercase tracking-wider">
+              <span>Chapter 4: Formulations</span>
+            </div>
+            <h2 class="heading-1 text-[#000000] tracking-tight m-0">
+              What Are Berberine Supplements?
+            </h2>
+            <p class="body-md text-[#31302e] leading-relaxed">
+              Berberine supplements are dietary products containing isolated or concentrated berberine alkaloid. They are commonly sold for metabolic support, blood sugar regulation, and cholesterol management. While conventional products contain <strong>berberine hydrochloride (HCl)</strong>, newer commercial iterations incorporate phospholipids, cyclodextrins, or transdermal delivery matrices.
+            </p>
+
+            <div class="table-container shadow-sm overflow-x-auto">
+              <table class="data-table" aria-label="Common Types of Berberine Supplements">
+                <thead>
+                  <tr>
+                    <th class="w-1/4">Supplement Type</th>
+                    <th class="w-1/4">Formulation Description</th>
+                    <th>Clinical &amp; Formulation Considerations</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {supplementTypes.map((supp) => (
+                    <tr>
+                      <td>
+                        <span class="font-bold text-[#000000] block">{supp.name}</span>
+                        <span class="text-[11px] text-[#615d59] font-mono">{supp.form}</span>
+                      </td>
+                      <td class="text-xs text-[#31302e]">{supp.description}</td>
+                      <td class="text-xs text-[#615d59]">
+                        {supp.considerations}
+                        <span class="block mt-1 font-semibold text-[#0075de]">{supp.evidenceStatus}</span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Research Dosages -->
+          <section id="research-dosages" class="space-y-4 pt-6 border-t border-[#e6e6e6]">
+            <span class="eyebrow text-[#213183]">Clinical Pharmacokinetics</span>
+            <h2 class="heading-1 text-[#000000] tracking-tight m-0">
+              How Much Berberine Is Used in Clinical Research?
+            </h2>
+            <div class="body-md text-[#31302e] space-y-4 leading-relaxed">
+              <p>
+                Across human clinical trials evaluated in the Lei (2023) and Nie (2024) meta-analyses, the standardized oral research dosage is typically:
+              </p>
+              <div class="p-4 rounded-xl bg-white border border-[#e6e6e6] flex flex-wrap items-center justify-around gap-4 text-center">
+                <div>
+                  <span class="text-xs font-mono text-[#615d59]">Standard Research Dose</span>
+                  <div class="text-2xl font-bold text-[#0075de]">500 mg</div>
+                  <span class="text-xs text-[#615d59]">Per single administration</span>
+                </div>
+                <div class="h-10 w-px bg-[#e6e6e6] hidden md:block"></div>
+                <div>
+                  <span class="text-xs font-mono text-[#615d59]">Daily Frequency</span>
+                  <div class="text-2xl font-bold text-[#0075de]">2 to 3 times / day</div>
+                  <span class="text-xs text-[#615d59]">Totaling 1,000 to 1,500 mg daily</span>
+                </div>
+                <div class="h-10 w-px bg-[#e6e6e6] hidden md:block"></div>
+                <div>
+                  <span class="text-xs font-mono text-[#615d59]">Administration Timing</span>
+                  <div class="text-2xl font-bold text-[#213183]">With Meals</div>
+                  <span class="text-xs text-[#615d59]">Reduces gastrointestinal cramping</span>
+                </div>
+              </div>
+              <p class="body-sm text-[#615d59]">
+                <strong>Critical Caution:</strong> These figures describe parameters evaluated in clinical trials—they do not constitute universal medical recommendations. There is no universally approved regulatory dosage for treating diabetes or high cholesterol. Individual tolerance, body mass, renal function, and concurrent medications heavily dictate safety.
+              </p>
+            </div>
+          </section>
+
+          <!-- Chapter 5: How to Choose a Berberine Supplement -->
+          <section id="buying-guide" class="space-y-5 pt-6 border-t border-[#e6e6e6]">
+            <div class="inline-flex items-center gap-2 text-xs font-bold text-[#0075de] uppercase tracking-wider">
+              <span>Chapter 5: Buyer's Guide</span>
+            </div>
+            <h2 class="heading-1 text-[#000000] tracking-tight m-0">
+              How to Choose a Berberine Supplement ("Best Berberine Supplement")
+            </h2>
+            <div class="body-md text-[#31302e] space-y-4 leading-relaxed">
+              <p>
+                Selecting an effective berberine supplement requires evaluating far more than front-label marketing claims or the highest milligram number. The most heavily advertised or most expensive brand is not automatically the superior product.
+              </p>
+              <p>
+                Evidence-based evaluation centers on five objective criteria:
+              </p>
+            </div>
+
+            <div class="space-y-3">
+              {buyerEvaluationCriteria.map((item) => (
+                <div class="feature-card">
+                  <h3 class="text-sm font-bold text-[#000000] mb-1">{item.title}</h3>
+                  <p class="text-xs font-medium text-[#0075de] mb-1">{item.requirement}</p>
+                  <p class="text-xs text-[#615d59] m-0">{item.rational}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <!-- Bioavailability and Clinical Outcomes -->
+          <section id="bioavailability-and-clinical-outcomes" class="space-y-4 pt-6 border-t border-[#e6e6e6]">
+            <div class="p-5 rounded-xl bg-white border border-[#e6e6e6] shadow-sm">
+              <h3 class="text-lg font-bold text-[#000000] mb-2">
+                Bioavailability and Clinical Outcomes
+              </h3>
+              <p class="body-sm text-[#31302e] leading-relaxed mb-3">
+                Higher absorption alone does not establish better clinical outcomes. Comparative outcome and safety evidence should be evaluated separately.
+              </p>
+              <p class="text-xs text-[#615d59] leading-relaxed m-0">
+                Formulations engineered to enhance systemic bioavailability demonstrate higher circulating plasma levels in pharmacokinetic studies, but whether this translates into superior clinical efficacy in disease endpoints requires verification in controlled outcome trials. Furthermore, higher systemic exposure warrants careful consideration regarding established cytochrome P450 (CYP3A4, CYP2D6) and P-glycoprotein inhibition profiles and potential medication interactions, distinguishing documented pharmacokinetic mechanisms from theoretical risks. Because a meaningful portion of berberine's metabolic activity occurs locally within the intestinal lumen and through interactions with the gut microbiota, clinical trials evaluating patient health outcomes remain the primary standard of evidence.
+              </p>
+            </div>
+          </section>
+
+          <!-- Chapter 9: Berberine Phytosome -->
+          <section id="phytosome-vs-hcl" class="space-y-5 pt-6 border-t border-[#e6e6e6]">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <span class="eyebrow text-[#391c57]">Chapter 9: Formulation Science</span>
+                <h2 class="heading-1 text-[#000000] tracking-tight m-0">
+                  Berberine HCl vs Berberine Phytosome
+                </h2>
+              </div>
+              <EvidenceBadge level="limited" text="Requires Outcome Trials" />
+            </div>
+
+            <div class="body-md text-[#31302e] space-y-4 leading-relaxed">
+              <p>
+                A <strong>berberine phytosome</strong> is a specialized formulation associating berberine extracts with dietary phospholipids (typically phosphatidylcholine from sunflower or soy). Phospholipids are amphiphilic molecules that form biological membrane bilayers.
+              </p>
+              <p>
+                The objective of phytosome technology is to chaperone the alkaloid across the hydrophilic-lipophilic barrier of the intestinal epithelium. However, a label stating "phytosome" should not be presumed universally superior without comparative trial proof:
+              </p>
+            </div>
+
+            <!-- Comparison Table -->
+            <div class="table-container shadow-sm overflow-x-auto">
+              <table class="data-table" aria-label="Berberine HCl vs Phytosome Comparison">
+                <thead>
+                  <tr>
+                    <th class="w-1/4">Feature</th>
+                    <th class="w-1/3 text-[#0075de]">Berberine HCl (Standard)</th>
+                    <th class="w-1/3 text-[#391c57]">Berberine Phytosome (Phospholipid)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {hclVsPhytosomeComparison.map((row) => (
+                    <tr>
+                      <td class="font-bold text-[#000000] text-xs">{row.feature}</td>
+                      <td class="text-xs text-[#31302e]">{row.hcl}</td>
+                      <td class="text-xs text-[#31302e]">{row.phytosome}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <div class="p-3 bg-[#fffaf5] border border-[#e6cbb2] rounded-lg text-xs text-[#523410]">
+              <strong class="font-semibold text-[#793400]">Research Gap:</strong> Direct, double-blind, head-to-head randomized trials comparing hard metabolic outcomes and adverse effects between matched berberine HCl and phytosome dosages remain scarce.
+            </div>
+          </section>
+
+          <!-- Chapter 10: Berberine Patches -->
+          <section id="transdermal-patches" class="space-y-5 pt-6 border-t border-[#e6e6e6]">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <span class="eyebrow text-[#dd5b00]">Chapter 10: Critical Evidence Review</span>
+                <h2 class="heading-1 text-[#000000] tracking-tight m-0">
+                  Do Berberine Patches Actually Work?
+                </h2>
+              </div>
+              <EvidenceBadge level="none" text="Insufficient Evidence" />
+            </div>
+
+            <div class="body-md text-[#31302e] space-y-4 leading-relaxed">
+              <p>
+                Berberine skin patches are marketed online as transdermal adhesive devices promising to deliver berberine directly through the skin into the bloodstream, bypassing the gastrointestinal tract and preventing nausea.
+              </p>
+              <p>
+                <strong>Scientific Reality: There is currently zero established human clinical trial evidence demonstrating that commercial berberine patches produce meaningful weight loss or metabolic improvements.</strong>
+              </p>
+
+              <h3 class="heading-2 text-[#000000]">The Transdermal Skin Barrier Challenge</h3>
+              <p>
+                The outer layer of human skin, the <em>stratum corneum</em>, functions as an effective biological barrier composed of keratin-rich corneocytes embedded in a dense extracellular lipid matrix. For a chemical compound to achieve systemic therapeutic concentrations via passive transdermal patch delivery, it typically must satisfy specific physicochemical criteria:
+              </p>
+              <ul class="list-disc pl-5 space-y-1 text-sm">
+                <li>Low molecular weight (&lt;500 Da)</li>
+                <li>Favorable lipid solubility (moderate octanol-water partition coefficient, LogP 1 to 3)</li>
+                <li>High pharmacological potency (effective at microgram or low milligram systemic doses)</li>
+              </ul>
+              <p>
+                In clinical trials, berberine is typically administered at 1,000 to 1,500 mg daily by mouth. Delivering gram-level quantities of a quaternary ammonium alkaloid across intact skin presents significant biophysical diffusion barriers without specialized active enhancement technologies (such as microneedle arrays or clinical-grade permeation enhancers), which are not documented in commercial retail patches.
+              </p>
+              <p class="body-sm text-[#615d59]">
+                <strong>Current Evidence:</strong> Published clinical trials on berberine evaluate oral formulations. There are currently no published human pharmacokinetic studies or randomized controlled trials demonstrating that over-the-counter berberine patches deliver therapeutically meaningful systemic concentrations or produce metabolic improvements.
+              </p>
+            </div>
+          </section>
+
+          <!-- Medical Disclaimer -->
+          <MedicalDisclaimer variant="callout" />
+        </div>
+      </div>
+
+      <!-- Table of Contents Sidebar (1 Column) -->
+      <aside class="hidden lg:block lg:col-span-1">
+        <div class="sticky top-20">
+          <TableOfContents items={tocItems} title="Page Navigation" />
+        </div>
+      </aside>
+    </div>
+  </div>
+</Layout>

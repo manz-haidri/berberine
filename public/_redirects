@@ -1,0 +1,9 @@
+# 301 Permanent Redirects for legacy URL aliases (Netlify / Cloudflare Pages / Vercel static)
+/about-us            /about/                    301
+/about-us/           /about/                    301
+/contact-us          /contact/                  301
+/contact-us/         /contact/                  301
+/privacy             /privacy-policy/           301
+/privacy/            /privacy-policy/           301
+/terms               /terms-and-conditions/     301
+/terms/              /terms-and-conditions/     301

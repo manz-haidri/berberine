@@ -1,0 +1,90 @@
+---
+export interface TocItem {
+  id: string;
+  label: string;
+  badge?: string;
+}
+
+export interface Props {
+  items: TocItem[];
+  title?: string;
+  mobileInline?: boolean;
+}
+
+const { items, title = "Table of Contents", mobileInline = false } = Astro.props;
+---
+
+{mobileInline ? (
+  <details class="toc-mobile-details group bg-white border border-[#e6e6e6] rounded-xl p-3.5 shadow-xs text-xs mb-6">
+    <summary class="flex items-center justify-between cursor-pointer font-bold text-[#000000] list-none select-none py-2 min-h-[44px] touch-manipulation">
+      <span class="flex items-center gap-2">
+        <span class="text-[#0075de] font-semibold">📑</span>
+        <span>{title}</span>
+        <span class="text-[11px] font-normal text-[#615d59]">({items.length} sections)</span>
+      </span>
+      <span class="text-[#615d59] group-open:rotate-180 transition-transform duration-200">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </span>
+    </summary>
+    <div class="mt-3 pt-3 border-t border-[#f0ede9]">
+      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 list-none p-0 m-0">
+        {items.map((item) => (
+          <li>
+            <a
+              href={`#${item.id}`}
+              class="toc-link flex items-center justify-between gap-2 py-2.5 px-3 rounded-lg text-[#31302e] hover:text-[#0075de] hover:bg-[#f6f5f4] active:bg-[#edebe9] transition-colors leading-snug min-h-[40px] touch-manipulation"
+            >
+              <span class="truncate">{item.label}</span>
+              {item.badge && (
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-[#f0f7ff] text-[#0075de] font-medium shrink-0 border border-[#0075de]/20">
+                  {item.badge}
+                </span>
+              )}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </details>
+) : (
+  <nav class="feature-card sticky top-24 bg-white/95 backdrop-blur-sm p-4 text-xs shadow-xs" aria-label="Page Table of Contents">
+    <div class="flex items-center justify-between pb-2 mb-2 border-b border-[#e6e6e6]">
+      <span class="font-bold uppercase tracking-wider text-[#000000]">{title}</span>
+      <span class="text-[11px] text-[#615d59]">{items.length} sections</span>
+    </div>
+    <ul class="space-y-1 list-none p-0 m-0">
+      {items.map((item) => (
+        <li>
+          <a
+            href={`#${item.id}`}
+            class="text-[#31302e] hover:text-[#0075de] flex items-center justify-between gap-1 py-1.5 px-2 rounded-lg hover:bg-[#f6f5f4] transition-colors leading-snug"
+          >
+            <span class="truncate">{item.label}</span>
+            {item.badge && (
+              <span class="text-[10px] px-1.5 py-0.5 rounded bg-[#f6f5f4] text-[#615d59] font-mono shrink-0">
+                {item.badge}
+              </span>
+            )}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}
+
+<script>
+  function setupTocAutoClose() {
+    document.querySelectorAll('.toc-mobile-details').forEach((details) => {
+      details.querySelectorAll('.toc-link').forEach((link) => {
+        link.addEventListener('click', () => {
+          (details as HTMLDetailsElement).removeAttribute('open');
+        });
+      });
+    });
+  }
+
+  setupTocAutoClose();
+  document.addEventListener('astro:page-load', setupTocAutoClose);
+</script>

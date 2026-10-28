@@ -1,0 +1,290 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MedicalDisclaimer from '../components/MedicalDisclaimer.astro';
+
+const editorialDesks = [
+  {
+    id: "team-vance",
+    name: "Pharmacokinetics & Alkaloid Chemistry",
+    role: "Editorial Research Desk",
+    bio: "Evaluates isoquinoline alkaloid biochemistry, P-glycoprotein efflux transport kinetics, hepatic metabolism, and cytochrome P450 isoenzyme interactions across published pharmacological literature.",
+    focus: "Bioavailability, Cellular Pathways & Pharmacokinetics",
+    icon: "🔬"
+  },
+  {
+    id: "team-chen",
+    name: "Clinical Trials & Metabolic Research",
+    role: "Evidence Review Desk",
+    bio: "Audits peer-reviewed human randomized controlled trial methodologies, glycemic biomarker endpoints (fasting glucose, HbA1c), lipid panels, and participant safety profiles.",
+    focus: "Human RCTs, Metabolic Endpoints & Safety",
+    icon: "🩺"
+  },
+  {
+    id: "team-jenkins",
+    name: "Formulation & Supplement Auditing",
+    role: "Product Review Desk",
+    bio: "Inspects manufacturer Supplement Facts panels, active alkaloid standardization disclosures, third-party Certificates of Analysis (CoAs), and excipient transparency.",
+    focus: "Supplement Auditing & Label Accuracy",
+    icon: "📋"
+  },
+  {
+    id: "team-ross",
+    name: "Biostatistics & Systematic Review",
+    role: "Meta-Analysis & Methodology Desk",
+    bio: "Applies systematic review principles and Cochrane risk-of-bias frameworks to evaluate statistical heterogeneity, forest plots, and effect sizes in clinical meta-analyses.",
+    focus: "Meta-Analyses, Bias Audits & Forest Plots",
+    icon: "📊"
+  }
+];
+
+const pillars = [
+  {
+    number: "01",
+    title: "Human RCTs Over In Vitro Hype",
+    description: "Cell-culture Petri dish studies and rodent models provide foundational biological hypotheses, but they do not prove human therapeutic efficacy. We prioritize double-blind randomized clinical trials in actual human cohorts."
+  },
+  {
+    number: "02",
+    title: "Surrogate Biomarkers vs Hard Endpoints",
+    description: "We rigorously distinguish between laboratory surrogate markers (such as fasting blood glucose or LDL cholesterol reductions) and verified long-term clinical endpoints (such as cardiovascular event prevention or all-cause mortality)."
+  },
+  {
+    number: "03",
+    title: "Pharmacokinetic Honesty",
+    description: "Standard oral berberine exhibits poor systemic bioavailability (<5%) due to intestinal P-glycoprotein efflux and rapid first-pass liver metabolism. We candidly explore how its biological activity is mediated locally in the gut and through the microbiome."
+  },
+  {
+    number: "04",
+    title: "Patient Safety & Contraindication Vigilance",
+    description: "Botanicals can possess potent pharmacological actions. We provide uncompromising warnings on CYP3A4/CYP2D6 drug interactions, hypoglycemia risks, and strict contraindications in pregnancy, nursing, and neonatal care."
+  }
+];
+---
+
+<Layout
+  title="About Us & Scientific Editorial Team | Berberine Portal"
+  description="Learn about the Berberine Research Portal: an independent scientific initiative translating clinical trials, pharmacokinetics, and supplement formulations."
+  canonical="https://berberinebenefit.com/about/"
+  isMedicalPage={false}
+>
+  <!-- Header Banner -->
+  <div class="bg-white dark:bg-[#000000] border-b border-[#e6e6e6] dark:border-[#262626] py-8 sm:py-12">
+    <div class="site-container">
+      <nav class="text-xs text-[#615d59] dark:text-[#94a3b8] mb-3" aria-label="Breadcrumb">
+        <ol class="flex items-center gap-1.5 list-none p-0 m-0">
+          <li><a href="/" class="hover:text-[#0075de] transition-colors">Home</a></li>
+          <li aria-hidden="true">/</li>
+          <li class="text-[#000000] dark:text-[#f8fafc] font-medium" aria-current="page">About Us</li>
+        </ol>
+      </nav>
+
+      <div class="flex flex-wrap items-center gap-2 mb-3">
+        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#0075de]/10 text-[#0075de] dark:bg-[#389bf2]/15 dark:text-[#389bf2] border border-[#0075de]/20">
+          Independent Scientific Initiative
+        </span>
+        <span class="text-xs text-[#615d59] dark:text-[#94a3b8]">
+          Peer-Reviewed Clinical Scrutiny • Non-Commercial Independence
+        </span>
+      </div>
+
+      <h1 class="display-2 text-[#000000] dark:text-[#f8fafc] tracking-tight m-0 max-w-4xl">
+        Translating Botanical Pharmacology Into Clear, Unbiased Clinical Science
+      </h1>
+      <p class="body-md text-[#615d59] dark:text-[#94a3b8] mt-4 max-w-3xl leading-relaxed">
+        The Berberine Research Portal (<span class="font-mono text-[#0075de] dark:text-[#389bf2]">berberinebenefit.com</span>) was founded to deliver rigorous, peer-reviewed clarity to consumers, researchers, and healthcare professionals navigating botanical supplements.
+      </p>
+    </div>
+  </div>
+
+  <!-- Medical Disclaimer Strip -->
+  <MedicalDisclaimer variant="banner" reviewedDate="October 2026 (Mission & Editorial Review)" />
+
+  <!-- Core Stats Strip -->
+  <section class="border-b border-[#e6e6e6] dark:border-[#262626] bg-[#f6f5f4] dark:bg-[#080808] py-8">
+    <div class="site-container">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div class="card-hoverable p-4 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] shadow-2xs">
+          <div class="text-2xl sm:text-3xl font-bold text-[#0075de] dark:text-[#389bf2]">15+</div>
+          <div class="text-xs font-medium text-[#615d59] dark:text-[#94a3b8] mt-1">Human Meta-Analyses</div>
+        </div>
+        <div class="card-hoverable p-4 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] shadow-2xs">
+          <div class="text-2xl sm:text-3xl font-bold text-[#000000] dark:text-[#f8fafc]">2,140+</div>
+          <div class="text-xs font-medium text-[#615d59] dark:text-[#94a3b8] mt-1">Trial Patient Records Audited</div>
+        </div>
+        <div class="card-hoverable p-4 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] shadow-2xs">
+          <div class="text-2xl sm:text-3xl font-bold text-[#1aae39] dark:text-[#4ade80]">100%</div>
+          <div class="text-xs font-medium text-[#615d59] dark:text-[#94a3b8] mt-1">Commercial Independence</div>
+        </div>
+        <div class="card-hoverable p-4 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] shadow-2xs">
+          <div class="text-2xl sm:text-3xl font-bold text-[#dd5b00] dark:text-[#fb923c]">5-Pillar</div>
+          <div class="text-xs font-medium text-[#615d59] dark:text-[#94a3b8] mt-1">Supplement Lab Audit</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Narrative & Content -->
+  <div class="site-container py-12 sm:py-16 space-y-16">
+    
+    <!-- Origin Story -->
+    <section class="max-w-4xl space-y-6">
+      <div class="space-y-2">
+        <span class="text-xs font-bold uppercase tracking-wider text-[#0075de] dark:text-[#389bf2]">Our Origin & Purpose</span>
+        <h2 class="heading-1 text-[#000000] dark:text-[#f8fafc] m-0">
+          Why We Built the Berberine Research Portal
+        </h2>
+      </div>
+
+      <div class="space-y-4 text-sm sm:text-base text-[#31302e] dark:text-[#cbd5e1] leading-relaxed">
+        <p>
+          Between 2023 and 2026, berberine transformed from a specialized botanical alkaloid into a viral global phenomenon, celebrated across social media platforms as <em class="font-serif">"nature's Ozempic."</em> While berberine indeed possesses fascinating biological mechanisms—most notably the activation of adenosine monophosphate-activated protein kinase (AMPK)—the popular public narrative rapidly detached from scientific reality.
+        </p>
+        <p>
+          Influencers promoted sensationalized 30-day weight-loss transformations, while unscrupulous supplement manufacturers marketed unproven transdermal patches and under-dosed gummies. Crucial pharmacological realities were completely ignored: that standard oral berberine has an estimated systemic bioavailability under 5%, that the average weight loss in randomized controlled trials is modest (approximately 1.9 lbs over 12 weeks), and that berberine inhibits key cytochrome P450 enzymes (CYP3A4, CYP2D6), which can dangerously elevate blood levels of prescription medications.
+        </p>
+        <p>
+          Recognizing the absence of an authoritative, non-commercial reference standard, our team formed <span class="font-mono text-[#0075de] dark:text-[#389bf2]">berberinebenefit.com</span>. Our mandate is simple: to treat dietary supplements with the same analytical rigor, biostatistical precision, and clinical honesty expected of modern pharmaceutical evaluations.
+        </p>
+      </div>
+    </section>
+
+    <!-- 4 Core Pillars -->
+    <section class="space-y-8">
+      <div class="max-w-3xl space-y-2">
+        <span class="text-xs font-bold uppercase tracking-wider text-[#0075de] dark:text-[#389bf2]">Editorial Philosophy</span>
+        <h2 class="heading-1 text-[#000000] dark:text-[#f8fafc] m-0">
+          Our Four Guiding Scientific Tenets
+        </h2>
+        <p class="text-xs sm:text-sm text-[#615d59] dark:text-[#94a3b8]">
+          Every analysis, comparison table, and research summary published on this portal adheres to four core editorial principles.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {pillars.map((pillar) => (
+          <div class="card-hoverable p-6 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] shadow-xs space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-sm font-bold text-[#0075de] dark:text-[#389bf2] bg-[#f0f7ff] dark:bg-[#0c1a2e] px-2.5 py-0.5 rounded">
+                Pillar {pillar.number}
+              </span>
+            </div>
+            <h3 class="text-base font-bold text-[#000000] dark:text-[#f8fafc] m-0">
+              {pillar.title}
+            </h3>
+            <p class="text-xs sm:text-sm text-[#615d59] dark:text-[#94a3b8] leading-relaxed m-0">
+              {pillar.description}
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Scientific Editorial Desks -->
+    <section class="space-y-8">
+      <div class="max-w-3xl space-y-2">
+        <span class="text-xs font-bold uppercase tracking-wider text-[#0075de] dark:text-[#389bf2]">Editorial Organization</span>
+        <h2 class="heading-1 text-[#000000] dark:text-[#f8fafc] m-0">
+          Scientific Editorial Desks & Review Structure
+        </h2>
+        <p class="text-xs sm:text-sm text-[#615d59] dark:text-[#94a3b8]">
+          Our editorial review process organizes research across distinct analytical domains to ensure thorough and objective evaluation.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {editorialDesks.map((member) => (
+          <div id={member.id} class="card-hoverable p-6 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] shadow-xs space-y-3 scroll-mt-24">
+            <div class="flex items-start gap-3">
+              <div class="w-10 h-10 rounded-lg bg-[#f0f7ff] dark:bg-[#0c1a2e] border border-[#b8daff] dark:border-[#1e3a63] flex items-center justify-center text-xl shrink-0">
+                {member.icon}
+              </div>
+              <div class="space-y-0.5">
+                <h3 class="text-base font-bold text-[#000000] dark:text-[#f8fafc] m-0">
+                  {member.name}
+                </h3>
+                <div class="text-xs font-medium text-[#0075de] dark:text-[#389bf2]">
+                  {member.role}
+                </div>
+              </div>
+            </div>
+
+            <p class="text-xs sm:text-sm text-[#31302e] dark:text-[#cbd5e1] leading-relaxed m-0">
+              {member.bio}
+            </p>
+
+            <div class="pt-2 border-t border-[#f0ede9] dark:border-[#1f1f1f] text-[11px] text-[#615d59] dark:text-[#94a3b8]">
+              <strong>Primary Editorial Scope:</strong> {member.focus}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Independence & Funding Transparency -->
+    <section class="p-6 sm:p-8 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] space-y-4">
+      <div class="flex items-center gap-2">
+        <span class="text-lg">⚖️</span>
+        <h2 class="heading-2 text-[#000000] dark:text-[#f8fafc] m-0">
+          Commercial Independence & Funding Transparency
+        </h2>
+      </div>
+
+      <p class="text-xs sm:text-sm text-[#31302e] dark:text-[#cbd5e1] leading-relaxed">
+        We maintain absolute separation between our scientific evaluations and commercial entities. Specifically:
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs sm:text-sm">
+        <div class="p-4 rounded-lg bg-[#f6f5f4] dark:bg-[#141414] border border-[#e6e6e6] dark:border-[#262626]">
+          <strong class="text-[#000000] dark:text-[#f8fafc] block mb-1">🚫 No Sponsored Ranks</strong>
+          <span class="text-[#615d59] dark:text-[#94a3b8]">Supplement brands cannot pay for higher rankings, favorable reviews, or customized editorial scores.</span>
+        </div>
+        <div class="p-4 rounded-lg bg-[#f6f5f4] dark:bg-[#141414] border border-[#e6e6e6] dark:border-[#262626]">
+          <strong class="text-[#000000] dark:text-[#f8fafc] block mb-1">🏷️ No White-Label Products</strong>
+          <span class="text-[#615d59] dark:text-[#94a3b8]">We do not manufacture, private-label, compound, or sell our own supplements or dietary powders.</span>
+        </div>
+        <div class="p-4 rounded-lg bg-[#f6f5f4] dark:bg-[#141414] border border-[#e6e6e6] dark:border-[#262626]">
+          <strong class="text-[#000000] dark:text-[#f8fafc] block mb-1">🔗 Transparent Retail Links</strong>
+          <span class="text-[#615d59] dark:text-[#94a3b8]">We may earn standard affiliate fees if you buy via retailer links. This never impacts product scores or safety flags.</span>
+        </div>
+      </div>
+
+      <p class="text-xs text-[#615d59] dark:text-[#94a3b8] leading-relaxed m-0 pt-2">
+        To read our complete evaluation criteria, scoring math, and risk-of-bias definitions, please review our comprehensive <a href="/editorial-methodology/" class="text-[#0075de] dark:text-[#389bf2] font-semibold hover:underline">Editorial Methodology & Standards</a> document.
+      </p>
+    </section>
+
+    <!-- Call to Action Strip -->
+    <section class="p-8 rounded-2xl bg-gradient-to-r from-[#005bab] to-[#0075de] dark:from-[#002855] dark:to-[#004b99] text-white space-y-4">
+      <div class="max-w-2xl space-y-2">
+        <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-white m-0">
+          Explore Our Peer-Reviewed Clinical Evidence
+        </h2>
+        <p class="text-xs sm:text-sm text-white/90 leading-relaxed">
+          Dive into our comprehensive research index covering fasting blood glucose trials, lipid meta-analyses, and lab-audited supplement rankings.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap gap-3 pt-2">
+        <a
+          href="/research/"
+          class="inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-xs font-semibold bg-white text-[#005bab] hover:bg-white/90 transition-colors shadow-xs"
+        >
+          Browse Research Library
+        </a>
+        <a
+          href="/supplements/"
+          class="inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-xs font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/30 transition-colors"
+        >
+          Compare Verified Supplements
+        </a>
+        <a
+          href="/contact/"
+          class="inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-xs font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/30 transition-colors"
+        >
+          Contact Our Editorial Desk
+        </a>
+      </div>
+    </section>
+
+  </div>
+</Layout>

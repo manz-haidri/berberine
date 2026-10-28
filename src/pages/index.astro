@@ -1,11 +1,536 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import EvidenceBadge from '../components/EvidenceBadge.astro';
+import MedicalDisclaimer from '../components/MedicalDisclaimer.astro';
+import ProductComparison from '../components/ProductComparison.astro';
+import FaqSection from '../components/FaqSection.astro';
+import { researchStudies } from '../data/researchStudies';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const lei2026 = researchStudies.find((s) => s.id === 'lei-2026')!;
+const vahed2026 = researchStudies.find((s) => s.id === 'vahed-2026')!;
+const lei2023 = researchStudies.find((s) => s.id === 'lei-2023')!;
+
+const compactEvidenceList = [
+  { outcome: "Blood Glucose & HbA1c", level: "promising" as const, text: "Promising Evidence", summary: "Average −0.35 mmol/L fasting glucose and −0.45 percentage points HbA1c across 17 double-blind RCTs (Lei 2023)." },
+  { outcome: "LDL Cholesterol & Triglycerides", level: "promising" as const, text: "Promising Evidence", summary: "Reductions of −0.41 mmol/L in LDL-C and −0.22 mmol/L in triglycerides; neutral effect on HDL-C." },
+  { outcome: "Liver Enzymes in NAFLD", level: "preliminary" as const, text: "Preliminary Data", summary: "Significant transaminase drops (ALT/AST) across 10 trials; histological fibrosis reversal unverified (Nie 2024)." },
+  { outcome: "Weight Loss / Adiposity", level: "limited" as const, text: "Limited Clinical Effect", summary: "Modest average weight reduction (−0.88 kg / ~1.9 lbs in Vahed 2026); this trial did not find a statistically significant reduction in visceral fat or liver fat compared with placebo over six months (Lei 2026)." },
+  { outcome: "Transdermal Skin Patches", level: "none" as const, text: "Not Established", summary: "Commercial patches lack published human pharmacokinetic or clinical efficacy data." },
+  { outcome: "Prescription Drug Interactions", level: "warning" as const, text: "Documented Safety Flag", summary: "Inhibits CYP3A4, CYP2D6, and P-glycoprotein; co-administration requires physician supervision." },
+];
 ---
 
-<Layout>
-	<Welcome />
+<Layout
+  title="Berberine: Benefits, Weight Loss, Safety & Supplements"
+  description="Evidence-based medical guide to berberine: clinical trials for blood sugar, cholesterol, weight loss reality (JAMA 2026), side effects, and top supplements."
+>
+  <!-- 1. HERO SECTION -->
+  <section class="site-container pt-6 pb-10">
+    <div class="hero-band relative bg-[#213183] text-white rounded-2xl p-6 sm:p-10 lg:p-12 overflow-hidden shadow-md">
+      <div class="max-w-3xl relative z-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 text-white text-xs font-semibold mb-4 backdrop-blur border border-white/25">
+          <span class="w-2 h-2 rounded-full bg-[#1aae39]"></span>
+          <span>Peer-Reviewed Evidence Portal</span>
+        </div>
+        
+        <h1 class="display-1 text-white tracking-tight mb-4 leading-tight font-bold" style="color: #ffffff !important;">
+          Berberine: Benefits, Research & Supplements
+        </h1>
+        
+        <p class="text-base sm:text-lg md:text-xl text-white/95 leading-relaxed font-normal mb-8 max-w-2xl">
+          Explore what research says about berberine, understand its benefits and risks, and compare supplement formulations.
+        </p>
+
+        <!-- Prominent Call to Action Buttons with High Accessible Contrast -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
+          <a
+            href="/research/"
+            class="btn-primary inline-flex items-center justify-center bg-[#0075de] hover:bg-[#005bab] active:bg-[#004e92] text-white px-6 py-3.5 rounded-full font-semibold text-sm shadow-md transition-all w-full sm:w-auto min-h-[48px] focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#213183]"
+          >
+            Explore Research <span class="btn-arrow inline-block ml-1.5">→</span>
+          </a>
+          <a
+            href="/supplements/#how-top-5-compare"
+            class="btn-secondary inline-flex items-center justify-center bg-white hover:bg-[#f6f5f4] active:bg-[#edebe9] text-[#213183] px-6 py-3.5 rounded-full font-semibold text-sm shadow-md transition-all w-full sm:w-auto min-h-[48px] focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#213183]"
+          >
+            Compare Supplements <span class="btn-arrow inline-block ml-1.5">→</span>
+          </a>
+        </div>
+      </div>
+      
+      <!-- Subtle Decorative Accent -->
+      <div class="absolute -right-12 -bottom-12 w-64 h-64 bg-white/5 rounded-full pointer-events-none"></div>
+    </div>
+  </section>
+
+  <!-- 2. QUICK LINKS TO BASICS, BENEFITS, SAFETY, WEIGHT LOSS AND FAQS -->
+  <section class="site-container py-8" aria-label="Quick Exploration Links">
+    <div class="mb-6">
+      <span class="eyebrow text-[#0075de]">Quick Navigation</span>
+      <h2 class="heading-2 text-[#000000] tracking-tight">
+        Explore Core Topics
+      </h2>
+      <p class="body-sm text-[#615d59]">
+        Essential guidance translating clinical pharmacology into accessible knowledge.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <!-- About Berberine -->
+      <a
+        href="/what-is-berberine/"
+        class="feature-card block text-decoration-none group hover:border-[#0075de] transition-all bg-white"
+      >
+        <div class="flex items-center justify-between text-xs mb-2">
+          <span class="font-semibold text-[#0075de]">Origins & Science</span>
+          <span class="text-[#615d59]">Basics</span>
+        </div>
+        <h3 class="text-base font-bold text-[#000000] group-hover:text-[#0075de] transition-colors mb-2">
+          About Berberine
+        </h3>
+        <p class="text-xs text-[#615d59] leading-relaxed mb-3">
+          Natural plant alkaloid origins, chemical classification, botanical sources (Barberry, Goldenseal), and cellular mechanisms.
+        </p>
+        <span class="text-xs font-semibold text-[#0075de] inline-flex items-center gap-1">
+          Read introductory guide <span class="card-arrow inline-block transition-transform duration-200 group-hover:translate-x-1">→</span>
+        </span>
+      </a>
+
+      <!-- Benefits -->
+      <a
+        href="/benefits/"
+        class="feature-card block text-decoration-none group hover:border-[#0075de] transition-all bg-white"
+      >
+        <div class="flex items-center justify-between text-xs mb-2">
+          <span class="font-semibold text-[#1aae39]">Clinical Data</span>
+          <EvidenceBadge level="promising" text="Promising" size="sm" />
+        </div>
+        <h3 class="text-base font-bold text-[#000000] group-hover:text-[#0075de] transition-colors mb-2">
+          Clinical Benefits
+        </h3>
+        <p class="text-xs text-[#615d59] leading-relaxed mb-3">
+          Meta-analytic evidence for blood sugar, HbA1c reduction, total cholesterol, LDL-C, and fatty liver transaminases.
+        </p>
+        <span class="text-xs font-semibold text-[#0075de] inline-flex items-center gap-1">
+          Examine clinical trials <span class="card-arrow inline-block transition-transform duration-200 group-hover:translate-x-1">→</span>
+        </span>
+      </a>
+
+      <!-- Safety & Side Effects -->
+      <a
+        href="/safety-and-side-effects/"
+        class="feature-card block text-decoration-none group hover:border-[#0075de] transition-all bg-white"
+      >
+        <div class="flex items-center justify-between text-xs mb-2">
+          <span class="font-semibold text-[#dd5b00]">Safety Review</span>
+          <EvidenceBadge level="warning" text="Precautions" size="sm" />
+        </div>
+        <h3 class="text-base font-bold text-[#000000] group-hover:text-[#0075de] transition-colors mb-2">
+          Safety & Side Effects
+        </h3>
+        <p class="text-xs text-[#615d59] leading-relaxed mb-3">
+          Gastrointestinal tolerability, cytochrome P450 drug interactions, contraindications in pregnancy, and long-term data.
+        </p>
+        <span class="text-xs font-semibold text-[#0075de] inline-flex items-center gap-1">
+          Review safety profiles <span class="card-arrow inline-block transition-transform duration-200 group-hover:translate-x-1">→</span>
+        </span>
+      </a>
+
+      <!-- Weight Loss & Ozempic Analysis (Preserving link) -->
+      <a
+        href="/weight-loss/"
+        class="feature-card block text-decoration-none group hover:border-[#0075de] transition-all bg-white"
+      >
+        <div class="flex items-center justify-between text-xs mb-2">
+          <span class="font-semibold text-[#793400]">Myth Busting</span>
+          <EvidenceBadge level="limited" text="Limited" size="sm" />
+        </div>
+        <h3 class="text-base font-bold text-[#000000] group-hover:text-[#0075de] transition-colors mb-2">
+          Weight Loss & "Ozempic" Myth
+        </h3>
+        <p class="text-xs text-[#615d59] leading-relaxed mb-3">
+          Why viral social claims are misleading: recent clinical trials show modest weight changes (~1.9 lbs) and neutral visceral fat impact.
+        </p>
+        <span class="text-xs font-semibold text-[#0075de] inline-flex items-center gap-1">
+          Read weight loss analysis <span class="card-arrow inline-block transition-transform duration-200 group-hover:translate-x-1">→</span>
+        </span>
+      </a>
+
+      <!-- Compare Supplements -->
+      <a
+        href="/supplements/"
+        class="feature-card block text-decoration-none group hover:border-[#0075de] transition-all bg-white"
+      >
+        <div class="flex items-center justify-between text-xs mb-2">
+          <span class="font-semibold text-[#0075de]">Product Reviews</span>
+          <span class="text-[#615d59]">Forms & Buying</span>
+        </div>
+        <h3 class="text-base font-bold text-[#000000] group-hover:text-[#0075de] transition-colors mb-2">
+          Compare Supplements
+        </h3>
+        <p class="text-xs text-[#615d59] leading-relaxed mb-3">
+          HCl salts vs Phytosome complexes, research dosing (500 mg split), third-party lab verification, and cost per serving.
+        </p>
+        <span class="text-xs font-semibold text-[#0075de] inline-flex items-center gap-1">
+          View supplement guide <span class="card-arrow inline-block transition-transform duration-200 group-hover:translate-x-1">→</span>
+        </span>
+      </a>
+
+      <!-- Dedicated FAQs -->
+      <a
+        href="#faq"
+        class="feature-card block text-decoration-none group hover:border-[#0075de] transition-all bg-white"
+      >
+        <div class="flex items-center justify-between text-xs mb-2">
+          <span class="font-semibold text-[#0075de]">20 Common Questions</span>
+          <span class="text-[#615d59]">FAQ Hub</span>
+        </div>
+        <h3 class="text-base font-bold text-[#000000] group-hover:text-[#0075de] transition-colors mb-2">
+          Frequently Asked Questions
+        </h3>
+        <p class="text-xs text-[#615d59] leading-relaxed mb-3">
+          Concise, evidence-backed answers to 20 frequently asked questions regarding dosage, timing, kidneys, weight loss reality, and safety.
+        </p>
+        <span class="text-xs font-semibold text-[#0075de] inline-flex items-center gap-1">
+          Explore FAQs below <span class="card-arrow inline-block transition-transform duration-200 group-hover:translate-y-0.5">↓</span>
+        </span>
+      </a>
+    </div>
+  </section>
+
+  <!-- 3. LATEST RESEARCH SUMMARIES (Digestible highlights) -->
+  <section class="site-container py-10 border-t border-[#e6e6e6]" aria-label="Latest Research Summaries">
+    <div class="flex flex-wrap items-end justify-between gap-4 mb-6">
+      <div>
+        <span class="eyebrow text-[#213183]">Scientific Overview</span>
+        <h2 class="heading-1 text-[#000000] tracking-tight m-0">
+          Latest Research Summaries
+        </h2>
+        <p class="body-sm text-[#615d59] mt-1 m-0">
+          Key findings from randomized controlled trials and landmark meta-analyses.
+        </p>
+      </div>
+      <a href="/research/" class="text-xs font-semibold text-[#0075de] hover:underline">
+        Explore Complete Research Library ({researchStudies.length} Studies) →
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Glycemic Impact -->
+      <div class="feature-card bg-white space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="eyebrow text-[#0075de]">Glycemic Control</span>
+          <EvidenceBadge level="promising" text="Promising Evidence" size="sm" />
+        </div>
+        <h3 class="text-lg font-bold text-[#000000] m-0">Blood Sugar & HbA1c</h3>
+        <p class="text-xs text-[#31302e] leading-relaxed m-0">
+          Meta-analysis of 17 double-blind RCTs (1,485 participants, Lei 2023) documented average reductions of <strong>0.35 mmol/L</strong> in fasting glucose and <strong>0.45 percentage points</strong> in HbA1c over 2 to 3 months.
+        </p>
+        <div class="pt-2 border-t border-[#f0ede9]">
+          <a href="/benefits/#blood-sugar" class="text-xs font-semibold text-[#0075de] hover:underline inline-flex items-center gap-1 group">
+            Read glycemic analysis <span class="card-arrow inline-block transition-transform duration-200">→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Lipidology -->
+      <div class="feature-card bg-white space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="eyebrow text-[#2a9d99]">Lipid Profile</span>
+          <EvidenceBadge level="promising" text="Promising Evidence" size="sm" />
+        </div>
+        <h3 class="text-lg font-bold text-[#000000] m-0">Cholesterol & Lipids</h3>
+        <p class="text-xs text-[#31302e] leading-relaxed m-0">
+          Consistently demonstrates average reductions of <strong>0.48 mmol/L</strong> in total cholesterol, <strong>0.41 mmol/L</strong> in LDL cholesterol, and <strong>0.22 mmol/L</strong> in triglycerides, with neutral effects on HDL.
+        </p>
+        <div class="pt-2 border-t border-[#f0ede9]">
+          <a href="/benefits/#cholesterol" class="text-xs font-semibold text-[#0075de] hover:underline inline-flex items-center gap-1 group">
+            Read lipid analysis <span class="card-arrow inline-block transition-transform duration-200">→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Weight & Liver Trial -->
+      <div class="feature-card bg-white space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="eyebrow text-[#dd5b00]">Adiposity & MASLD</span>
+          <EvidenceBadge level="limited" text="Neutral on Visceral Fat" size="sm" />
+        </div>
+        <h3 class="text-lg font-bold text-[#000000] m-0">2026 Multicenter RCT</h3>
+        <p class="text-xs text-[#31302e] leading-relaxed m-0">
+          In a 6-month trial across 11 hospitals (Lei et al., 2026, 337 adults), this trial did not find a statistically significant reduction in visceral fat or liver fat compared with placebo, while confirming modest secondary lipid improvements.
+        </p>
+        <div class="pt-2 border-t border-[#f0ede9]">
+          <a href="/weight-loss/" class="text-xs font-semibold text-[#0075de] hover:underline inline-flex items-center gap-1 group">
+            Read trial details <span class="card-arrow inline-block transition-transform duration-200">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. SUPPLEMENT COMPARISON PREVIEW -->
+  <section class="site-container py-10 border-t border-[#e6e6e6]" aria-label="Supplement Comparison Preview">
+    <div class="mb-6">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <span class="eyebrow text-[#0075de]">Formulation Science</span>
+          <h2 class="heading-1 text-[#000000] tracking-tight m-0">
+            Compare Berberine Supplements
+          </h2>
+          <p class="body-sm text-[#615d59] mt-1 m-0">
+            Compare verified retail formulations, declared alkaloid contents, and third-party laboratory verifications.
+          </p>
+        </div>
+        <a href="/supplements/" class="btn-utility text-xs py-1.5 px-3">
+          Full Comparison Guide <span class="btn-arrow inline-block ml-1">→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Product Comparison Preview (3 verified products) -->
+    <ProductComparison previewOnly={true} />
+  </section>
+
+  <!-- 5. COMPACT EVIDENCE OVERVIEW -->
+  <section class="site-container py-10 border-t border-[#e6e6e6]" aria-label="Compact Evidence Overview">
+    <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+      <div>
+        <span class="eyebrow text-[#213183]">Evidence Synthesis</span>
+        <h2 class="heading-1 text-[#000000] tracking-tight m-0">
+          Compact Evidence Overview
+        </h2>
+        <p class="body-sm text-[#615d59] mt-1 m-0">
+          Summary of evidence strength across primary therapeutic targets.
+        </p>
+      </div>
+      <a href="/research/#evidence-matrix" class="text-xs font-semibold text-[#0075de] hover:underline">
+        View Full 11-Outcome Matrix on Research Page →
+      </a>
+    </div>
+
+    <div class="table-container shadow-xs bg-white">
+      <table class="data-table text-xs" aria-label="Compact Evidence Summary">
+        <thead>
+          <tr>
+            <th class="w-1/3">Health Outcome</th>
+            <th class="w-1/4">Evidence Status</th>
+            <th>Summary of Clinical Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+          {compactEvidenceList.map((row) => (
+            <tr>
+              <td class="font-bold text-[#000000]">{row.outcome}</td>
+              <td>
+                <EvidenceBadge level={row.level} text={row.text} size="sm" />
+              </td>
+              <td class="text-[#31302e] leading-snug">{row.summary}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 6. COMPREHENSIVE EVIDENCE GUIDE & SUPPLEMENT REVIEW TOOL (AI-SEO & KNOWLEDGE SYNTHESIS) -->
+  <section class="site-container py-12 border-t border-[#e6e6e6]" aria-label="Comprehensive Berberine Guide and Tool Overview">
+    <div class="bg-white rounded-2xl border border-[#e6e6e6] p-6 sm:p-8 lg:p-10 space-y-8 shadow-xs">
+      <!-- Section Header -->
+      <div class="border-b border-[#f0ede9] pb-6">
+        <span class="eyebrow text-[#0075de]">Authoritative Scientific Synthesis</span>
+        <h2 class="heading-1 text-[#000000] tracking-tight mt-1 mb-3">
+          Berberine Clinical Evidence Guide: Pharmacology, Benefits, Weight Loss Reality &amp; Supplement Review Tool
+        </h2>
+        <p class="body-sm text-[#615d59] max-w-3xl leading-relaxed m-0">
+          An objective, peer-reviewed evaluation of berberine pharmacology, meta-analytic cardiometabolic outcomes, viral weight loss claims, supplement formulations (HCl vs. Phytosome vs. patches), and safety standards.
+        </p>
+      </div>
+
+      <!-- 1. What is Berberine and What Does Berberine Do? -->
+      <article class="space-y-3">
+        <h3 class="heading-2 text-[#000000] tracking-tight">
+          1. What is Berberine and What Does Berberine Do?
+        </h3>
+        <p class="body-md text-[#31302e] leading-relaxed">
+          <strong>Berberine</strong> is a bioactive quaternary ammonium isoquinoline alkaloid extracted from the roots, rhizomes, and bark of medicinal plants including <em>Berberis vulgaris</em> (European barberry), <em>Hydrastis canadensis</em> (goldenseal), and <em>Coptis chinensis</em> (Chinese goldthread). Used for centuries in traditional botanical medicine, modern clinical pharmacology evaluates berberine as a multi-target cardiometabolic regulator.
+        </p>
+        <p class="body-md text-[#31302e] leading-relaxed">
+          When examining <strong>what does berberine do</strong> at the cellular level, researchers emphasize its primary mechanism: the activation of adenosine monophosphate-activated protein kinase (AMPK). Known as the cell's "master energy sensor," AMPK coordinates cellular energy balance. When activated, AMPK promotes glucose uptake into skeletal muscle cells via GLUT4 transporter translocation and inhibits hepatic glucose and lipid synthesis.
+        </p>
+        <p class="body-md text-[#31302e] leading-relaxed">
+          Beyond AMPK signaling, berberine upregulates low-density lipoprotein receptor (LDLR) expression in liver cells by stabilizing LDLR mRNA via ERK pathways, operating independently of standard statins. In the gut, berberine modulates microbiota composition, reinforces the mucosal barrier, and stimulates enteroendocrine L-cells to release glucagon-like peptide-1 (GLP-1) locally within the intestinal lumen.
+        </p>
+        <div class="pt-1">
+          <a href="/what-is-berberine/" class="text-xs font-semibold text-[#0075de] hover:underline">
+            Explore botanical sources &amp; chemical properties in our introductory guide →
+          </a>
+        </div>
+      </article>
+
+      <!-- 2. What is Berberine Used For and What is Berberine Good For? -->
+      <article class="space-y-3 pt-6 border-t border-[#f0ede9]">
+        <h3 class="heading-2 text-[#000000] tracking-tight">
+          2. What is Berberine Used For and What is Berberine Good For?
+        </h3>
+        <p class="body-md text-[#31302e] leading-relaxed">
+          In clinical medicine, <strong>what is berberine used for</strong> centers on cardiometabolic health and glucose regulation. Patients and clinicians evaluate <strong>what is berberine good for</strong> across three main therapeutic areas: blood sugar management in type 2 diabetes, lipid profile improvement in hyperlipidemia, and liver transaminase regulation in non-alcoholic fatty liver disease (NAFLD/MASLD).
+        </p>
+        <p class="body-md text-[#31302e] leading-relaxed">
+          The clinical <strong>benefits of berberine</strong> are supported by extensive human trial data. In a systematic review and meta-analysis of 17 randomized controlled trials with 1,485 human participants (Lei et al., 2023), oral berberine supplementation produced statistically significant reductions in glycemic biomarkers. Participants receiving berberine achieved an average reduction in fasting blood glucose of 0.35 mmol/L (~6.3 mg/dL) and an average drop of 0.45 percentage points in glycated hemoglobin (HbA1c).
+        </p>
+        <p class="body-md text-[#31302e] leading-relaxed">
+          Furthermore, <strong>berberine benefits</strong> extend to cardiovascular lipid management. Across pooled clinical cohorts, berberine administration consistently demonstrates average reductions of 0.48 mmol/L in total cholesterol, 0.41 mmol/L (~16 mg/dL) in LDL cholesterol, and 0.22 mmol/L in serum triglycerides, with neutral effects on protective HDL cholesterol. In hepatic trials, a 2024 meta-analysis by Nie et al. documented significant reductions in circulating ALT and AST transaminases, supporting liver health in individuals with metabolic hepatic steatosis.
+        </p>
+        <div class="pt-1">
+          <a href="/benefits/" class="text-xs font-semibold text-[#0075de] hover:underline">
+            Read comprehensive clinical meta-analysis breakdowns across all 11 outcomes →
+          </a>
+        </div>
+      </article>
+
+      <!-- 3. Berberine Weight Loss: Does Berberine Help with Weight Loss? -->
+      <article class="space-y-3 pt-6 border-t border-[#f0ede9]">
+        <h3 class="heading-2 text-[#000000] tracking-tight">
+          3. Berberine Weight Loss: Does Berberine Help with Weight Loss?
+        </h3>
+        <p class="body-md text-[#31302e] leading-relaxed">
+          A pervasive question driven by viral online claims is: <strong>does berberine help with weight loss</strong>, and is <strong>berberine for weight loss</strong> genuinely "Nature's Ozempic"? An objective review of the medical literature demonstrates a clear divide between social media marketing and published human clinical trial outcomes.
+        </p>
+        <p class="body-md text-[#31302e] leading-relaxed">
+          While online influencers portray berberine as a rapid fat loss compound or non-prescription semaglutide alternative, clinical evidence indicates much more modest effects. In a 6-month, multicenter randomized double-blind placebo-controlled trial published in <em>JAMA Network Open</em> (Lei et al., 2026) evaluating 337 adult patients across 11 hospitals, berberine did not produce a statistically significant reduction in visceral adipose tissue (VAT) or intrahepatic liver fat compared to placebo.
+        </p>
+        <p class="body-md text-[#31302e] leading-relaxed">
+          Similarly, a 2026 meta-analysis by Vahed and colleagues evaluating human clinical trials calculated an average weight reduction of −0.88 kg (~1.9 lbs). While berberine can modestly support metabolic health within a structured diet and exercise plan, the scientific consensus is clear: <strong>berberine weight loss</strong> is modest, gradual, and not clinically equivalent to pharmaceutical GLP-1 receptor agonists, which routinely yield 15% to 20% body weight reductions under physician care.
+        </p>
+        <div class="pt-1">
+          <a href="/weight-loss/" class="text-xs font-semibold text-[#0075de] hover:underline">
+            Review the 2026 JAMA Network Open trial data and head-to-head analysis →
+          </a>
+        </div>
+      </article>
+
+      <!-- 4. Berberine Supplements: Berberine HCl, Berberine Phytosome, and Patches -->
+      <article class="space-y-3 pt-6 border-t border-[#f0ede9]">
+        <h3 class="heading-2 text-[#000000] tracking-tight">
+          4. Berberine Supplements: Berberine HCl, Berberine Phytosome, and Patches
+        </h3>
+        <p class="body-md text-[#31302e] leading-relaxed">
+          When selecting a <strong>berberine supplement</strong>, consumers encounter distinct chemical formats, delivery systems, and commercial formulations. Finding the <strong>best berberine supplement</strong> requires understanding the pharmacological differences between these choices.
+        </p>
+        <div class="space-y-3 text-sm text-[#31302e]">
+          <p class="m-0 leading-relaxed">
+            <strong>Berberine HCl (Hydrochloride):</strong> The vast majority of clinical trials have evaluated standard <strong>berberine hcl</strong>, an affordable salt formulation typically standardized to 97% or higher alkaloid purity. Because standard berberine has low oral bioavailability (under 5% intact systemic absorption due to P-glycoprotein efflux and rapid first-pass liver metabolism), clinical dosing protocols recommend 500 mg taken two to three times daily with meals (1,000–1,500 mg/day) to sustain gastrointestinal and circulating levels.
+          </p>
+          <p class="m-0 leading-relaxed">
+            <strong>Berberine Phytosome:</strong> To address absorption limitations, manufacturers developed phytosome complexes, notably Indena's patented formulation binding berberine extract to sunflower lecithin phospholipids and pea protein. Featured in commercial products such as <strong>Thorne berberine</strong> (Thorne Berberine-500), phytosome complexes demonstrate higher blood plasma concentrations in single-dose healthy volunteer trials. However, clinical researchers emphasize that improved pharmacokinetic bioavailability in healthy subjects does not automatically prove superior long-term disease outcomes compared to traditional <strong>berberine supplements</strong> in salt form.
+          </p>
+          <p class="m-0 leading-relaxed">
+            <strong>Berberine Patches:</strong> Transdermal <strong>berberine patches</strong> have emerged commercially, claiming transdermal absorption bypasses stomach upset. However, berberine’s molecular structure—a hydrophilic quaternary ammonium cation with a molecular weight of 336.36 g/mol—faces severe biophysical barriers penetrating the lipophilic stratum corneum of human skin. Crucially, there are zero published, peer-reviewed human clinical trials demonstrating that transdermal patches deliver active berberine into the bloodstream. We classify transdermal patches as unestablished.
+          </p>
+        </div>
+        <div class="pt-1">
+          <a href="/supplements/" class="text-xs font-semibold text-[#0075de] hover:underline">
+            Examine our independent evaluation of top retail berberine formulations →
+          </a>
+        </div>
+      </article>
+
+      <!-- 5. Side Effects of Berberine: Is Berberine Safe? -->
+      <article class="space-y-3 pt-6 border-t border-[#f0ede9]">
+        <h3 class="heading-2 text-[#000000] tracking-tight">
+          5. Side Effects of Berberine: Is Berberine Safe?
+        </h3>
+        <p class="body-md text-[#31302e] leading-relaxed">
+          A vital consideration for patients is reviewing <strong>berberine side effects</strong> and evaluating whether <strong>is berberine safe</strong> for regular daily use.
+        </p>
+        <p class="body-md text-[#31302e] leading-relaxed">
+          For most healthy adults, oral berberine has an acceptable safety record when used at research doses (up to 1,500 mg daily) for 3 to 6 months. However, the most frequent <strong>side effects of berberine</strong> involve the digestive tract. Because unabsorbed berberine remains in the gut lumen, 10% to 20% of users report gastrointestinal discomfort, including abdominal cramping, diarrhea, constipation, nausea, and flatulence. In clinical studies, gastrointestinal irritation was commonly mitigated by dividing doses across meals and initiating protocols with smaller amounts under professional guidance.
+        </p>
+        <p class="body-md text-[#31302e] leading-relaxed">
+          The most critical safety warning involves Cytochrome P450 enzyme inhibition. Berberine strongly inhibits CYP3A4, CYP2D6, and P-glycoprotein drug transporters. Co-administering berberine with prescription medications metabolized through these pathways—including statins, immunosuppressants (cyclosporine, tacrolimus), anticoagulants, blood pressure medications, or metformin—can alter drug blood concentrations and elevate toxicity risks. Physician consultation is essential prior to use. Strict contraindications apply to pregnant individuals, nursing mothers, and infants.
+        </p>
+        <div class="pt-1">
+          <a href="/safety-and-side-effects/" class="text-xs font-semibold text-[#0075de] hover:underline">
+            Read complete safety pharmacology, CYP450 tables &amp; contraindications →
+          </a>
+        </div>
+      </article>
+
+      <!-- 6. About the Berberine Research Portal & Supplement Evaluation Tool -->
+      <article class="space-y-3 pt-6 border-t border-[#f0ede9]">
+        <h3 class="heading-2 text-[#000000] tracking-tight">
+          6. About the Berberine Research Portal &amp; Supplement Evaluation Tool
+        </h3>
+        <p class="body-md text-[#31302e] leading-relaxed">
+          The Berberine Research Portal was engineered to provide an independent, evidence-backed scientific intelligence tool amid biased affiliate reviews. Our platform serves patients, physicians, and researchers seeking verified pharmacological reality.
+        </p>
+        <p class="body-md text-[#31302e] leading-relaxed">
+          Our independent supplement evaluation tool replaces marketing claims with a transparent, reproducible 4-domain scoring rubric totaling 100 points:
+        </p>
+        <ol class="list-decimal pl-5 space-y-2 text-sm text-[#31302e]">
+          <li><strong>Label Clarity &amp; Active Alkaloid Disclosure (Max 25 pts):</strong> Evaluating whether packaging differentiates total complex mass from actual active berberine alkaloid yield.</li>
+          <li><strong>Documented Testing &amp; Facility Certification Scope (Max 25 pts):</strong> Rigorously distinguishing between basic manufacturing facility cGMP audits and independent finished-product certifications (e.g., USP Verified, NSF Contents Certified).</li>
+          <li><strong>Source Traceability &amp; Batch Verification (Max 25 pts):</strong> Verifying manufacturer batch documentation, analytical HPLC certificates of analysis, and inventory consistency.</li>
+          <li><strong>Price, Dosage &amp; Math Transparency (Max 25 pts):</strong> Calculating verified cost per 500 mg active alkaloid serving, bottle supply economics, and one-time purchase terms.</li>
+        </ol>
+        <p class="body-md text-[#31302e] leading-relaxed">
+          We operate with strict commercial independence: we accept zero payment from supplement brands, feature zero sponsored ranking positions, and never sell dietary supplements on site. By connecting peer-reviewed clinical trials with objective product evaluations, our portal delivers trusted, evidence-based guidance for exploring berberine safely.
+        </p>
+        <div class="pt-1">
+          <a href="/editorial-methodology/" class="text-xs font-semibold text-[#0075de] hover:underline">
+            Review our full editorial methodology, evidence tiers &amp; independence policy →
+          </a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 7. FREQUENTLY ASKED QUESTIONS SECTION (Schema exclusively on /faq/) -->
+  <FaqSection id="faq" includeSchema={false} />
+
+  <!-- 8. EDITORIAL INFORMATION, DISCLOSURES & METHODOLOGY -->
+  <section class="site-container py-10 border-t border-[#e6e6e6]" aria-label="Editorial Standards and Disclosures">
+    <div class="p-6 rounded-2xl bg-white border border-[#e6e6e6] shadow-xs space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[#f0ede9] pb-3">
+        <div class="flex items-center gap-2">
+          <div class="w-6 h-6 rounded bg-[#213183] text-white flex items-center justify-center font-bold text-xs">
+            ✓
+          </div>
+          <h3 class="text-base font-bold text-[#000000] m-0">Editorial Standards & Scientific Methodology</h3>
+        </div>
+        <a href="/editorial-methodology/" class="text-xs font-semibold text-[#0075de] hover:underline">
+          Read Complete Editorial Policy →
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 text-xs text-[#31302e]">
+        <div class="space-y-1">
+          <strong class="text-[#000000] block font-semibold">Strict Evidence Hierarchy</strong>
+          <p class="text-[#615d59] m-0 leading-relaxed">
+            We rely on peer-reviewed human randomized clinical trials (RCTs) and systematic meta-analyses. Animal experiments and cellular pathways are reported strictly for mechanism explanations and never presented as human efficacy.
+          </p>
+        </div>
+
+        <div class="space-y-1">
+          <strong class="text-[#000000] block font-semibold">Commercial Independence</strong>
+          <p class="text-[#615d59] m-0 leading-relaxed">
+            We do not accept paid manufacturer promotions, product placement fees, or sponsored rankings. We do not award unsupported "best" or "most effective" badges. Outbound retailer links are provided for consumer convenience.
+          </p>
+        </div>
+
+        <div class="space-y-1">
+          <strong class="text-[#000000] block font-semibold">Distinct Review & Publication Dates</strong>
+          <p class="text-[#615d59] m-0 leading-relaxed">
+            Academic publication dates are reported separately from editorial review dates. Review dates are updated only after a genuine manual audit against primary sources.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mandatory Medical Disclaimer Callout -->
+    <div class="mt-8">
+      <MedicalDisclaimer variant="callout" />
+    </div>
+  </section>
 </Layout>

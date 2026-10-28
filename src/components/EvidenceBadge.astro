@@ -1,0 +1,58 @@
+---
+export interface Props {
+  level: "promising" | "preliminary" | "limited" | "none" | "warning";
+  text?: string;
+  size?: "sm" | "md";
+}
+
+const { level, text, size = "md" } = Astro.props;
+
+const config = {
+  promising: {
+    bg: "rgba(26, 174, 57, 0.1)",
+    color: "#13882c",
+    border: "rgba(26, 174, 57, 0.25)",
+    icon: "✓",
+    defaultText: "Promising Clinical Evidence"
+  },
+  preliminary: {
+    bg: "rgba(42, 157, 153, 0.1)",
+    color: "#1e726f",
+    border: "rgba(42, 157, 153, 0.25)",
+    icon: "◈",
+    defaultText: "Encouraging Preliminary Data"
+  },
+  limited: {
+    bg: "rgba(221, 91, 0, 0.1)",
+    color: "#b04800",
+    border: "rgba(221, 91, 0, 0.25)",
+    icon: "▲",
+    defaultText: "Limited / Inconsistent Evidence"
+  },
+  none: {
+    bg: "rgba(97, 93, 89, 0.1)",
+    color: "#4e4a46",
+    border: "rgba(97, 93, 89, 0.2)",
+    icon: "—",
+    defaultText: "Insufficient / Not Established"
+  },
+  warning: {
+    bg: "rgba(121, 52, 0, 0.12)",
+    color: "#793400",
+    border: "rgba(121, 52, 0, 0.3)",
+    icon: "⚠",
+    defaultText: "Clinical Safety Precaution"
+  }
+};
+
+const current = config[level] || config.none;
+const label = text || current.defaultText;
+const badgeClass = `badge-${level}`;
+---
+
+<span
+  class={`badge-pill ${badgeClass} inline-flex items-center gap-1.5 font-medium rounded-full ${size === 'sm' ? 'text-xs px-2 py-0.5' : 'text-xs px-2.5 py-1'}`}
+>
+  <span aria-hidden="true" class="font-bold text-[11px]">{current.icon}</span>
+  <span>{label}</span>
+</span>

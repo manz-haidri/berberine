@@ -1,0 +1,437 @@
+---
+import { verifiedSupplementProducts } from '../data/supplementProducts';
+
+const products = verifiedSupplementProducts;
+const topRanked = products[0];
+const otherProducts = products.slice(1);
+---
+
+<div class="cmp-section-container space-y-4">
+  <!-- Mobile / Tablet swipe cue -->
+  <div class="xl:hidden flex items-center justify-center gap-2 text-xs font-semibold text-[#615d59] py-2 px-3 bg-[#f6f5f4] dark:bg-[#141414] rounded-lg border border-[#e6e6e6] dark:border-[#262626]">
+    <span class="inline-block animate-pulse text-[#0075de]">←</span>
+    <span class="uppercase tracking-wider text-[11px] text-[#31302e] dark:text-[#cbd5e1]">Swipe horizontally to compare all five supplements</span>
+    <span class="inline-block animate-pulse text-[#0075de]">→</span>
+  </div>
+
+  <!-- Comparison Table Card matching verified editorial rubric -->
+  <div
+    class="table-scroll-container overflow-x-auto rounded-lg border border-[#e6e6e6] dark:border-[#262626] bg-white dark:bg-[#000000] shadow-soft relative"
+    style="-webkit-overflow-scrolling: touch; scrollbar-width: none; -ms-overflow-style: none;"
+    role="region"
+    aria-label="How the Top 5 supplements compare table"
+  >
+    <table class="w-full border-collapse text-left min-w-[720px] sm:min-w-[760px] xl:min-w-full table-fixed" aria-label="Head-to-head berberine product comparison">
+      <caption class="sr-only">
+        Standardized comparison of five berberine supplements based on formulation, serving size, declared amounts, verified testing scope, pricing, and independent rubric scores.
+      </caption>
+      <colgroup>
+        <col class="w-[105px] sm:w-[115px] xl:w-[125px]" />
+        <col class="w-[125px] sm:w-[135px] xl:w-auto" />
+        <col class="w-[125px] sm:w-[135px] xl:w-auto" />
+        <col class="w-[125px] sm:w-[135px] xl:w-auto" />
+        <col class="w-[125px] sm:w-[135px] xl:w-auto" />
+        <col class="w-[125px] sm:w-[135px] xl:w-auto" />
+      </colgroup>
+      <thead>
+        <!-- Product Image & Rank Row -->
+        <tr>
+          <th scope="col" class="sticky-metric-col p-3 text-left bg-[#fcfbfa] dark:bg-[#0d0d0d] border-b border-r border-[#e6e6e6] dark:border-[#262626]">
+            <span class="sr-only">Metric / Product</span>
+          </th>
+          
+          <!-- Column 1: Top Ranked Product (Rank 01 under Rubric) -->
+          <th
+            scope="col"
+            class="win-col relative p-0 text-center align-bottom bg-[#f0f7ff] dark:bg-[#0c1a2e]/60 border-l-2 border-r-2 border-[#0075de]"
+          >
+            <div class="bg-[#0075de] text-white text-[11px] font-bold uppercase tracking-[0.15em] py-1 text-center w-full">
+              RANK 01 · TOP RUBRIC
+            </div>
+            <div class="pt-3 pb-2 px-2 flex flex-col items-center">
+              <div class="table-product-img-box mb-1.5">
+                <img
+                  src={topRanked.imageUrl}
+                  alt={topRanked.imageAlt}
+                  loading="eager"
+                  class="table-product-img drop-shadow-xs"
+                />
+              </div>
+              <span class="text-xs font-bold text-[#0075de] dark:text-[#389bf2] uppercase tracking-wider block">
+                {topRanked.rankBadge}
+              </span>
+            </div>
+          </th>
+
+          <!-- Columns 2 to 5: Other Reviewed Products -->
+          {otherProducts.map((prod) => (
+            <th
+              scope="col"
+              class="p-2 sm:p-3 text-center align-bottom border-r border-[#e6e6e6] dark:border-[#262626] last:border-r-0 bg-white dark:bg-[#000000]"
+            >
+              <div class="flex flex-col items-center pt-3 pb-2">
+                <div class="table-product-img-box mb-1.5">
+                  <img
+                    src={prod.imageUrl}
+                    alt={prod.imageAlt}
+                    width="50"
+                    height="80"
+                    loading="lazy"
+                    class="table-product-img drop-shadow-xs"
+                  />
+                </div>
+                <span class="text-xs font-semibold text-[#615d59] dark:text-[#94a3b8] uppercase tracking-wider block">
+                  {prod.rankBadge}
+                </span>
+              </div>
+            </th>
+          ))}
+        </tr>
+
+        <!-- Brand Name Row -->
+        <tr class="border-b border-[#e6e6e6] text-xs">
+          <th scope="col" class="sticky-metric-col px-2.5 sm:px-3 py-2.5 bg-white border-r border-[#e6e6e6] text-[#615d59] font-semibold text-[11px] sm:text-xs">
+            Brand
+          </th>
+          
+          <!-- Top Ranked Brand Name -->
+          <th
+            scope="col"
+            class="win-col p-3 text-center font-bold text-[#000000] dark:text-white uppercase tracking-wider text-[11px] bg-[#f0f7ff] dark:bg-[#0c1a2e]/60 border-l-2 border-r-2 border-[#0075de]"
+          >
+            {topRanked.shortName}
+          </th>
+
+          <!-- Other Brand Names -->
+          {otherProducts.map((prod) => (
+            <th
+              scope="col"
+              class="p-3 text-center font-bold text-[#000000] dark:text-white uppercase tracking-wider text-[11px] border-r border-[#e6e6e6] dark:border-[#262626] last:border-r-0 bg-white dark:bg-[#000000]"
+            >
+              {prod.shortName}
+            </th>
+          ))}
+        </tr>
+      </thead>
+
+      <tbody class="divide-y divide-[#e6e6e6] text-xs text-[#31302e]">
+        <!-- 1. Formulation -->
+        <tr>
+          <th scope="row" class="sticky-metric-col px-2.5 sm:px-3 py-3 font-semibold text-[#000000] bg-white border-r border-[#e6e6e6] text-[11px] sm:text-xs leading-snug">
+            Formulation
+          </th>
+          <td class="win-col p-3 text-center font-medium bg-[#f0f7ff] border-l-2 border-r-2 border-[#0075de]">
+            <span class="inline-block px-1.5 py-0.5 rounded bg-white text-[#0075de] font-semibold border border-[#0075de]/30 text-[11px]">
+              {topRanked.formulationLabel}
+            </span>
+          </td>
+          {otherProducts.map((p) => (
+            <td class="p-3 text-center border-r border-[#e6e6e6] last:border-r-0 text-[11px]">
+              <span class="inline-block px-1.5 py-0.5 rounded bg-[#f6f5f4] text-[#31302e] border border-[#e6e6e6] font-medium">
+                {p.formulationLabel}
+              </span>
+            </td>
+          ))}
+        </tr>
+
+        <!-- 2. Manufacturer-labeled serving size -->
+        <tr>
+          <th scope="row" class="sticky-metric-col px-2.5 sm:px-3 py-3 font-semibold text-[#000000] bg-white border-r border-[#e6e6e6] text-[11px] sm:text-xs leading-snug">
+            Labeled Serving Size
+          </th>
+          <td class="win-col p-3 text-center font-bold text-[#0075de] bg-[#f0f7ff] border-l-2 border-r-2 border-[#0075de]">
+            {topRanked.servingSize}
+          </td>
+          {otherProducts.map((p) => (
+            <td class="p-3 text-center font-medium border-r border-[#e6e6e6] last:border-r-0">
+              {p.servingSize}
+            </td>
+          ))}
+        </tr>
+
+        <!-- 3. Declared formulation amount per labeled serving -->
+        <tr>
+          <th scope="row" class="sticky-metric-col px-2.5 sm:px-3 py-3 font-semibold text-[#000000] bg-white border-r border-[#e6e6e6] text-[11px] sm:text-xs leading-snug">
+            Declared Formulation Amount<br />
+            <span class="font-normal text-[9.5px] sm:text-[10px] text-[#615d59] leading-tight block mt-0.5">(Per Labeled Serving)</span>
+          </th>
+          <td class="win-col p-3 text-center font-bold text-[#000000] bg-[#f0f7ff] border-l-2 border-r-2 border-[#0075de]">
+            {topRanked.declaredFormulationAmount}
+          </td>
+          {otherProducts.map((p) => (
+            <td class="p-3 text-center border-r border-[#e6e6e6] last:border-r-0">
+              {p.declaredFormulationAmount}
+            </td>
+          ))}
+        </tr>
+
+        <!-- 4. Declared berberine content per labeled serving, where disclosed -->
+        <tr>
+          <th scope="row" class="sticky-metric-col px-2.5 sm:px-3 py-3 font-semibold text-[#000000] bg-white border-r border-[#e6e6e6] text-[11px] sm:text-xs leading-snug">
+            Declared Berberine Content<br />
+            <span class="font-normal text-[9.5px] sm:text-[10px] text-[#615d59] leading-tight block mt-0.5">(Where Disclosed)</span>
+          </th>
+          <td class="win-col p-3 text-center bg-[#f0f7ff] border-l-2 border-r-2 border-[#0075de] leading-snug">
+            <strong class="text-[#0075de]">{topRanked.declaredBerberineContent}</strong>
+          </td>
+          {otherProducts.map((p) => (
+            <td class="p-3 text-center border-r border-[#e6e6e6] last:border-r-0 leading-snug text-[11px]">
+              {p.declaredBerberineContent === "Not separately disclosed by manufacturer" ? (
+                <span class="text-[#877864] italic text-[10.5px]">Not separately disclosed by manufacturer</span>
+              ) : (
+                <span>{p.declaredBerberineContent}</span>
+              )}
+            </td>
+          ))}
+        </tr>
+
+        <!-- 5. Manufacturer daily-use directions -->
+        <tr>
+          <th scope="row" class="sticky-metric-col px-2.5 sm:px-3 py-3 font-semibold text-[#000000] bg-white border-r border-[#e6e6e6] text-[11px] sm:text-xs leading-snug">
+            Daily-Use Directions<br />
+            <span class="font-normal text-[9.5px] sm:text-[10px] text-[#615d59] leading-tight block mt-0.5">(Manufacturer Label)</span>
+          </th>
+          <td class="win-col p-3 text-center bg-[#f0f7ff] border-l-2 border-r-2 border-[#0075de] text-[11px] leading-snug">
+            {topRanked.manufacturerDailyDirections}
+          </td>
+          {otherProducts.map((p) => (
+            <td class="p-3 text-center border-r border-[#e6e6e6] last:border-r-0 text-[11px] leading-snug">
+              {p.manufacturerDailyDirections}
+            </td>
+          ))}
+        </tr>
+
+        <!-- 6. Capsules per bottle -->
+        <tr>
+          <th scope="row" class="sticky-metric-col px-2.5 sm:px-3 py-3 font-semibold text-[#000000] bg-white border-r border-[#e6e6e6] text-[11px] sm:text-xs leading-snug">
+            Capsules per Bottle
+          </th>
+          <td class="win-col p-3 text-center font-bold bg-[#f0f7ff] border-l-2 border-r-2 border-[#0075de]">
+            {topRanked.capsulesPerBottle} capsules
+          </td>
+          {otherProducts.map((p) => (
+            <td class="p-3 text-center border-r border-[#e6e6e6] last:border-r-0">
+              {p.capsulesPerBottle} capsules
+            </td>
+          ))}
+        </tr>
+
+        <!-- 7. Labeled servings per bottle -->
+        <tr>
+          <th scope="row" class="sticky-metric-col px-2.5 sm:px-3 py-3 font-semibold text-[#000000] bg-white border-r border-[#e6e6e6] text-[11px] sm:text-xs leading-snug">
+            Servings per Bottle
+          </th>
+          <td class="win-col p-3 text-center font-bold text-[#0075de] bg-[#f0f7ff] border-l-2 border-r-2 border-[#0075de]">
+            {topRanked.servingsPerContainer} servings
+          </td>
+          {otherProducts.map((p) => (
+            <td class="p-3 text-center font-medium border-r border-[#e6e6e6] last:border-r-0">
+              {p.servingsPerContainer} servings
+            </td>
+          ))}
+        </tr>
+
+        <!-- 8. Bottle price and currency -->
+        <tr>
+          <th scope="row" class="sticky-metric-col px-2.5 sm:px-3 py-3 font-semibold text-[#000000] bg-white border-r border-[#e6e6e6] text-[11px] sm:text-xs leading-snug">
+            Bottle Price &amp; Currency<br />
+            <span class="font-normal text-[9.5px] sm:text-[10px] text-[#615d59] leading-tight block mt-0.5">(One-Time Purchase)</span>
+          </th>
+          <td class="win-col p-3 text-center font-bold text-[#000000] text-sm bg-[#f0f7ff] border-l-2 border-r-2 border-[#0075de]">
+            {topRanked.priceStatus === 'Estimated' && '~'}${topRanked.priceUSD.toFixed(2)} <span class="text-[10px] text-[#615d59] font-normal">{topRanked.currency}</span>
+            {topRanked.priceStatus === 'Estimated' && <span class="block text-[9.5px] text-[#793400] font-normal">(Estimated)</span>}
+          </td>
+          {otherProducts.map((p) => (
+            <td class="p-3 text-center font-semibold text-[#000000] border-r border-[#e6e6e6] last:border-r-0">
+              {p.priceStatus === 'Estimated' && '~'}${p.priceUSD.toFixed(2)} <span class="text-[10px] text-[#615d59] font-normal">{p.currency}</span>
+              {p.priceStatus === 'Estimated' && <span class="block text-[9.5px] text-[#793400] font-normal">(Estimated)</span>}
+            </td>
+          ))}
+        </tr>
+
+        <!-- 9. Price per labeled serving -->
+        <tr>
+          <th scope="row" class="sticky-metric-col px-2.5 sm:px-3 py-3 font-semibold text-[#000000] bg-white border-r border-[#e6e6e6] text-[11px] sm:text-xs leading-snug">
+            Cost per Labeled Serving
+          </th>
+          <td class="win-col p-3 text-center font-bold text-[#1aae39] bg-[#f0f7ff] border-l-2 border-r-2 border-[#0075de]">
+            {topRanked.priceStatus === 'Estimated' && '~'}${topRanked.pricePerServing.toFixed(2)} / serving
+            {topRanked.priceStatus === 'Estimated' && <span class="block text-[9.5px] text-[#793400] font-normal">(Estimated)</span>}
+          </td>
+          {otherProducts.map((p) => (
+            <td class="p-3 text-center font-semibold text-[#1aae39] border-r border-[#e6e6e6] last:border-r-0">
+              {p.priceStatus === 'Estimated' && '~'}${p.pricePerServing.toFixed(2)} / serving
+              {p.priceStatus === 'Estimated' && <span class="block text-[9.5px] text-[#793400] font-normal">(Estimated)</span>}
+            </td>
+          ))}
+        </tr>
+
+        <!-- 10. Daily Cost Range -->
+        <tr>
+          <th scope="row" class="sticky-metric-col px-2.5 sm:px-3 py-3 font-semibold text-[#000000] bg-white border-r border-[#e6e6e6] text-[11px] sm:text-xs leading-snug">
+            Daily Cost Range<br />
+            <span class="font-normal text-[9.5px] sm:text-[10px] text-[#615d59] leading-tight block mt-0.5">(Per Directions)</span>
+          </th>
+          <td class="win-col p-3 text-center font-medium bg-[#f0f7ff] border-l-2 border-r-2 border-[#0075de] text-[11px]">
+            {topRanked.dailyCostRange}
+          </td>
+          {otherProducts.map((p) => (
+            <td class="p-3 text-center border-r border-[#e6e6e6] last:border-r-0 text-[11px]">
+              {p.dailyCostRange}
+            </td>
+          ))}
+        </tr>
+
+        <!-- 11. Documented Testing Scope -->
+        <tr>
+          <th scope="row" class="sticky-metric-col px-2.5 sm:px-3 py-3 font-semibold text-[#000000] bg-white border-r border-[#e6e6e6] text-[11px] sm:text-xs leading-snug">
+            Quality Testing Scope<br />
+            <span class="font-normal text-[9.5px] sm:text-[10px] text-[#615d59] leading-tight block mt-0.5">(Verified Standards)</span>
+          </th>
+          <td class="win-col p-3 text-center bg-[#f0f7ff] border-l-2 border-r-2 border-[#0075de] text-[11px] leading-snug">
+            <span class="font-bold text-[#0075de] block mb-1">
+              {topRanked.qualityTesting.badgeText}
+            </span>
+            <span class="text-[10px] text-[#615d59] block">
+              Finished seal: {topRanked.finishedProductCertification.badgeText}
+            </span>
+            {topRanked.qualityTesting.sourceLink && (
+              <a
+                href={topRanked.qualityTesting.sourceLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-block mt-1 text-[10px] text-[#0075de] underline hover:text-[#005bab]"
+              >
+                View Source ↗
+              </a>
+            )}
+          </td>
+          {otherProducts.map((p) => (
+            <td class="p-3 text-center border-r border-[#e6e6e6] last:border-r-0 text-[11px] leading-snug">
+              <span class="font-semibold text-[#31302e] block mb-1">
+                {p.qualityTesting.badgeText}
+              </span>
+              <span class="text-[10px] text-[#615d59] block">
+                Finished seal: {p.finishedProductCertification.badgeText}
+              </span>
+              {p.qualityTesting.sourceLink && (
+                <a
+                  href={p.qualityTesting.sourceLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-block mt-1 text-[10px] text-[#0075de] underline hover:text-[#005bab]"
+                >
+                  View Source ↗
+                </a>
+              )}
+            </td>
+          ))}
+        </tr>
+
+        <!-- 12. Country of Manufacture / Facility -->
+        <tr>
+          <th scope="row" class="sticky-metric-col px-2.5 sm:px-3 py-3 font-semibold text-[#000000] bg-white border-r border-[#e6e6e6] text-[11px] sm:text-xs leading-snug">
+            Facility / Location
+          </th>
+          <td class="win-col p-3 text-center bg-[#f0f7ff] border-l-2 border-r-2 border-[#0075de] text-[11px]">
+            {topRanked.manufactureLocation}
+          </td>
+          {otherProducts.map((p) => (
+            <td class="p-3 text-center border-r border-[#e6e6e6] last:border-r-0 text-[11px]">
+              {p.manufactureLocation}
+            </td>
+          ))}
+        </tr>
+
+        <!-- 13. RUBRIC SCORE / EDITORIAL RANK -->
+        <tr class="bg-[#000000] text-white">
+          <th
+            scope="row"
+            class="sticky-metric-col px-2.5 sm:px-3 py-3 sm:py-4 text-[11px] sm:text-xs font-bold uppercase tracking-[0.1em] text-white bg-[#000000] border-r border-[#262626] leading-snug"
+          >
+            RUBRIC SCORE<br />
+            <span class="text-[9.5px] sm:text-[10px] font-normal text-white/70 normal-case block mt-0.5">(Out of 100 pts)</span>
+          </th>
+          <!-- Top Ranked Cell -->
+          <td
+            class="win-col p-4 text-center bg-[#000000] border-l-2 border-r-2 border-b-2 border-[#0075de]"
+          >
+            <div class="font-serif text-3xl font-bold text-white leading-none">
+              {topRanked.rubricScore}
+            </div>
+            <span class="text-[9px] uppercase tracking-wider text-[#0075de] font-bold block mt-1">
+              {topRanked.rankBadge} · TOP RANK
+            </span>
+            <span class="text-[8.5px] text-white/60 block mt-0.5 tracking-tight font-mono">
+              {topRanked.rubricBreakdown.labelClarity} | {topRanked.rubricBreakdown.testingScope} | {topRanked.rubricBreakdown.sourceTraceability} | {topRanked.rubricBreakdown.priceTransparency}
+            </span>
+          </td>
+          {otherProducts.map((p) => (
+            <td class="p-4 text-center border-r border-[#262626] last:border-r-0 bg-[#000000]">
+              <div class="font-serif text-3xl font-normal text-white leading-none">
+                {p.rubricScore}
+              </div>
+              <span class="text-[9px] uppercase tracking-wider text-white/60 font-semibold block mt-1">
+                {p.rankBadge}
+              </span>
+              <span class="text-[8.5px] text-white/40 block mt-0.5 tracking-tight font-mono">
+                {p.rubricBreakdown.labelClarity} | {p.rubricBreakdown.testingScope} | {p.rubricBreakdown.sourceTraceability} | {p.rubricBreakdown.priceTransparency}
+              </span>
+            </td>
+          ))}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="flex flex-wrap items-center justify-between text-xs text-[#615d59] px-1 pt-1 gap-2">
+    <div>
+      <strong>Editorial Standard:</strong> Review of 5 retail products based on manufacturer labels and public documentation.
+    </div>
+    <a href="#ranking-methodology" class="text-[#0075de] hover:underline font-semibold">
+      Read Complete Scoring Rubric &amp; Tie Rules →
+    </a>
+  </div>
+</div>
+
+<style>
+  .table-product-img-box {
+    height: 80px !important;
+    height: 112px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    position: relative !important;
+  }
+  .table-product-img {
+    height: 76px !important;
+    max-height: 76px !important;
+    width: auto !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+    display: block !important;
+    margin: 0 auto !important;
+    flex-shrink: 0 !important;
+  }
+  .win-col {
+    box-shadow: inset 0 0 0 1px rgba(0, 117, 222, 0.08);
+  }
+  .sticky-metric-col {
+    position: sticky;
+    left: 0;
+    z-index: 20;
+    box-shadow: 2px 0 6px -1px rgba(0, 0, 0, 0.08);
+    word-break: normal;
+    overflow-wrap: break-word;
+  }
+  .table-scroll-container {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .table-scroll-container::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+</style>

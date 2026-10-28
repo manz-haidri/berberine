@@ -1,0 +1,54 @@
+---
+export interface Props {
+  variant?: "banner" | "callout" | "compact";
+  title?: string;
+  reviewedDate?: string;
+}
+
+const { 
+  variant = "banner", 
+  title = "Medical & Scientific Evidence Disclaimer",
+  reviewedDate = "October 2026 (Research & Product Audit)"
+} = Astro.props;
+---
+
+{variant === "banner" && (
+  <div class="bg-[#fcf8f2] border-b border-[#ebdccb] text-[#523410] py-2 px-3 sm:py-2.5 sm:px-4 text-xs font-normal">
+    <div class="site-container flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-start gap-2">
+        <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-[#dd5b00] text-white font-bold text-[10px] shrink-0 mt-0.5" aria-hidden="true">i</span>
+        <p class="m-0 leading-snug">
+          <strong class="font-semibold text-[#31302e]">Scientific Research Portal:</strong> Content is strictly for educational, informational, and research analysis. Not intended as medical advice or treatment.
+        </p>
+      </div>
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-[#615d59] text-[11px] sm:text-xs">
+        <span>Domain: <strong class="text-[#31302e]">berberinebenefit.com</strong></span>
+        <span class="hidden sm:inline">•</span>
+        <span>Evidence Audit: <strong class="text-[#31302e]">{reviewedDate}</strong></span>
+      </div>
+    </div>
+  </div>
+)}
+
+{variant === "callout" && (
+  <aside class="my-6 p-4 rounded-xl border border-[#e6cbb2] bg-[#fffaf5] text-[#31302e]" aria-label="Medical Disclaimer">
+    <div class="flex items-start gap-3">
+      <div class="text-[#dd5b00] font-bold text-lg leading-none mt-0.5" aria-hidden="true">⚠</div>
+      <div class="space-y-1 text-sm leading-relaxed">
+        <div class="font-semibold text-[#523410] text-sm uppercase tracking-wider">{title}</div>
+        <p class="text-[#31302e] m-0">
+          Berberine is a biologically active isoquinoline alkaloid with documented effects on drug-metabolizing enzymes (CYP450) and transport proteins. It is <strong>not</strong> an FDA-approved replacement for prescription treatments such as metformin, statins, or GLP-1 receptor agonists. 
+        </p>
+        <p class="text-[#615d59] text-xs m-0 pt-1">
+          Never initiate, discontinue, or alter prescription medications without consulting a board-certified physician. Strict contraindications apply to pregnant individuals, nursing mothers, and newborns.
+        </p>
+      </div>
+    </div>
+  </aside>
+)}
+
+{variant === "compact" && (
+  <div class="p-3 rounded-lg border border-[#e6e6e6] bg-[#f6f5f4] text-xs text-[#615d59]">
+    <span class="font-semibold text-[#31302e]">Note:</span> Laboratory biological markers (e.g., blood glucose or transaminases) represent surrogate measurements and do not establish long-term clinical outcome prevention.
+  </div>
+)}

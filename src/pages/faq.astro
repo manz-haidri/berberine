@@ -1,0 +1,64 @@
+---
+import Layout from '../layouts/Layout.astro';
+import FaqSection from '../components/FaqSection.astro';
+import MedicalDisclaimer from '../components/MedicalDisclaimer.astro';
+---
+
+<Layout
+  title="Berberine FAQs: 20 Clinical Questions Answered"
+  description="Evidence-backed answers to 20 top clinical questions on berberine: mechanisms, dosage timing, blood sugar, kidney safety, side effects, and weight loss."
+>
+  <!-- Header Banner -->
+  <header class="bg-white border-b border-[#e6e6e6] py-8">
+    <div class="site-container">
+      <nav class="text-xs text-[#615d59] mb-3" aria-label="Breadcrumb">
+        <ol class="flex items-center gap-1.5 list-none p-0 m-0">
+          <li><a href="/" class="hover:text-[#0075de]">Home</a></li>
+          <li>/</li>
+          <li class="text-[#000000] font-medium" aria-current="page">Frequently Asked Questions</li>
+        </ol>
+      </nav>
+      <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#0075de]/10 text-[#0075de] text-xs font-semibold mb-3">
+        Evidence-Based FAQ Repository
+      </div>
+      <h1 class="display-2 text-[#000000] tracking-tight m-0">
+        Frequently Asked Questions About Berberine
+      </h1>
+      <p class="body-md text-[#615d59] mt-3 max-w-3xl">
+        Clear, clinically referenced answers to the top 20 questions regarding berberine mechanisms, metabolic efficacy, formulation differences, dosage timing, kidney safety, and weight loss reality.
+      </p>
+    </div>
+  </header>
+
+  <!-- Complete FAQ Section with JSON-LD Schema & Live Search Filter -->
+  <FaqSection
+    id="all-faqs"
+    title="Browse Clinical Q&As by Category"
+    subtitle="Filter or search below to explore concise answers verified against randomized controlled trials."
+    includeSchema={true}
+  />
+
+  <!-- Outbound Navigation & Medical Disclaimer -->
+  <div class="site-container pb-16">
+    <div class="max-w-4xl mx-auto space-y-8">
+      <div class="p-5 sm:p-6 rounded-2xl bg-[#f6f5f4] border border-[#e6e6e6] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+          <h3 class="text-base font-bold text-[#000000] m-0">Need deeper scientific data?</h3>
+          <p class="text-xs text-[#615d59] mt-1 m-0">
+            Explore our complete research paper summaries, author indexes, and product comparison tables.
+          </p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2 shrink-0 w-full sm:w-auto">
+          <a href="/research/" class="btn-utility text-xs py-2 px-3.5 flex-1 sm:flex-initial justify-center min-h-[38px]">
+            Research Library
+          </a>
+          <a href="/supplements/" class="btn-primary text-xs py-2 px-4 flex-1 sm:flex-initial justify-center min-h-[38px]">
+            Compare Supplements
+          </a>
+        </div>
+      </div>
+
+      <MedicalDisclaimer variant="callout" />
+    </div>
+  </div>
+</Layout>

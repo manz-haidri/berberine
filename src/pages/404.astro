@@ -1,0 +1,116 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const quickLinks = [
+  {
+    title: "About Berberine",
+    desc: "Botanical sources, isoquinoline alkaloid chemistry, and AMPK cellular mechanics.",
+    href: "/what-is-berberine/",
+    icon: "🧬"
+  },
+  {
+    title: "Clinical Benefits & Trials",
+    desc: "Meta-analyses on fasting blood glucose, HbA1c, lipids, and liver transaminases.",
+    href: "/benefits/",
+    icon: "📈"
+  },
+  {
+    title: "Compare Verified Supplements",
+    desc: "5-pillar mathematical evaluation, HCl vs Phytosome, and dosage math.",
+    href: "/supplements/",
+    icon: "💊"
+  },
+  {
+    title: "Weight Loss Investigation",
+    desc: "Vahed et al. (2026) meta-analysis evaluating 'Nature's Ozempic' claims.",
+    href: "/weight-loss/",
+    icon: "⚖️"
+  },
+  {
+    title: "Safety & Medication Interactions",
+    desc: "Ju et al. (2018) tolerability data, CYP3A4 inhibition, and contraindications.",
+    href: "/safety-and-side-effects/",
+    icon: "⚠️"
+  },
+  {
+    title: "Frequently Asked Questions",
+    desc: "Evidence-based answers to common dosage, timing, and formulation questions.",
+    href: "/faq/",
+    icon: "❓"
+  }
+];
+---
+
+<Layout
+  title="404 - Page Not Found | Berberine Research Portal"
+  description="The clinical resource or page you requested could not be found. Explore our scientific library, supplement comparison, or safety guide."
+  robots="noindex, nofollow"
+  isMedicalPage={false}
+>
+  <div class="site-container py-16 sm:py-24">
+    <div class="max-w-3xl mx-auto text-center space-y-8">
+      
+      <!-- Scientific 404 Visual Indicator -->
+      <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-[#f0f7ff] dark:bg-[#0c1a2e] border border-[#b8daff] dark:border-[#1e3a63] text-3xl shadow-xs">
+        🔬
+      </div>
+
+      <div class="space-y-3">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-[#dd5b00]/10 text-[#dd5b00] dark:bg-[#dd5b00]/20 border border-[#dd5b00]/25">
+          HTTP 404 • Resource Not Located
+        </div>
+        <h1 class="display-2 text-[#000000] dark:text-[#f8fafc] tracking-tight m-0">
+          Clinical Resource Not Found
+        </h1>
+        <p class="body-md text-[#615d59] dark:text-[#94a3b8] max-w-xl mx-auto leading-relaxed">
+          The page or trial analysis you are looking for might have been relocated, renamed during an evidence audit, or does not exist.
+        </p>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+        <a href="/" class="btn-primary text-xs sm:text-sm py-2.5 px-6 font-semibold">
+          Return to Homepage
+        </a>
+        <a href="/research/" class="btn-secondary text-xs sm:text-sm py-2.5 px-6 font-semibold">
+          Search Research Library
+        </a>
+      </div>
+
+      <!-- Core Research Portals Quick Grid -->
+      <div class="pt-10 text-left border-t border-[#e6e6e6] dark:border-[#262626]">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-[#615d59] dark:text-[#94a3b8] mb-4 text-center">
+          Or Navigate Directly to a Research Pillar
+        </h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {quickLinks.map((link) => (
+            <a
+              href={link.href}
+              class="card-hoverable p-4 rounded-xl bg-white dark:bg-[#0d0d0d] border border-[#e6e6e6] dark:border-[#262626] shadow-2xs group flex flex-col justify-between"
+            >
+              <div class="space-y-1.5">
+                <div class="text-xl">{link.icon}</div>
+                <div class="text-xs font-bold text-[#000000] dark:text-[#f8fafc] group-hover:text-[#0075de] dark:group-hover:text-[#389bf2] transition-colors">
+                  {link.title}
+                </div>
+                <div class="text-[11px] text-[#615d59] dark:text-[#94a3b8] leading-relaxed">
+                  {link.desc}
+                </div>
+              </div>
+              <div class="mt-3 text-[11px] font-semibold text-[#0075de] dark:text-[#389bf2] inline-flex items-center gap-1">
+                Explore Pillar <span class="card-arrow inline-block transition-transform duration-200">→</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Broken link reporting footer note -->
+      <div class="pt-6 text-xs text-[#615d59] dark:text-[#94a3b8]">
+        Think this link is broken or should exist? Please <a href="/contact/" class="text-[#0075de] dark:text-[#389bf2] underline">notify our editorial team</a> with the URL.
+      </div>
+
+    </div>
+  </div>
+</Layout>

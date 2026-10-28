@@ -1,23 +1,290 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '../styles/global.css';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+export interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
+export interface Props {
+  title: string;
+  description?: string;
+  canonical?: string;
+  type?: string;
+  image?: string;
+  datePublished?: string;
+  dateModified?: string;
+  robots?: string;
+  isMedicalPage?: boolean;
+  breadcrumbs?: BreadcrumbItem[];
+  additionalSchemas?: Record<string, any>[];
+}
+
+const {
+  title,
+  description = "A comprehensive, research-backed medical and scientific guide to Berberine (berberinebenefit.com). Exploring clinical meta-analyses, blood sugar regulation, lipids, liver enzymes, and safety.",
+  canonical,
+  type = "website",
+  image = "/images/og-image.png",
+  datePublished,
+  dateModified,
+  robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+  isMedicalPage = true,
+  breadcrumbs,
+  additionalSchemas = []
+} = Astro.props;
+
+const fullTitle = title.includes("Berberine") ? title : `${title} | Berberine Research Portal`;
+const siteUrl = "https://berberinebenefit.com";
+
+// Normalize canonical URL to strictly enforce trailing slash for directory routes
+let cleanCanonical = canonical || Astro.url.href;
+if (cleanCanonical.startsWith("/")) {
+  cleanCanonical = `${siteUrl}${cleanCanonical}`;
+}
+if (!cleanCanonical.endsWith("/") && !cleanCanonical.split("/").pop()?.includes(".")) {
+  cleanCanonical = `${cleanCanonical}/`;
+}
+
+const fullImageUrl = image.startsWith("http") ? image : `${siteUrl}${image.startsWith("/") ? image : `/${image}`}`;
+
+// Organization entity definition (reused across WebSite and MedicalWebPage)
+const organizationSchema = {
+  "@type": "Organization",
+  "@id": "https://berberinebenefit.com/#organization",
+  "name": "Berberine Research Portal",
+  "url": "https://berberinebenefit.com/",
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://berberinebenefit.com/images/logo.svg"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "editorial",
+    "url": "https://berberinebenefit.com/contact/"
+  }
+};
+
+// Main page schema: MedicalWebPage for clinical/scientific pages, WebPage for legal/about/contact/error
+const pageSchema: Record<string, any> = isMedicalPage
+  ? {
+      "@type": "MedicalWebPage",
+      "@id": `${cleanCanonical}#webpage`,
+      "url": cleanCanonical,
+      "name": fullTitle,
+      "description": description,
+      "isPartOf": {
+        "@id": "https://berberinebenefit.com/#website"
+      },
+      "publisher": {
+        "@id": "https://berberinebenefit.com/#organization"
+      },
+      "about": [
+        {
+          "@type": "MedicalEntity",
+          "name": "Berberine",
+          "code": {
+            "@type": "MedicalCode",
+            "code": "C0005085",
+            "codingSystem": "UMLS"
+          }
+        }
+      ],
+      "medicalAudience": "Patients, Researchers, Healthcare Consumers"
+    }
+  : {
+      "@type": "WebPage",
+      "@id": `${cleanCanonical}#webpage`,
+      "url": cleanCanonical,
+      "name": fullTitle,
+      "description": description,
+      "isPartOf": {
+        "@id": "https://berberinebenefit.com/#website"
+      },
+      "publisher": {
+        "@id": "https://berberinebenefit.com/#organization"
+      }
+    };
+
+if (datePublished) {
+  pageSchema.datePublished = datePublished;
+}
+if (dateModified) {
+  pageSchema.dateModified = dateModified;
+}
+
+// Build BreadcrumbList schema for subpages
+const isHomePage = cleanCanonical === "https://berberinebenefit.com/" || cleanCanonical === "https://berberinebenefit.com";
+const breadcrumbItems: BreadcrumbItem[] = breadcrumbs || (isHomePage ? [] : [
+  { name: "Home", url: "https://berberinebenefit.com/" },
+  { name: title.replace(/ \| Berberine.*$/, "").replace(/ \| berberine.*$/, ""), url: cleanCanonical }
+]);
+
+const breadcrumbSchema = breadcrumbItems.length > 1 ? {
+  "@type": "BreadcrumbList",
+  "@id": `${cleanCanonical}#breadcrumb`,
+  "itemListElement": breadcrumbItems.map((item, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": item.name,
+    "item": item.url.startsWith("http") ? item.url : `${siteUrl}${item.url.startsWith("/") ? item.url : `/${item.url}`}`
+  }))
+} : null;
+
+const schemaGraph = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://berberinebenefit.com/#website",
+      "url": "https://berberinebenefit.com/",
+      "name": "Berberine Research Portal",
+      "description": "Evidence-backed medical and scientific guide to berberine: clinical meta-analyses, blood sugar regulation, lipids, liver enzymes, and supplement evaluations.",
+      "publisher": {
+        "@id": "https://berberinebenefit.com/#organization"
+      }
+    },
+    organizationSchema,
+    pageSchema,
+    ...(breadcrumbSchema ? [breadcrumbSchema] : []),
+    ...additionalSchemas
+  ]
+};
+---
+
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="format-detection" content="telephone=no" />
+    <!-- Favicons & App Icons -->
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Berberine" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="canonical" href={cleanCanonical} />
+    <meta name="generator" content={Astro.generator} />
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+    <!-- SEO Meta Tags -->
+    <title>{fullTitle}</title>
+    <meta name="title" content={fullTitle} />
+    <meta name="description" content={description} />
+    <meta name="author" content="Berberine Research Editorial Team" />
+    <meta name="robots" content={robots} />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content="Berberine Research Portal (berberinebenefit.com)" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={cleanCanonical} />
+    <meta property="og:image" content={fullImageUrl} />
+    <meta property="og:image:secure_url" content={fullImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Berberine Research Portal: Clinical Evidence, Benefits & Supplement Comparison" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={fullImageUrl} />
+    <meta name="twitter:image:alt" content="Berberine Research Portal: Clinical Evidence, Benefits & Supplement Comparison" />
+
+    <!-- AI Agent Discovery (llms.txt and llms-full.txt) & XML Sitemap -->
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Agent Context" />
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="LLM Full Knowledge Base" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Google Fonts with Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+
+    <!-- JSON-LD Structured Data Schema for AI Search & Google Rich Results -->
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
+
+    <!-- Theme Color for Browser Chrome (Supports OLED Black on mobile) -->
+    <meta name="theme-color" content="#ffffff" id="meta-theme-color" />
+
+    <!-- Dark/Light Theme Initialization (Zero-FOUC) & Global State Engine -->
+    <script is:inline>
+      (function() {
+        function applyTheme(isDark) {
+          if (isDark) {
+            document.documentElement.classList.add('dark');
+            document.documentElement.setAttribute('data-theme', 'dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.setAttribute('data-theme', 'light');
+          }
+          var meta = document.getElementById('meta-theme-color');
+          if (meta) {
+            meta.setAttribute('content', isDark ? '#000000' : '#ffffff');
+          }
+        }
+
+        function getStoredTheme() {
+          try {
+            const saved = localStorage.getItem('theme');
+            if (saved === 'dark' || saved === 'light') return saved;
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          } catch (_) {
+            return 'light';
+          }
+        }
+
+        function initTheme() {
+          const current = getStoredTheme();
+          applyTheme(current === 'dark');
+        }
+
+        window.__toggleTheme = function() {
+          const isDark = document.documentElement.classList.contains('dark') || document.documentElement.getAttribute('data-theme') === 'dark';
+          const nextDark = !isDark;
+          applyTheme(nextDark);
+          try {
+            localStorage.setItem('theme', nextDark ? 'dark' : 'light');
+          } catch (_) {}
+          window.dispatchEvent(new CustomEvent('theme-change', { detail: { isDark: nextDark } }));
+          return nextDark;
+        };
+
+        // Immediate Zero-FOUC execution before body renders
+        initTheme();
+
+        // Preserve and re-apply on ClientRouter page transitions
+        document.addEventListener('astro:after-swap', initTheme);
+      })();
+    </script>
+
+    <!-- Astro ClientRouter for smooth SPA navigation without FOUC or reload flashes -->
+    <ClientRouter />
+  </head>
+  <body>
+    <!-- Skip to Main Content Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Sticky Navigation Bar (Free of Top Banner) -->
+    <Navbar />
+
+    <!-- Main Content Landmark -->
+    <main id="main-content" class="flex-grow">
+      <slot />
+    </main>
+
+    <!-- Rich Scientific Footer -->
+    <Footer />
+  </body>
+</html>

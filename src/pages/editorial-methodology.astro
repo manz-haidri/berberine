@@ -1,0 +1,232 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MedicalDisclaimer from '../components/MedicalDisclaimer.astro';
+import EvidenceBadge from '../components/EvidenceBadge.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+
+const tocItems = [
+  { id: "source-selection", label: "1. Scientific Source Selection & Evidence Hierarchy" },
+  { id: "evidence-levels", label: "2. Evidence Confidence Classification System" },
+  { id: "dates-policy", label: "3. Publication Dates vs Review Dates Policy" },
+  { id: "independence", label: "4. Commercial Independence & Advertising Disclosures" },
+  { id: "glossary", label: "5. Scientific Glossary in Plain Language" },
+  { id: "corrections", label: "6. Corrections, Errata & Scientific Updates" }
+];
+
+const evidenceLevels = [
+  {
+    level: "promising" as const,
+    badgeText: "Promising Clinical Evidence",
+    definition: "Supported by multiple randomized, double-blind, placebo-controlled human clinical trials or systematic reviews and meta-analyses showing statistically significant improvements in verified clinical endpoints.",
+    criteria: "Minimum of 2 independent RCTs or systematic review; low risk of bias; clinically relevant effect size.",
+    example: "Fasting blood glucose, HbA1c, LDL cholesterol, and serum triglyceride reductions."
+  },
+  {
+    level: "preliminary" as const,
+    badgeText: "Preliminary / Encouraging Data",
+    definition: "Supported by smaller clinical trials, pilot studies, or trials measuring surrogate biomarkers (e.g., circulating liver transaminases) without histological confirmation or hard endpoint verification.",
+    criteria: "Human pilot studies, open-label cohorts, or surrogate laboratory endpoints; requires larger confirmatory RCTs.",
+    example: "Liver transaminase (ALT/AST) reductions in non-alcoholic fatty liver disease (NAFLD/MASLD)."
+  },
+  {
+    level: "limited" as const,
+    badgeText: "Limited / Inconsistent Evidence",
+    definition: "Findings show conflicting outcomes between trials, modest effect sizes that fail to meet clinical thresholds, or data restricted to specific comorbid cohorts that cannot be generalized.",
+    criteria: "High study heterogeneity; conflicting results; small effect magnitude (e.g., <1 kg weight loss).",
+    example: "General adult obesity monotherapy weight loss (Vahed et al., 2026; Lei et al., 2026)."
+  },
+  {
+    level: "none" as const,
+    badgeText: "Insufficient / Not Established",
+    definition: "Lacks peer-reviewed human clinical trials or pharmacokinetic validation in human subjects. Includes unverified commercial delivery formats and unsubstantiated marketing claims.",
+    criteria: "Absence of published human trial data, or biological plausibility contradicted by pharmacological physics.",
+    example: "Transdermal berberine skin patches, long-term cardiovascular outcome prevention (heart attacks/strokes)."
+  },
+  {
+    level: "warning" as const,
+    badgeText: "Documented Safety Flag / Contraindication",
+    definition: "Documented clinical contraindications, significant adverse events, or high-risk drug-drug interactions requiring strict medical surveillance.",
+    criteria: "Known enzyme inhibition (CYP3A4/CYP2D6), displacement of plasma proteins (e.g. bilirubin), or teratogenic/uterine stimulation risks.",
+    example: "Pregnancy, nursing, neonatal exposure, and co-administration with narrow therapeutic index medications (cyclosporine, tacrolimus)."
+  }
+];
+
+const scientificGlossary = [
+  {
+    term: "AMPK (AMP-Activated Protein Kinase)",
+    plainLanguage: "The cellular 'master energy sensor.' Inside cells, AMPK detects energy levels. When activated, it signals muscle cells to absorb and burn glucose (partially independent of insulin) and tells liver cells to slow down fat production."
+  },
+  {
+    term: "HbA1c (Hemoglobin A1c / Glycated Hemoglobin)",
+    plainLanguage: "A standard blood test reflecting average blood sugar levels over the past 2 to 3 months. When blood sugar drops, HbA1c changes are measured in 'percentage points' (e.g., decreasing from 8.0% to 7.5% is a 0.5 percentage point drop)."
+  },
+  {
+    term: "HOMA-IR (Homeostatic Model Assessment of Insulin Resistance)",
+    plainLanguage: "A calculated score derived from fasting blood glucose and fasting insulin. A lower score indicates that the body's cells respond more efficiently to insulin, whereas a higher score indicates greater insulin resistance."
+  },
+  {
+    term: "SMD (Standardized Mean Difference)",
+    plainLanguage: "A statistical metric used in meta-analyses when different studies measure an outcome using slightly different scales or tests. An SMD of −0.58 indicates a moderate relative drop compared to baseline variation, but it does not mean an exact 0.58-unit decrease for every patient."
+  },
+  {
+    term: "Bioavailability",
+    plainLanguage: "The fraction of an ingested compound that successfully enters systemic circulation in intact, biologically active form. Pharmacokinetic evaluations consistently report low systemic oral bioavailability for standard berberine (often estimated under 5% intact compound due to poor intestinal permeability, P-glycoprotein efflux, and hepatic metabolism), indicating that substantial biological activity occurs locally within the gastrointestinal tract and through gut microbiota interactions."
+  }
+];
+---
+
+<Layout
+  title="Editorial Methodology & Evidence Standards | Berberine Portal"
+  description="Transparent editorial standards: scientific evidence hierarchy, fact-checking protocols, commercial independence, and review frequency for berberine research."
+>
+  <!-- Header Banner -->
+  <header class="bg-white border-b border-[#e6e6e6] py-8">
+    <div class="site-container">
+      <nav class="text-xs text-[#615d59] mb-3" aria-label="Breadcrumb">
+        <ol class="flex items-center gap-1.5 list-none p-0 m-0">
+          <li><a href="/" class="hover:text-[#0075de]">Home</a></li>
+          <li>/</li>
+          <li class="text-[#000000] font-medium" aria-current="page">Editorial Methodology</li>
+        </ol>
+      </nav>
+      <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#213183]/10 text-[#213183] text-xs font-semibold mb-3">
+        Scientific Integrity & Editorial Transparency
+      </div>
+      <h1 class="display-2 text-[#000000] tracking-tight m-0">
+        Editorial Standards & Evidence Evaluation Policy
+      </h1>
+      <p class="body-md text-[#615d59] mt-3 max-w-3xl">
+        How we evaluate medical literature, assign evidence confidence ratings, maintain complete financial independence from supplement manufacturers, and translate clinical pharmacology into plain language.
+      </p>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <div class="site-container py-12">
+    <div class="max-w-4xl mx-auto space-y-12">
+      <!-- Mobile / iPad Collapsible Table of Contents -->
+      <TableOfContents items={tocItems} title="Methodology Navigation" mobileInline={true} />
+
+      <!-- 1. Source Selection & Evidence Hierarchy -->
+      <section id="source-selection" class="space-y-4">
+        <h2 class="heading-1 text-[#000000] tracking-tight">
+          1. Scientific Source Selection & Evidence Hierarchy
+        </h2>
+        <div class="body-md text-[#31302e] space-y-3 leading-relaxed">
+          <p>
+            To provide accurate, reliable healthcare analysis, our synthesis adheres to established epidemiological evidence hierarchies. We source literature directly from <strong>PubMed (NLM/NIH), publisher digital object identifiers (DOIs), and international clinical trial registries</strong> (such as ClinicalTrials.gov and ChiCTR).
+          </p>
+          <p>
+            We strictly enforce the following distinctions across all content:
+          </p>
+          <ul class="list-disc pl-5 space-y-2 text-sm">
+            <li><strong>Randomized Double-Blind Trials (RCTs):</strong> Considered the primary clinical benchmark for efficacy and safety. Within-group baseline changes are strictly separated from placebo-controlled between-group effect sizes.</li>
+            <li><strong>Systematic Reviews & Meta-Analyses:</strong> Evaluated for study heterogeneity (I² statistic), publication bias, and trial cohort overlap. Participant counts from overlapping reviews are never added together.</li>
+            <li><strong>Pharmacokinetic & Absorption Studies:</strong> We explicitly distinguish increased blood absorption from proven patient health benefits. An improved absorption profile in healthy volunteers does <em>not</em> prove superior clinical disease outcomes.</li>
+            <li><strong>Supplement Potency & Quality Testing:</strong> Analytical laboratory testing (such as HPLC testing by Funk et al., 2018) verifies chemical purity and label accuracy, but does <em>not</em> prove clinical efficacy.</li>
+            <li><strong>Preclinical Animal & Cell Experiments:</strong> Human health benefits are never inferred from petri-dish cell cultures or rodent models. Animal mechanisms (such as Lee et al., 2006) are reported solely to explain biological pathways.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 2. Evidence Strength Classification System -->
+      <section id="evidence-levels" class="space-y-4 pt-6 border-t border-[#e6e6e6]">
+        <h2 class="heading-1 text-[#000000] tracking-tight">
+          2. Evidence Confidence Classification System
+        </h2>
+        <p class="body-md text-[#615d59]">
+          Every health claim and outcome analyzed across our portal is assigned a standardized evidence level based on the quality and consistency of available clinical data:
+        </p>
+
+        <div class="space-y-4 pt-2">
+          {evidenceLevels.map((item) => (
+            <div class="card-hoverable p-4 rounded-xl bg-white border border-[#e6e6e6] shadow-xs">
+              <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                <EvidenceBadge level={item.level} text={item.badgeText} size="sm" />
+                <span class="text-xs font-mono text-[#615d59] uppercase">{item.level} tier</span>
+              </div>
+              <p class="text-sm text-[#31302e] font-medium mb-2">
+                {item.definition}
+              </p>
+              <div class="text-xs text-[#615d59] space-y-1 bg-[#fcfbfa] p-2.5 rounded border border-[#f0ede9]">
+                <div><strong class="text-[#31302e]">Inclusion Threshold:</strong> {item.criteria}</div>
+                <div><strong class="text-[#31302e]">Clinical Example:</strong> {item.example}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- 3. Dates Policy & Content Updates -->
+      <section id="dates-policy" class="space-y-4 pt-6 border-t border-[#e6e6e6]">
+        <h2 class="heading-1 text-[#000000] tracking-tight">
+          3. Publication Dates vs Review Dates Policy
+        </h2>
+        <div class="body-md text-[#31302e] space-y-3 leading-relaxed">
+          <p>
+            We maintain strict transparency between when an academic paper was originally published and when our editorial team audited and incorporated the research:
+          </p>
+          <ul class="list-disc pl-5 space-y-1.5 text-sm">
+            <li><strong>Publication Date:</strong> Reflects the peer-reviewed journal's formal issue or online release date (e.g., Lei et al. in JAMA Network Open, January 2026).</li>
+            <li><strong>Content Review Date:</strong> Updated <em>only</em> after our editorial team has conducted a comprehensive re-audit of the page against original sources, verified retractions or corrections, and updated our analytical commentary. We never automatically stamp the current calendar date on unreviewed pages.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 4. Commercial Independence & Affiliate Policy -->
+      <section id="independence" class="space-y-4 pt-6 border-t border-[#e6e6e6]">
+        <h2 class="heading-1 text-[#000000] tracking-tight">
+          4. Commercial Independence & Advertising Disclosures
+        </h2>
+        <div class="body-md text-[#31302e] space-y-3 leading-relaxed">
+          <p>
+            Our research evaluations are completely independent of commercial dietary supplement manufacturers:
+          </p>
+          <ul class="list-disc pl-5 space-y-1.5 text-sm">
+            <li><strong>No Paid Editorial Placements:</strong> We do not accept payment, free product samples, or sponsorship from supplement brands to review, praise, or feature specific products.</li>
+            <li><strong>No Unsubstantiated 'Best' Awards:</strong> We do not award unsupported badges such as 'Best Overall', 'Most Effective', or 'Safest'. Rankings, when present, are labeled strictly by verified formulation criteria and third-party certifications.</li>
+            <li><strong>Outbound Retailer Links:</strong> When outbound retailer links are provided for consumer convenience, our editorial evaluation remains strictly insulated from commercial relationships. Any affiliate commissions received do not influence product evaluation or inclusion.</li>
+            <li><strong>No On-Site Checkout:</strong> We do not sell products directly, collect payment details, or store consumer financial information.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 5. Scientific Terms Explained in Plain Language -->
+      <section id="glossary" class="space-y-4 pt-6 border-t border-[#e6e6e6]">
+        <h2 class="heading-1 text-[#000000] tracking-tight">
+          5. Scientific Glossary in Plain Language
+        </h2>
+        <p class="body-md text-[#615d59]">
+          Key biochemical and epidemiological terms explained without jargon:
+        </p>
+
+        <div class="grid grid-cols-1 gap-3 pt-2">
+          {scientificGlossary.map((g) => (
+            <div class="card-hoverable p-4 rounded-xl bg-white border border-[#e6e6e6]">
+              <h3 class="text-sm font-bold text-[#000000] mb-1">{g.term}</h3>
+              <p class="text-xs text-[#31302e] leading-relaxed m-0">{g.plainLanguage}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- 6. Corrections & Errata Policy -->
+      <section id="corrections" class="space-y-4 pt-6 border-t border-[#e6e6e6]">
+        <h2 class="heading-1 text-[#000000] tracking-tight">
+          6. Corrections, Errata & Scientific Updates
+        </h2>
+        <div class="body-md text-[#31302e] space-y-3 leading-relaxed">
+          <p>
+            Scientific understanding evolves as new randomized clinical trials and systematic reviews are published. When newer high-quality evidence contradicts earlier pilot findings—such as recent large trials demonstrating neutral effects on visceral adipose tissue—we transparently update our evidence tables and explain the discrepancies.
+          </p>
+          <p>
+            If a factual error or statistical inconsistency is identified, our policy is to promptly verify against primary publisher records and publish a transparent correction.
+          </p>
+        </div>
+      </section>
+
+      <!-- Mandatory Medical Disclaimer -->
+      <MedicalDisclaimer variant="callout" />
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,89 @@
+---
+// RankingMethodology.astro: Transparent, reproducible editorial rubric
+---
+
+<div class="bg-white rounded-2xl border border-[#e6e6e6] p-6 lg:p-8 space-y-6 shadow-soft">
+  <div class="border-b border-[#f0ede9] pb-4">
+    <div class="inline-flex items-center gap-2 text-xs font-bold text-[#0075de] uppercase tracking-wider mb-1">
+      <span>Editorial Transparency</span>
+    </div>
+    <h3 class="heading-2 text-[#000000] tracking-tight m-0">
+      How We Rank: Evaluation Criteria &amp; Reproducible Rubric
+    </h3>
+    <p class="body-sm text-[#615d59] mt-2 max-w-3xl leading-relaxed">
+      Editorial review of five products based on manufacturer labels and publicly available documentation. Our editorial rankings reflect a systematic, reproducible evaluation of documented packaging facts, facility certifications, primary source documentation, and pricing transparency. This is an objective review of available product documentation—<strong>it is not a ranking of proven clinical or medical effectiveness</strong>.
+    </p>
+  </div>
+
+  <!-- Four Objective Rubric Domains -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
+    <!-- Criterion 1 -->
+    <div class="p-4 rounded-xl bg-[#faf9f8] border border-[#f0ede9] space-y-2">
+      <div class="flex items-center justify-between">
+        <span class="font-bold text-[#000000] text-sm">1. Label Clarity &amp; Ingredient Disclosure</span>
+        <span class="badge-pill bg-[#0075de]/15 text-[#005bab] text-[10px] font-bold">Max 25 pts</span>
+      </div>
+      <p class="text-[#31302e] leading-relaxed m-0">
+        We evaluate whether the label explicitly differentiates between total complex mass (e.g., phytosome carrier plus active) and actual berberine alkaloid content. Points are awarded based on whether the actual formulation is clearly disclosed—not simply because a product is single-ingredient. Products disclosing exact standardization percentages (such as 28% active berberine) receive highest clarity marks; formulations that omit active alkaloid yield receive lower scores.
+      </p>
+    </div>
+
+    <!-- Criterion 2 -->
+    <div class="p-4 rounded-xl bg-[#faf9f8] border border-[#f0ede9] space-y-2">
+      <div class="flex items-center justify-between">
+        <span class="font-bold text-[#000000] text-sm">2. Documented Testing &amp; Certification Scope</span>
+        <span class="badge-pill bg-[#0075de]/15 text-[#005bab] text-[10px] font-bold">Max 25 pts</span>
+      </div>
+      <p class="text-[#31302e] leading-relaxed m-0">
+        We rigorously distinguish between facility cGMP certifications (e.g., NSF-audited manufacturing plants), manufacturer-reported in-house testing, manufacturer-reported external laboratory testing, and independent finished-product consumer certifications (e.g., USP Verified or NSF Contents Certified seals in public directories). A facility audit is not finished-product certification, and an absent public certificate does not prove absence of testing.
+      </p>
+    </div>
+
+    <!-- Criterion 3 -->
+    <div class="p-4 rounded-xl bg-[#faf9f8] border border-[#f0ede9] space-y-2">
+      <div class="flex items-center justify-between">
+        <span class="font-bold text-[#000000] text-sm">3. Source Traceability &amp; Consistency</span>
+        <span class="badge-pill bg-[#0075de]/15 text-[#005bab] text-[10px] font-bold">Max 25 pts</span>
+      </div>
+      <p class="text-[#31302e] leading-relaxed m-0">
+        Products must feature direct manufacturer documentation and active retail destinations. Discrepancies between physical packaging, variant options, and digital technical specifications (such as conflicting serving counts or ambiguous ingredient directories) are tracked in our source register and penalize traceability scores.
+      </p>
+    </div>
+
+    <!-- Criterion 4 -->
+    <div class="p-4 rounded-xl bg-[#faf9f8] border border-[#f0ede9] space-y-2">
+      <div class="flex items-center justify-between">
+        <span class="font-bold text-[#000000] text-sm">4. Price &amp; Serving Transparency</span>
+        <span class="badge-pill bg-[#0075de]/15 text-[#005bab] text-[10px] font-bold">Max 25 pts</span>
+      </div>
+      <p class="text-[#31302e] leading-relaxed m-0">
+        We score pricing transparency strictly on documentation completeness: traceable price sources, recorded verification dates, identified bottle package sizes, clear one-time purchase terms, verified capsule/serving math, and unambiguous daily-use directions (including transparent daily cost ranges where applicable). <em>Products are not penalized simply because their price is higher or directions permit a range. Affordability is presented separately as factual cost data without implying equivalent clinical potency or value across differing salt and phytosome formats.</em>
+      </p>
+    </div>
+  </div>
+
+  <!-- Missing Data, Tie-Breaking & Editorial Ethics -->
+  <div class="p-4 rounded-xl bg-[#fcf8f2] border border-[#ebdccb] text-xs text-[#523410] space-y-2 leading-relaxed">
+    <div class="flex items-center gap-2">
+      <span class="font-bold text-[#793400] text-sm">Explicit Scoring Rules, Evidence Requirements &amp; Tie Handling</span>
+    </div>
+    <ul class="list-disc pl-5 space-y-1 m-0">
+      <li><strong>Missing Documentation:</strong> Missing evidence means <em>"Not publicly verified,"</em> not proof of poor quality or absence of testing. Unverified claims are categorized objectively rather than assumed false.</li>
+      <li><strong>Unavailable Active Standardization:</strong> Where a manufacturer does not publish an active alkaloid standardization percentage on its label or factsheet, we record: <em>"Not separately disclosed by manufacturer."</em> We do not infer standardization of one brand from another brand using a similarly named ingredient.</li>
+      <li><strong>Tie-Breaking Rules:</strong> When two products achieve equal calculated composite totals, ties are broken first by higher score in Domain 2 (Documented Testing &amp; Certification Scope), followed by Domain 1 (Label Clarity &amp; Disclosure). If still equal, a co-ranked editorial tie is declared.</li>
+      <li><strong>No Promotional Proof:</strong> Formulation complexity, brand history, BBB ratings, or Trustpilot scores are never treated as proof of clinical effectiveness or assigned arbitrary bonus points.</li>
+      <li><strong>No Predetermined Winners:</strong> Composite scores are calculated directly from domain scores, and rankings are derived ordinally from calculated totals and published tie-breakers. We do not preserve predetermined winners or artificial ranking orders.</li>
+    </ul>
+  </div>
+
+  <!-- Editorial Disclosure & Methodology Transparency (Replaced raw filenames) -->
+  <div class="pt-3 border-t border-[#f0ede9] flex flex-wrap items-center justify-between gap-3 text-xs">
+    <div class="flex items-center gap-2 text-[#615d59]">
+      <span class="text-[#0075de] font-bold">✓</span>
+      <span><strong>Editorial Disclosure:</strong> Evaluated against our published four-domain rubric and primary source register. Scores reflect public documentation transparency, not clinical efficacy or safety ratings.</span>
+    </div>
+    <div class="text-[#615d59]">
+      Last Audit Date: <strong>2026-10-25</strong>
+    </div>
+  </div>
+</div>

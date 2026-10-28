@@ -1,0 +1,309 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MedicalDisclaimer from '../components/MedicalDisclaimer.astro';
+import StudyCard from '../components/StudyCard.astro';
+import EvidenceBadge from '../components/EvidenceBadge.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import { researchStudies } from '../data/researchStudies';
+
+const juStudy = researchStudies.find((s) => s.id === 'ju-2018')!;
+
+const tocItems = [
+  { id: "overview", label: "Side Effects Overview (Ch 6)" },
+  { id: "ju-study", label: "Ju et al. (2018) Tolerability Data" },
+  { id: "drug-interactions", label: "Medication & CYP Interactions", badge: "Critical" },
+  { id: "is-it-safe", label: "Is Berberine Safe for Daily Use? (Ch 7)" },
+  { id: "kidneys-renal-safety", label: "Kidneys & Renal Clearance" },
+  { id: "contraindications", label: "Who Must Avoid Berberine", badge: "Warning" },
+  { id: "safety-verdict", label: "Clinical Safety Verdict" },
+];
+---
+
+<Layout
+  title="Berberine Side Effects, Drug Interactions & Safety Guide"
+  description="Medical review of berberine safety: GI side effects, CYP3A4 and CYP2D6 drug interactions, organ safety, dosage precautions, and pregnancy contraindications."
+>
+  <!-- Header Banner -->
+  <div class="bg-white border-b border-[#e6e6e6] py-6">
+    <div class="site-container">
+      <nav class="text-xs text-[#615d59] mb-2" aria-label="Breadcrumb">
+        <ol class="flex items-center gap-1.5 list-none p-0 m-0">
+          <li><a href="/" class="hover:text-[#0075de]">Home</a></li>
+          <li>/</li>
+          <li class="text-[#000000] font-medium" aria-current="page">Safety & Side Effects</li>
+        </ol>
+      </nav>
+      <div class="flex flex-wrap items-center gap-2 mb-2">
+        <span class="badge-pill bg-[#793400]/15 text-[#793400] text-xs font-semibold">
+          Medical Safety Guide
+        </span>
+        <span class="text-xs text-[#615d59]">Interactions & Safety • Clinical Pharmacology Review</span>
+      </div>
+      <h1 class="display-2 text-[#000000] tracking-tight m-0">
+        Berberine Side Effects, Drug Interactions, and Clinical Safety
+      </h1>
+      <p class="body-md text-[#615d59] mt-3 max-w-3xl">
+        A clinical evaluation of adverse events documented across 2,147 trial participants. Analyzing cytochrome P450 drug interactions, gastrointestinal tolerability, and strict medical contraindications.
+      </p>
+    </div>
+  </div>
+
+  <!-- Content Layout -->
+  <div class="site-container py-10">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-10">
+      <!-- Main Content (3 Columns) -->
+      <div class="lg:col-span-3 space-y-10 sm:space-y-12">
+        <!-- Mobile / iPad Quick Navigation (Hidden on Desktop) -->
+        <div class="lg:hidden">
+          <TableOfContents items={tocItems} title="Safety Navigation" mobileInline={true} />
+        </div>
+
+        <!-- Overview of Side Effects -->
+        <section id="overview" class="space-y-4 relative">
+          <div id="side-effects" class="absolute -top-24" aria-hidden="true"></div>
+          <div class="flex items-center justify-between border-b border-[#e6e6e6] pb-2">
+            <h2 class="heading-1 text-[#000000] tracking-tight m-0">
+              What Are the Side Effects of Berberine?
+            </h2>
+            <EvidenceBadge level="warning" text="GI Side Effects Common" />
+          </div>
+
+          <div class="body-md text-[#31302e] space-y-4 leading-relaxed">
+            <p>
+              Berberine is biologically active and frequently induces adverse effects, particularly within the gastrointestinal tract. Because berberine undergoes minimal intestinal absorption, high concentrations remain in the bowel lumen where it interacts directly with intestinal motility, bile acids, and enteric microorganisms.
+            </p>
+            <p>
+              The severity and frequency of adverse events depend heavily on <strong>dosage magnitude, formulation type, individual sensitivity, and concurrent meals</strong>.
+            </p>
+            <p>
+              The most commonly documented adverse events in human clinical trials are gastrointestinal complaints, observed across trials in <strong>10% to 34.5% of participants</strong> depending on dosage magnitude (most pronounced at full 1,500 mg/day doses, such as the 34.5% incidence reported in Yin et al. 2008):
+            </p>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
+              <div class="p-3 rounded-lg bg-white border border-[#e6e6e6] text-center">
+                <span class="text-sm font-bold text-[#000000]">Constipation</span>
+                <span class="block text-[11px] text-[#615d59] mt-0.5">Reported in ~5–12% of patients</span>
+              </div>
+              <div class="p-3 rounded-lg bg-white border border-[#e6e6e6] text-center">
+                <span class="text-sm font-bold text-[#000000]">Flatulence & Gas</span>
+                <span class="block text-[11px] text-[#615d59] mt-0.5">Reported in ~8–15% of patients</span>
+              </div>
+              <div class="card-hoverable p-3 rounded-lg bg-white border border-[#e6e6e6] text-center">
+                <span class="text-sm font-bold text-[#000000]">Nausea & Cramping</span>
+                <span class="block text-[11px] text-[#615d59] mt-0.5">Dose-dependent stomach upset</span>
+              </div>
+              <div class="card-hoverable p-3 rounded-lg bg-white border border-[#e6e6e6] text-center">
+                <span class="text-sm font-bold text-[#000000]">Diarrhea</span>
+                <span class="block text-[11px] text-[#615d59] mt-0.5">Reported in ~10–19% of patients</span>
+              </div>
+              <div class="card-hoverable p-3 rounded-lg bg-white border border-[#e6e6e6] text-center">
+                <span class="text-sm font-bold text-[#000000]">Headache</span>
+                <span class="block text-[11px] text-[#615d59] mt-0.5">Mild and resolving</span>
+              </div>
+              <div class="card-hoverable p-3 rounded-lg bg-white border border-[#e6e6e6] text-center">
+                <span class="text-sm font-bold text-[#000000]">Elevated Transaminases</span>
+                <span class="block text-[11px] text-[#615d59] mt-0.5">Transient and reversible</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Ju 2018 Study Embed -->
+        <section id="ju-study" class="space-y-4 pt-6 border-t border-[#e6e6e6]">
+          <span class="eyebrow text-[#213183]">Meta-Analysis of 2,147 Participants</span>
+          <h2 class="heading-1 text-[#000000] tracking-tight">
+            What Does Clinical Trial Surveillance Show?
+          </h2>
+          <div class="body-md text-[#31302e] space-y-4 leading-relaxed">
+            <p>
+              In a dedicated safety systematic review and meta-analysis published in <em>Phytomedicine</em>, <strong>Jianqing Ju, Jingen Li, Qian Lin, and Hao Xu (2018)</strong> scrutinized 16 randomized controlled trials involving <strong>2,147 dyslipidemic participants</strong>.
+            </p>
+            <p>
+              <strong>Primary Safety Finding:</strong> The researchers found <em>no statistically significant difference</em> in total adverse event incidence between patients randomized to berberine versus control/placebo groups. No serious adverse events (SAEs) or hospitalizations were recorded across any of the included trials.
+            </p>
+          </div>
+
+          <StudyCard study={juStudy} />
+
+          <div class="p-4 rounded-xl bg-[#fffaf5] border border-[#e6cbb2] text-xs text-[#523410]">
+            <strong class="font-semibold text-[#793400]">Methodological Caveat:</strong> The authors emphasized that existing safety evidence remains insufficient to declare long-term chronic safety because trial follow-ups rarely exceeded 12 to 24 weeks and comprehensive organ toxicological monitoring was inconsistent across primary trials.
+          </div>
+        </section>
+
+        <!-- Critical Drug Interactions -->
+        <section id="drug-interactions" class="space-y-5 pt-6 border-t border-[#e6e6e6]">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <span class="eyebrow text-[#793400]">Pharmacological Conflict</span>
+              <h2 class="heading-1 text-[#000000] tracking-tight m-0">
+                Can Berberine Interact With Medications?
+              </h2>
+            </div>
+            <EvidenceBadge level="warning" text="Clinically Significant Interactions" />
+          </div>
+
+          <div class="body-md text-[#31302e] space-y-4 leading-relaxed">
+            <p>
+              <strong>Yes. Berberine possesses a high potential for clinically dangerous drug-drug interactions.</strong> Berberine is a potent inhibitor of human cytochrome P450 enzymes (specifically <strong>CYP3A4, CYP2D6, and CYP2C9</strong>) and an inhibitor of the efflux transporter <strong>P-glycoprotein (P-gp)</strong>.
+            </p>
+            <p>
+              When an oral supplement inhibits these pathways, it blocks the metabolic breakdown and excretion of prescription drugs, causing blood levels of those drugs to rise unpredictably into toxic ranges:
+            </p>
+          </div>
+
+          <div class="space-y-3">
+            <div class="card-hoverable p-4 rounded-xl bg-white border border-[#e6e6e6] shadow-sm">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#dd5b00]"></span>
+                <h3 class="text-sm font-bold text-[#000000] m-0">1. Diabetes Medications (Hypoglycemia Risk)</h3>
+              </div>
+              <p class="text-xs text-[#31302e] leading-relaxed m-0">
+                Combining berberine with glucose-lowering drugs (metformin, sulfonylureas, GLP-1 agonists, or insulin) creates an additive hypoglycemic effect. This can provoke severe, life-threatening low blood sugar episodes. Patients must not co-administer without physician supervision.
+              </p>
+            </div>
+
+            <div class="card-hoverable p-4 rounded-xl bg-white border border-[#e6e6e6] shadow-sm">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#793400]"></span>
+                <h3 class="text-sm font-bold text-[#000000] m-0">2. Immunosuppressants (e.g., Cyclosporine, Tacrolimus)</h3>
+              </div>
+              <p class="text-xs text-[#31302e] leading-relaxed m-0">
+                Berberine significantly reduces the hepatic clearance of cyclosporine by inhibiting CYP3A4 and P-gp, dramatically elevating blood cyclosporine concentrations and multiplying the risk of nephrotoxicity. Organ transplant recipients must strictly avoid berberine.
+              </p>
+            </div>
+
+            <div class="card-hoverable p-4 rounded-xl bg-white border border-[#e6e6e6] shadow-sm">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#0075de]"></span>
+                <h3 class="text-sm font-bold text-[#000000] m-0">3. Cardiovascular & Anticoagulant Drugs</h3>
+              </div>
+              <p class="text-xs text-[#31302e] leading-relaxed m-0">
+                Medications such as statins (atorvastatin, simvastatin), blood pressure calcium channel blockers (diltiazem, amlodipine), and anticoagulants (warfarin) depend on CYP3A4/CYP2C9 clearance and can exhibit altered systemic exposure when taken alongside berberine.
+              </p>
+            </div>
+          </div>
+
+          <div class="p-3 bg-[#f6f5f4] border border-[#e6e6e6] rounded-lg text-xs text-[#615d59]">
+            <strong class="text-[#000000]">Medical Imperative:</strong> Patients must never self-adjust, reduce, or stop prescription medications to accommodate berberine supplementation.
+          </div>
+        </section>
+
+        <!-- Chapter 7: Is Berberine Safe? -->
+        <section id="is-it-safe" class="space-y-4 pt-6 border-t border-[#e6e6e6]">
+          <div class="inline-flex items-center gap-2 text-xs font-bold text-[#0075de] uppercase tracking-wider">
+            <span>Chapter 7: Safety Profile</span>
+          </div>
+          <h2 class="heading-1 text-[#000000] tracking-tight">
+            Is Berberine Safe for Daily Use?
+          </h2>
+          <div class="body-md text-[#31302e] space-y-4 leading-relaxed">
+            <p>
+              Short-term clinical trials lasting between <strong>12 and 24 weeks</strong> have consistently demonstrated reasonable tolerability in carefully selected adult study cohorts.
+            </p>
+            <p>
+              However, <em>the absence of serious adverse events in small, highly screened clinical trials does not establish that berberine is safe for all individuals or suitable for indefinite, lifelong continuous daily consumption</em>. Comprehensive toxicological data for chronic supplementation exceeding six months remain sparse.
+            </p>
+          </div>
+        </section>
+
+        <!-- Renal & Kidney Safety -->
+        <section id="kidneys-renal-safety" class="space-y-4 pt-6 border-t border-[#e6e6e6]">
+          <div class="inline-flex items-center gap-2 text-xs font-bold text-[#0075de] uppercase tracking-wider">
+            <span>Renal Pharmacology</span>
+          </div>
+          <h2 class="heading-1 text-[#000000] tracking-tight">
+            Is Berberine Bad for the Kidneys?
+          </h2>
+          <div class="body-md text-[#31302e] space-y-4 leading-relaxed">
+            <p>
+              In published clinical trials of adults with normal baseline renal function, berberine at evaluated research doses (1,000 mg to 1,500 mg daily for up to 3 to 6 months) did not demonstrate drug-induced nephrotoxicity. While preliminary animal models and in vitro cellular assays have investigated potential protective biochemical mechanisms in diabetic kidney disease (such as suppression of oxidative stress and advanced glycation end-products), these preclinical findings cannot be conflated with verified human clinical outcomes.
+            </p>
+            <p>
+              However, <strong>critical clinical precautions apply to individuals with pre-existing renal impairment</strong>:
+            </p>
+            <div class="p-4 rounded-xl bg-[#fffaf5] border border-[#e6cbb2] space-y-2 text-xs text-[#523410]">
+              <strong class="font-bold text-[#793400] text-sm block">⚠️ Chronic Kidney Disease (CKD) Guideline:</strong>
+              <p class="m-0">
+                Berberine phase-II metabolites (demethylated and glucuronidated conjugates) undergo renal filtration and excretion. In individuals with <strong>reduced kidney function (eGFR &lt; 60 mL/min/1.73m² or stages 3–5 CKD)</strong>, clearance kinetics are substantially diminished, raising the risk of prolonged systemic exposure and heightened pharmacological interaction with concurrent medications.
+              </p>
+              <p class="m-0 pt-1 font-semibold text-[#31302e]">
+                Individuals diagnosed with kidney disease, renal failure, or those taking nephrotoxic medications must never take berberine without direct clinical supervision and ongoing renal panel monitoring from a board-certified nephrologist.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Who Must Avoid Berberine -->
+        <section id="contraindications" class="space-y-4 pt-6 border-t border-[#e6e6e6]">
+          <div class="flex items-center justify-between">
+            <h2 class="heading-1 text-[#000000] tracking-tight m-0">
+              Who Should Avoid Berberine? (Strict Contraindications)
+            </h2>
+            <EvidenceBadge level="warning" text="Strict Contraindications" />
+          </div>
+
+          <div class="p-5 rounded-2xl bg-[#fffaf5] border border-[#e6cbb2] space-y-4 text-xs text-[#31302e] leading-relaxed">
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-red-600 text-base">✕</span>
+              <div>
+                <strong class="text-[#793400] text-sm block">1. Pregnant Individuals</strong>
+                Berberine crosses the placenta, stimulates uterine contractions, and has documented potential fetal toxicity. It must be strictly avoided during all stages of pregnancy.
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-red-600 text-base">✕</span>
+              <div>
+                <strong class="text-[#793400] text-sm block">2. Breastfeeding Individuals</strong>
+                Berberine can transfer into breast milk. Neonatal safety and metabolic clearance in the immature infant liver are unestablished. Nursing mothers must strictly avoid it.
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-red-600 text-base">✕</span>
+              <div>
+                <strong class="text-[#793400] text-sm block">3. Newborns & Infants (Kernicterus Risk)</strong>
+                Berberine displaces bilirubin from serum albumin binding sites. In neonates, this can precipitate severe hyperbilirubinemia and lead to <strong>kernicterus</strong>—a devastating form of irreversible brain damage.
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-[#b04800] text-base">⚠</span>
+              <div>
+                <strong class="text-[#793400] text-sm block">4. Individuals on Prescription Pharmacotherapy</strong>
+                Anyone taking anticoagulants, immunosuppressants, statins, or blood pressure agents requires formal clinical pharmacy review due to severe CYP3A4/P-gp interaction hazards.
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-[#b04800] text-base">⚠</span>
+              <div>
+                <strong class="text-[#793400] text-sm block">5. Significant Liver or Renal Disease</strong>
+                Altered drug clearance and limited safety data in end-stage hepatic or renal insufficiency necessitate strict medical supervision.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Verdict -->
+        <section id="safety-verdict" class="space-y-4 pt-6 border-t border-[#e6e6e6]">
+          <h2 class="heading-1 text-[#000000] tracking-tight">
+            Scientific Safety Verdict
+          </h2>
+          <div class="p-5 rounded-xl bg-white border border-[#e6e6e6] body-md text-[#31302e] leading-relaxed shadow-sm">
+            <p class="m-0">
+              Berberine exhibits a reasonable safety profile in short-to-medium duration adult clinical trials (12–24 weeks), characterized primarily by mild, manageable gastrointestinal side effects. However, its <strong>potent inhibition of cytochrome P450 drug clearance, profound contraindications during pregnancy and infancy, and the scarcity of long-term continuous safety data</strong> demand that it be approached as a biologically active compound requiring clinical prudence—not an innocuous herbal panacea.
+            </p>
+          </div>
+        </section>
+
+        <!-- Medical Disclaimer -->
+        <MedicalDisclaimer variant="callout" />
+      </div>
+
+      <!-- Table of Contents Sidebar (1 Column) -->
+      <aside class="hidden lg:block lg:col-span-1">
+        <TableOfContents items={tocItems} title="Safety Navigation" />
+      </aside>
+    </div>
+  </div>
+</Layout>

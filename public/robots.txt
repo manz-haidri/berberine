@@ -1,0 +1,32 @@
+# robots.txt for https://berberinebenefit.com
+User-agent: *
+Allow: /
+
+# Primary Search Engine Crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# AI Search Discovery & Retrieval Crawlers (AI-SEO / AEO)
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+# User-Triggered AI Retrieval Bots
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+Sitemap: https://berberinebenefit.com/sitemap-index.xml
