@@ -156,7 +156,7 @@ const schemaGraph = {
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -239,7 +239,7 @@ const schemaGraph = {
           try {
             const saved = localStorage.getItem('theme');
             if (saved === 'dark' || saved === 'light') return saved;
-            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            return 'light';
           } catch (_) {
             return 'light';
           }

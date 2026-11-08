@@ -21,3 +21,5 @@
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
 
+https://berberine-drg.pages.dev/*
+  X-Robots-Tag: noindex
